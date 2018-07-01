@@ -1,61 +1,4 @@
 
-* Intro
-  . Property-Based Testing of Browser Rendering Engines with a Consensus Oracle
-    . Joel Martin
-    . David Levine
-
-    "
-    Good morning everyone!
-
-    My name is Joel Martin. I'm a Principal Software Engineer at
-    ViaSat, Inc and I am also a PhD candidate at the University of
-    Texas, Arlington. My co-author on this paper is David Levine from
-    the University of Texas, Arlington. The title of the paper is
-    'Property-Based Testing of Browser Rendering Engines with
-    a Consensus Oracle'
-    "
-
-* The Problem
-    . The Test Oracle Problem [Fragment #1]
-
-    "
-    The are some systems where determining correct behavior is
-    difficult. To be more precise: there exists a class of systems
-    under test in which the process of determining the correct output
-    based on a given input has a similar order of complexity to the
-    system itself. This is the Test Oracle Problem [show fragment
-    #1]. Our paper proposes an approach to address this problem in the
-    browser rendering context. I'll also discuss ways in which the
-    approach is more broadly applicable to systems beyond browser
-    rendering.
-    "
-
-  * Browser Rendering
-    [Listing of HTML+CSS] [Fragment #1, #2-#5]
-
-    "
-    A real-world example where the Test Oracle Problem manifests is
-    in web browser rendering. [show fragment #1] Let's consider this
-    browser rendering test case. Even though this web page is fairly
-    trivial compared to real-world web pages, it is still non-trivial
-    to verify that a browser has rendered this page correctly. There
-    are a number of reasons for this:
-      - The CSS element sizing and positioning standard is large and
-        nuanced (and one of the basic things we would like to test)
-        [show fragment #2]
-      - environment factors: browser size, available fonts [show
-        fragment #3]
-      - color model and alpha blending [show fragment #4]
-      - font rendering model (especially spacing issues like kerning
-        which may cause other page elements to shift significantly)
-        [show fragment #5]
-    Current solutions to browser render testing often involve manual
-    user intervention at some stage of the process and higly
-    constrained test environment. The goal of our approach is a
-    browser render testing system that is both comprehensive and fully
-    automated.
-    "
-
 * A Solution
   . Property-Based Testing [Fragment #1]
   . Grammar-based Input Generators [Fragment #2]
@@ -68,10 +11,6 @@
 
   * Property-Based Testing (PBT)
     . Popularized by QuickCheck (Claessen & Hughes 2000)
-    . Trivial example: [Fragment #1]
-      . Input properties: A is an integer, B is an integer
-      . Output property: C is the sum of A and B
-
     "
     Property-based testing is a testing methodology that was
     popularized by the QuickCheck system developed by Koen Claessen
@@ -82,22 +21,29 @@
     under test. The input properties are used by the test system to
     generate valid inputs for the SUT. The output properties are used
     by the test system to validate outputs for a given set of inputs.
-    When outputs violate the output properties the corresponding
+    When results violate the output properties the corresponding
     inputs are considered a failing test case.
+    "
 
-    [show fragment #1]
+    . Simple PBT Example [fragment #1]
+      . Input properties: A is an integer, B is an integer
+      . Output property: C is the sum of A and B
+
+    "
     Here is a very simple example of PBT properties.
     ...
 
     Property-based testing is often explained in the context of
     functional testing where testing is performed at the function
-    level. However, we have found that PBT works well for testing at
-    a system level. In this case the input properties may be complex
-    generators and the output properties may be non-trivial test
-    Oracles. In particular, the test-shrinking capability of
-    property-based testing is very useful whether testing is at
-    a functional level or a whole system level.
+    level. However, PBT also works well for testing at a system level.
+    In this case the input properties may be complex generators and
+    the output properties may be non-trivial test Oracles. In
+    particular, the test-shrinking capability of property-based
+    testing is very useful whether testing is at a functional level or
+    a whole system level.
     "
+
+  * More complicated example?
 
   * PBT Test Shrinking
     . Importance of Test Shrinking

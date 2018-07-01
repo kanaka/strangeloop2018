@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>COMPSAC 2018 - Property-Based Testing of Browser Rendering Engines with a Consensus Oracle</title>
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
@@ -42,21 +42,286 @@
           <aside class="notes">
             <ul>
               <li>Silence phone
-              <li>Have demo window open and sized
-              <li>Setup screen sharing
+              <li>
+                Good morning everyone!
+
+                My name is Joel Martin. I'm a Principal Software Engineer at
+                ViaSat, Inc and I am also a PhD candidate at the University of
+                Texas, Arlington. My co-author on this paper is David Levine from
+                the University of Texas, Arlington. The title of the paper is
+                'Property-Based Testing of Browser Rendering Engines with
+                a Consensus Oracle'
             </ul>
           </aside>
         </section>
         <section>
-          <h3>The Challenge</h3>
-          <ul>
-            <li>Complex Input (HTML + CSS)
-            <li>Complex test Oracle
-            <li>Manual Intervention
-          </ul>
+          <section>
+            <h3>The Problem</h3>
+            <ul>
+              <li class="fragment">The Test Oracle Problem</li>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>
+                  The are some systems where determining correct behavior is
+                  difficult. To be more precise: there exists a class of systems
+                  under test in which the process of determining the correct output
+                  based on a given input has a similar order of complexity to the
+                  system itself. This is the Test Oracle Problem <font color="green">
+                  [show fragment #1]</font>. Our paper proposes an
+                  approach to address this problem in the browser
+                  rendering context. I'll also discuss ways in which
+                  the approach is more broadly applicable to systems
+                  beyond browser rendering.
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>Browser Rendering</h3>
+<!--
+<html>
+  <body style="background: #1289af">
+    <div style="left: 10%; width: 20%;
+                font: 25px/1 rgba(100,100,100,0.5)">
+      Pythia, Apollo, Dione.
+    </div>
+  </body>
+</html>
+-->
+<!--<code class="hlhtml" data-trim>-->
+            <div style="position:relative">
+              <pre style="position:absolute" class="fragment"><code data-noescape>
+&lt;html&gt;
+  &lt;body style="background: #1289af"&gt;
+    &lt;div style="left: 10%; width: 20%;
+                font: 'Fira Sans' 25px/1
+                      rgba(100,100,100,0.5)"&gt;
+      Pythia, Apollo, Dione.
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+              <pre style="position:absolute" class="fragment"><code data-noescape>
+&lt;html&gt;
+  &lt;body style="background: #1289af"&gt;
+    &lt;div style="<mark>left: 10%; width: 20%;</mark>
+                font: 'Fira Sans' 25px/1
+                      rgba(100,100,100,0.5)"&gt;
+      Pythia, Apollo, Dione.
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+              <pre style="position:absolute" class="fragment"><code data-noescape>
+&lt;html&gt;
+  &lt;body style="background: #1289af"&gt;
+    &lt;div style="left: 10%; width: 20%;
+                font: <mark>'Fira Sans'</mark> 25px/1
+                      rgba(100,100,100,0.5)"&gt;
+      Pythia, Apollo, Dione.
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+              <pre style="position:absolute" class="fragment"><code data-noescape>
+&lt;html&gt;
+  &lt;body style="<mark>background: #1289af</mark>"&gt;
+    &lt;div style="left: 10%; width: 20%;
+                font: 'Fira Sans' 25px/1
+                      <mark>rgba(100,100,100,0.5)</mark>"&gt;
+      Pythia, Apollo, Dione.
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+              <pre style="position:absolute" class="fragment"><code data-noescape>
+&lt;html&gt;
+  &lt;body style="background: #1289af"&gt;
+    &lt;div style="left: 10%; width: 20%;
+                font: <mark>'Fira Sans' 25px/1</mark>
+                      rgba(100,100,100,0.5)"&gt;
+      <mark>Pythia, Apollo, Dione.</mark>
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+              </code></pre>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>
+                  A real-world example where the Test Oracle Problem manifests is
+                  in web browser rendering. <font color="green">[show fragment #1]</font> Let's consider this
+                  browser rendering test case. Even though this web page is fairly
+                  simple compared to real-world web pages, it is still non-trivial
+                  to verify that a browser has rendered this page correctly. There
+                  are a number of reasons for this:
+                  <ul>
+                    <li><font color="green">[show fragment #2]</font>
+                      The CSS element sizing and positioning
+                      standard is large and nuanced (and one of the
+                      basic things we would like to test)
+                    <li><font color="green">[show fragment #3]</font>
+                      environment factors: browser window geometry,
+                      available OS fonts 
+                    <li><font color="green">[show fragment #4]</font>
+                      color model and alpha blending 
+                    <li><font color="green">[show fragment #5]</font>
+                      font rendering model (especially spacing
+                      issues like kerning which may cause other page
+                      elements to shift significantly)
+                  </ul>
+                  Current solutions to browser render testing often involve manual
+                  user intervention at some stage of the process and use a highly
+                  constrained test environment. The goal of our approach is a
+                  browser render testing system that is both comprehensive and fully
+                  automated.
+              </ul>
+            </aside>
+          </section>
         </section>
         <section>
-          <h3>Our Solution</h3>
+          <section>
+            <h3>A Solution</h3>
+            <ul>
+              <li class="fragment">Property-Based Testing (PBT)</li>
+              <li class="fragment">Grammar-based Input Generators</li>
+              <li class="fragment">Consensus Oracle</li>
+            </ul>
+            <aside class="notes">
+              The are three main components to our approach. Property-based
+              testing, grammar-based input generators, and a consensus oracle.
+            </aside>
+          </section>
+          <section>
+            <h3>Property-Based Testing (PBT)</h3>
+            <ul>
+              <li>Popularized by QuickCheck<br>
+                (Claessen &amp; Hughes, 2000)
+              <li>Input properties are defined in terms of generators
+              <li>Grow "size" of input properties until test failure
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Property-based testing is a testing methodology
+                  that was popularized by the QuickCheck system
+                  developed by Koen Claessen and John Hughes in 2000.
+                <li>In property-based testing the tester defines
+                  properties or assertions about the inputs values and
+                  output values of the system under test.
+                <li>Typical PBT systems define input properties in
+                  terms of generator functions. Each generator
+                  function takes a size value which has a generator
+                  specific meaning.  Generators are combined to create
+                  compound generators which can be recursive.
+                <li>Output properties are used by the test system to
+                  validate outputs for a given set of inputs. When
+                  test results violate the output properties the
+                  corresponding inputs are considered a failing test
+                  case.
+                <li>A single run of property-based testing involves
+                  calling the input properties with larger and larger
+                  size values to stochastically generate large and
+                  large test cases until the output properties are
+                  violated.
+                <li>Let's look at a simple example.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Simple PBT Example</h3>
+            <div style="position:absolute" class="fragment">
+            <ul>
+              <li>Input properties: A is an integer, B is an integer</li>
+              <li>Output property: sum of A and B</li>
+            </ul>
+              <pre><code data-noescape>> (def SUT +)
+
+> (tc/quick-check 10
+    (props/for-all
+      [A gen/int B gen/int]
+      (= (SUT A B) (+ A B))))
+{:result true,
+ :num-tests 10}
+
+
+
+
+
+              </code></pre>
+            </div>
+          </section>
+          <section data-transition="none">
+            <h3>Simple PBT Example</h3>
+            <div style="position:absolute">
+            <ul>
+              <li>Input properties: A is an integer, B is an integer</li>
+              <li>Output property: sum of A and B</li>
+            </ul>
+              <pre><code data-noescape>> (def SUT +)
+
+> (tc/quick-check 100
+    (props/for-all
+      [A gen/int B gen/int]
+      (= (SUT A B) (+ A B))))
+{:result true,
+ :num-tests 100}
+
+
+
+
+
+              </code></pre>
+            </div>
+          </section>
+          <section data-transition="none">
+            <h3>Simple PBT Example</h3>
+            <div style="position:absolute">
+            <ul>
+              <li>Input properties: A is an integer, B is an integer</li>
+              <li>Output property: sum of A and B (almost)</li>
+            </ul>
+              <pre><code data-noescape>> (def SUT (fn [a b] (Math/round (+ a b (* b 0.01)))))
+
+> (tc/quick-check 10
+    (props/for-all
+      [A gen/int B gen/int]
+      (= (SUT A B) (+ A B))))
+{:result true,
+ :num-tests 10}
+
+
+
+
+
+              </code></pre>
+            </div>
+          </section>
+          <section data-transition="none">
+            <h3>Simple PBT Example</h3>
+            <div style="position:absolute">
+            <ul>
+              <li>Input properties: A is an integer, B is an integer</li>
+              <li>Output property: sum of A and B (almost)</li>
+            </ul>
+              <pre><code data-noescape>> (def SUT (fn [a b] (Math/round (+ a b (* b 0.01)))))
+
+> (tc/quick-check 100
+    (props/for-all
+      [A gen/int B gen/int]
+      (= (SUT A B) (+ A B))))
+{:result false,
+ :num-tests 70,
+ :failing-size 69,
+ :fail [44 -66],
+ :shrunk {:total-nodes-visited 15,
+          :depth 3,
+          :result false,
+          :smallest [0 -51]}} </code></pre>
+            </div>
+          </section>
+        </section>
+        <section>
+          <h3>Results</h3>
         </section>
         <section>
           <h3>Questions?</h3>
