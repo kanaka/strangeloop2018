@@ -48,7 +48,7 @@
                 My name is Joel Martin. I'm a Principal Software Engineer at
                 ViaSat, Inc and I am also a PhD candidate at the University of
                 Texas, Arlington. My co-author on this paper is David Levine from
-                the University of Texas, Arlington. The title of the paper is
+                the University of Texas, Arlington. The title of this paper is
                 'Property-Based Testing of Browser Rendering Engines with
                 a Consensus Oracle'
             </ul>
@@ -63,16 +63,18 @@
             <aside class="notes">
               <ul>
                 <li>
-                  The are some systems where determining correct behavior is
-                  difficult. To be more precise: there exists a class of systems
-                  under test in which the process of determining the correct output
-                  based on a given input has a similar order of complexity to the
-                  system itself. This is the Test Oracle Problem <font color="green">
-                  [show fragment #1]</font>. Our paper proposes an
-                  approach to address this problem in the browser
-                  rendering context. I'll also discuss ways in which
-                  the approach is more broadly applicable to systems
-                  beyond browser rendering.
+                  The are some systems where determining correct
+                  behavior is difficult. To be more precise: there
+                  exists a class of systems under test for which the
+                  process of determining the correct output based on
+                  a given input has a similar order of complexity to
+                  the system under test itself. This is the Test
+                  Oracle Problem
+                  <font color="green"> [show fragment #1]</font>. Our
+                  paper proposes an approach to address this problem
+                  in the context of browser render testing. I'll also
+                  discuss ways in which the approach is more broadly
+                  applicable to systems beyond browser rendering.
               </ul>
             </aside>
           </section>
@@ -149,12 +151,12 @@
             <aside class="notes">
               <ul>
                 <li>
-                  A real-world example where the Test Oracle Problem manifests is
-                  in web browser rendering. <font color="green">[show fragment #1]</font> Let's consider this
-                  browser rendering test case. Even though this web page is fairly
-                  simple compared to real-world web pages, it is still non-trivial
-                  to verify that a browser has rendered this page correctly. There
-                  are a number of reasons for this:
+                  Let's consider a browser rendering test case.
+                  <font color="green">[show fragment #1]</font> Even
+                  though this web page is fairly simple compared to
+                  real-world web pages, it is still non-trivial to
+                  verify that a browser has rendered this page
+                  correctly. There are a number of reasons for this:
                   <ul>
                     <li><font color="green">[show fragment #2]</font>
                       The CSS element sizing and positioning
@@ -170,35 +172,39 @@
                       issues like kerning which may cause other page
                       elements to shift significantly)
                   </ul>
-                  Current solutions to browser render testing often involve manual
-                  user intervention at some stage of the process and use a highly
-                  constrained test environment. The goal of our approach is a
-                  browser render testing system that is both comprehensive and fully
-                  automated.
+                  Current solutions to browser render testing often
+                  involve manual user intervention at some stage of
+                  the process and use a highly constrained test
+                  environment. The goal of our approach is a browser
+                  render testing system that is both comprehensive and
+                  fully automated.
               </ul>
             </aside>
           </section>
         </section>
         <section>
-          <section>
-            <h3>A Solution</h3>
-            <ul>
-              <li class="fragment">Property-Based Testing (PBT)</li>
-              <li class="fragment">Grammar-based Input Generators</li>
-              <li class="fragment">Consensus Oracle</li>
-            </ul>
-            <aside class="notes">
-              The are three main components to our approach. Property-based
-              testing, grammar-based input generators, and a consensus oracle.
-            </aside>
-          </section>
+          <h3>A Solution</h3>
+          <ul>
+            <li class="fragment">Property-Based Testing (PBT)</li>
+            <li class="fragment">Grammar-based Input Generators</li>
+            <li class="fragment">Consensus Oracle</li>
+          </ul>
+          <aside class="notes">
+            There are three main components to our approach.
+            Property-based testing, grammar-based input generators,
+            and a consensus oracle. Let's consider each one in turn.
+          </aside>
+        </section>
+        <section>
           <section>
             <h3>Property-Based Testing (PBT)</h3>
             <ul>
               <li>Popularized by QuickCheck<br>
                 (Claessen &amp; Hughes, 2000)
               <li>Input properties are defined in terms of generators
-              <li>Grow "size" of input properties until test failure
+              <li>Output properties define success/failure (e.g. test Oracle)
+              <li>Grow "size" of input properties until output
+                properties violated (test failure)
             </ul>
             <aside class="notes">
               <ul>
@@ -211,7 +217,7 @@
                 <li>Typical PBT systems define input properties in
                   terms of generator functions. Each generator
                   function takes a size value which has a generator
-                  specific meaning.  Generators are combined to create
+                  specific meaning. Generators are combined to create
                   compound generators which can be recursive.
                 <li>Output properties are used by the test system to
                   validate outputs for a given set of inputs. When
@@ -223,102 +229,240 @@
                   size values to stochastically generate large and
                   large test cases until the output properties are
                   violated.
-                <li>Let's look at a simple example.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>PBT Test Shrinking</h3>
+            <ul>
+              <li>Each test case is a tree of generator nodes.
+              <li>Pick nodes in the tree and try smaller size values.
+              <li>Gradient descent walk to find "smallest" test failure
+              <li>Extremely important for complex compound generators
+                (e.g. recursive)
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Hard to overstate the importance of test
+                  shrinking. The highly recursive nature of the HTML
+                  grammar means that generated test cases can become
+                  before large.
+                <li>There is a positive aspect to this in that large
+                  cases can each achieve non-trivial code coverage of
+                  the system under test.
+                <li>The major downside to this is that large test
+                  cases are not helpful to the tester in doing root
+                  cause analysis.
+                <li>Test shrinking can significantly reduce the size
+                  of the test case while still preserving the
+                  failure in the system under test.
+                <li>Now let's look at a simple PBT example.
+              </ul>
+            </aside>
+        </section>
+          <section data-transition="none">
+            <h3>Simple PBT Example</h3>
+            <div style="position:absolute">
+              <ul>
+                <li>Input property: P is a sequence of integers</li>
+                <li>Output property: sum of integers in P <font style="visibility: hidden" color="green">(almost)</font></li>
+              </ul>
+              <pre class="fragment"><code data-noescape>> (def SUT
+    (fn [x] (apply + x)))
+
+> (tc/quick-check 10
+    (props/for-all
+      [P (gen/vector gen/int)]
+      (= (SUT P) (apply + P))))
+{:result true,
+ :num-tests 10}
+
+
+
+              </code></pre>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>Let's consider a simple example.
+                <li>We define the input property as a sequence of
+                  integers.
+                <li>The output property states that the output from
+                  running the SUT on the input property should be
+                  a value that is the sum of the values in input
+                  sequence.
+                <li><font color="green">[show fragment #5]</font>
+                  Here is code showing what this would look like coded
+                  with Clojure's test.check library. Namespace imports
+                  have been elided.
+                <li>First we define the SUT to be the application of
+                  sum to a sequence.
+                <li>Then we define our properties using the props-all
+                  function and pass this to the quick-check function
+                  to run 10 test iterations.
+                <li>The input property P is defined as a compound
+                  generator which generates a vector of integers.
+                <li>The output property states that the execution of
+                  the SUT on P should have the exact same result
+                  as apply sum to the values in P.
+                <li>The final two lines are the result of the test
+                  showing that all 10 iterations were run with no
+                  property violations.
               </ul>
             </aside>
           </section>
           <section data-transition="none">
             <h3>Simple PBT Example</h3>
-            <div style="position:absolute" class="fragment">
-            <ul>
-              <li>Input properties: A is an integer, B is an integer</li>
-              <li>Output property: sum of A and B</li>
-            </ul>
-              <pre><code data-noescape>> (def SUT +)
-
-> (tc/quick-check 10
-    (props/for-all
-      [A gen/int B gen/int]
-      (= (SUT A B) (+ A B))))
-{:result true,
- :num-tests 10}
-
-
-
-
-
-              </code></pre>
-            </div>
-          </section>
-          <section data-transition="none">
-            <h3>Simple PBT Example</h3>
             <div style="position:absolute">
-            <ul>
-              <li>Input properties: A is an integer, B is an integer</li>
-              <li>Output property: sum of A and B</li>
-            </ul>
-              <pre><code data-noescape>> (def SUT +)
+              <ul>
+                <li>Input property: P is a sequence of integers</li>
+                <li>Output property: sum of integers in P <font style="visibility: hidden" color="green">(almost)</font></li>
+              </ul>
+              <pre><code data-noescape>> (def SUT
+    (fn [x] (apply + x)))
 
 > (tc/quick-check 100
     (props/for-all
-      [A gen/int B gen/int]
-      (= (SUT A B) (+ A B))))
+      [P (gen/vector gen/int)]
+      (= (SUT P) (apply + P))))
 {:result true,
  :num-tests 100}
 
 
 
-
-
               </code></pre>
             </div>
+            <aside class="notes">
+              <ul>
+                <li>We can increase the number of iterations to 100
+                  and see that the result is unchanged. Which is not
+                  surprising since our test Oracle output property and
+                  the SUT are currently defined identically.
+              </ul>
+            </aside>
           </section>
           <section data-transition="none">
             <h3>Simple PBT Example</h3>
             <div style="position:absolute">
-            <ul>
-              <li>Input properties: A is an integer, B is an integer</li>
-              <li>Output property: sum of A and B (almost)</li>
-            </ul>
-              <pre><code data-noescape>> (def SUT (fn [a b] (Math/round (+ a b (* b 0.01)))))
+              <ul>
+                <li>Input property: P is a sequence of integers</li>
+                <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
+              </ul>
+              <pre><code data-noescape>> (def SUT
+    (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
 
 > (tc/quick-check 10
     (props/for-all
-      [A gen/int B gen/int]
-      (= (SUT A B) (+ A B))))
+      [P (gen/vector gen/int)]
+      (= (SUT P) (apply + P))))
 {:result true,
  :num-tests 10}
 
 
 
-
-
               </code></pre>
             </div>
+            <aside class="notes">
+              <ul>
+                <li>Now let's introduce a bug in our SUT such that
+                  a sequence containing 13 to 17 integers will result
+                  in the value 0 being returned instead of the sum.
+                <li>Our properties remain unchanged.
+                <li>We can see that running 10 iterations still passed
+                  because the sizes being generated P are still small
+                  and no sequence long enough to trigger the bug is
+                  generated.
+              </ul>
+            </aside>
           </section>
           <section data-transition="none">
             <h3>Simple PBT Example</h3>
             <div style="position:absolute">
-            <ul>
-              <li>Input properties: A is an integer, B is an integer</li>
-              <li>Output property: sum of A and B (almost)</li>
-            </ul>
-              <pre><code data-noescape>> (def SUT (fn [a b] (Math/round (+ a b (* b 0.01)))))
+              <ul>
+                <li>Input property: P is a sequence of integers</li>
+                <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
+              </ul>
+              <pre><code data-noescape>> (def SUT
+    (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
 
 > (tc/quick-check 100
     (props/for-all
-      [A gen/int B gen/int]
-      (= (SUT A B) (+ A B))))
+      [P (gen/vector gen/int)]
+      (= (SUT P) (apply + P))))
 {:result false,
- :num-tests 70,
- :failing-size 69,
- :fail [44 -66],
- :shrunk {:total-nodes-visited 15,
-          :depth 3,
-          :result false,
-          :smallest [0 -51]}} </code></pre>
+ :num-tests 31,
+ :fail [[1 19 12 18 -7 30 -8 15
+         13 -15 8 -3 1 -21 10 19]],
+ :shrunk {:total-nodes-visited 262,
+          :smallest [[0 0 0 0 0 0 0 0 0 0 0 0 0]]}} </code></pre>
             </div>
+            <aside class="notes">
+              <ul>
+                <li>However, running with a maximum of 100 iterations
+                  triggers a test case failure on the 31st iteration.
+                <li>The initial input property which triggered the
+                  failure has 16 elements. <!-- TODO: highlight -->
+                <li>After the failure was discovered, the quick-check
+                  function ran an addition 262 test shrink iterations
+                  and found that a sequence of 13 zeros that triggers
+                  the failure.
+              </ul>
+            </aside>
           </section>
+        </section>
+        <section data-transition="none">
+          <section>
+            <h3>Grammar-based Input Generators</h3>
+            <ul>
+              <li>Test Case Composition (web pages):
+                <ul>
+                  <li>HTML (content)
+                  <li>CSS (presentation)
+                </ul>
+              <li class="fragment">Goals
+                <ul>
+                  <li>Comprehensive
+                  <li>Automated
+                  <li>Controllable
+                </ul>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Now let's talk about the the input properties for
+                  browser render testing. In this case we want to
+                  generate web pages which mean generating HTML and
+                  CSS. These basically represent the content and
+                  presentation respectively. The third component of
+                  web page is the behavior defined in JavaScript but
+                  that is not in scope for our paper.
+                <li><font color="green">[show fragment #1]</font>
+                  The are several goal we want for our generators:
+                  <ul>
+                    <li><b>Comprehensive</b>: we want web pages that cover
+                      the whole domain valid web pages. So generators
+                      themselves are generated from raw data from
+                      upstream HTML and CSS standards.
+                    <li><b>Automated</b>: already mentioned that we want
+                      automated creation of the generators themselves,
+                      but we also want the generators output full
+                      web pages that don't require human final
+                      assembly or tweaking.
+                    <li><b>Controllable</b>: Because the domain of valid web
+                      pages is essentially unbounded, we want the
+                      tester to have the ability to choose more narrow
+                      domains to focus on.
+                  </ul>
+              </ul> 
+            </aside>
+          </section>
+          <section>
+            <h3>HTML</h3>
+          </section>
+          <section>
+            <h3>CSS</h3>
+          </section>
+        </section>
+        <section data-transition="none">
+          <h3>Consensus Oracle</h3>
         </section>
         <section>
           <h3>Results</h3>

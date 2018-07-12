@@ -1,33 +1,15 @@
 
+(require '[clojure.test.check :as tc] '[clojure.test.check [properties :as props] [generators :as gen]])
+
 * A Solution
-  . Property-Based Testing [Fragment #1]
-  . Grammar-based Input Generators [Fragment #2]
-  . Consensus Oracle [Fragment #3]
-
-  "
-  The are three main components to our approach. Property-based
-  testing, grammar-based input generators, and a consensus oracle.
-  "
-
   * Property-Based Testing (PBT)
     . Popularized by QuickCheck (Claessen & Hughes 2000)
     "
-    Property-based testing is a testing methodology that was
-    popularized by the QuickCheck system developed by Koen Claessen
-    and John Hughes in 2000.
-
-    In property-based testing a tester defines properties or
-    assertions about the inputs values and output values of the system
-    under test. The input properties are used by the test system to
-    generate valid inputs for the SUT. The output properties are used
-    by the test system to validate outputs for a given set of inputs.
-    When results violate the output properties the corresponding
-    inputs are considered a failing test case.
     "
 
-    . Simple PBT Example [fragment #1]
-      . Input properties: A is an integer, B is an integer
-      . Output property: C is the sum of A and B
+  * Simple PBT Example [fragment #1]
+    . Input properties: A is an integer, B is an integer
+    . Output property: C is the sum of A and B
 
     "
     Here is a very simple example of PBT properties.
@@ -41,28 +23,14 @@
     particular, the test-shrinking capability of property-based
     testing is very useful whether testing is at a functional level or
     a whole system level.
-    "
 
-  * More complicated example?
-
-  * PBT Test Shrinking
-    . Importance of Test Shrinking
-
-    "
-    Hard to understate the importance of test shrinking. The highly
-    recursive nature of the HTML grammar means that generated test
-    cases can become before large. There is a positive aspect to this
-    in that large cases can each achieve non-trivial code coverage of
-    the system under test. The major downside to this is that large
-    test cases are not helpful to the tester in determine which
-    components of the test case contributed to the test case. Test
-    shrinking can significantly reduce the size of the test case while
-    still preserving the components of the test case that triggered
-    the failure in the system under test.
     "
 
   * Grammar-based Input Generators
+
   * Consensus Oracle
+
+  * How this applies in context of browsers
 
 * Results
 * Related Work?
