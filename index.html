@@ -10,7 +10,12 @@
     <link rel="stylesheet" href="css/theme/black.css">
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+    <!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+
+    <!-- Custom overrides -->
+    <link rel="stylesheet" href="css/custom.css">
+
+    <link rel="stylesheet" href="lib/css/darcula.css">
 
     <!-- Printing and PDF exports -->
     <script>
@@ -92,7 +97,7 @@
 -->
 <!--<code class="hlhtml" data-trim>-->
             <div style="position:relative">
-              <pre style="position:absolute" class="fragment"><code data-noescape>
+              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
     &lt;div style="left: 10%; width: 20%;
@@ -103,7 +108,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
               </code></pre>
-              <pre style="position:absolute" class="fragment"><code data-noescape>
+              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
     &lt;div style="<mark>left: 10%; width: 20%;</mark>
@@ -114,7 +119,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
               </code></pre>
-              <pre style="position:absolute" class="fragment"><code data-noescape>
+              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
     &lt;div style="left: 10%; width: 20%;
@@ -125,7 +130,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
               </code></pre>
-              <pre style="position:absolute" class="fragment"><code data-noescape>
+              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="<mark>background: #1289af</mark>"&gt;
     &lt;div style="left: 10%; width: 20%;
@@ -136,7 +141,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
               </code></pre>
-              <pre style="position:absolute" class="fragment"><code data-noescape>
+              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
     &lt;div style="left: 10%; width: 20%;
@@ -267,7 +272,7 @@
                 <li>Input property: P is a sequence of integers</li>
                 <li>Output property: sum of integers in P <font style="visibility: hidden" color="green">(almost)</font></li>
               </ul>
-              <pre class="fragment"><code data-noescape>> (def SUT
+              <pre class="fragment"><code class="clojure" data-noescape>> (def SUT
     (fn [x] (apply + x)))
 
 > (tc/quick-check 10
@@ -317,7 +322,7 @@
                 <li>Input property: P is a sequence of integers</li>
                 <li>Output property: sum of integers in P <font style="visibility: hidden" color="green">(almost)</font></li>
               </ul>
-              <pre><code data-noescape>> (def SUT
+              <pre><code class="clojure" data-noescape>> (def SUT
     (fn [x] (apply + x)))
 
 > (tc/quick-check 100
@@ -347,7 +352,7 @@
                 <li>Input property: P is a sequence of integers</li>
                 <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
               </ul>
-              <pre><code data-noescape>> (def SUT
+              <pre><code class="clojure" data-noescape>> (def SUT
     (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
 
 > (tc/quick-check 10
@@ -381,7 +386,7 @@
                 <li>Input property: P is a sequence of integers</li>
                 <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
               </ul>
-              <pre><code data-noescape>> (def SUT
+              <pre><code class="clojure" data-noescape>> (def SUT
     (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
 
 > (tc/quick-check 100
@@ -455,20 +460,269 @@
             </aside>
           </section>
           <section>
-            <h3>HTML</h3>
+            <h3>Grammar-Based Generators</h3>
+            <ul>
+              <li class="fragment">W3C Standards &rarr; Data
+              <li class="fragment">Data &rarr; EBNF
+              <li class="fragment">EBNF &rarr; Generators
+              <li class="fragment">Generators &rarr; HTML+CSS
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li><font color="green">[show fragment #1]</font>
+                  Our basic approach is to use first download and
+                  normalize HTML and CSS specification data.
+                <li><font color="green">[show fragment #1]</font>
+                  Then we load that data and use it to generate
+                  EBNF grammars that can parse web pages containing
+                  HTML and CSS.
+                <li><font color="green">[show fragment #1]</font>
+                  Then we parse the EBNF grammar files and output
+                  generator functions for each of the rules in the
+                  grammar.
+              </ul> 
+            </aside>
           </section>
           <section>
-            <h3>CSS</h3>
+            <h3>HTML 5</h3>
+            <ul>
+              <li>W3C Standard
+              <li>130 tag elements
+              <li>110 tag attributes
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Specifically version 5 of the standard
+                <li><font color="green">[show fragment #1]</font>
+                  <ul>
+                    <li>
+                  </ul>
+              </ul> 
+            </aside>
+          </section>
+          <section data-transition="none-out">
+            <h3>HTML Elements</h3>
+            <pre><code class="html" data-noescape>
+&lt;div&gt; div content &lt;/div&gt;
+&lt;span&gt; span content &lt;/span&gt;
+&lt;body&gt; body of page &lt;/body&gt;
+&lt;b&gt; bold text &lt;/b&gt;
+            </code></pre>
+          </section>
+          <section data-transition="none-in">
+            <h3>HTML Elements</h3>
+            <pre><code class="html" data-noescape>
+&lt;<mark>div</mark>&gt; div content &lt;/<mark>div</mark>&gt;
+&lt;<mark>span</mark>&gt; span content &lt;/<mark>span</mark>&gt;
+&lt;<mark>body</mark>&gt; body of page &lt;/<mark>body</mark>&gt;
+&lt;<mark>b</mark>&gt; bold text &lt;/<mark>b</mark>&gt;
+            </code></pre>
+          </section>
+          <section data-transition="none-out">
+            <h3>HTML Attributes</h3>
+            <pre><code class="html"  data-noescape>
+&lt;div style="text-color: red"&gt; div containing red text &lt;/div&gt;
+&lt;div class="myclass1"&gt; div with class myclass1 &lt;/div&gt;
+&lt;div id="mydiv1"&gt; div with ID mydiv1 &lt;/div&gt;
+&lt;span lang="en"&gt; English language text &lt;/span&gt;
+&lt;a href="http://w3c.org"&gt; W3C link &lt;/a&gt;
+            </code></pre>
+          </section>
+          <section data-transition="none-in">
+            <h3>HTML Attributes</h3>
+            <pre><code class="html"  data-noescape>
+&lt;div <mark>style="text-color: red"</mark>&gt; div containing red text &lt;/div&gt;
+&lt;div <mark>class="myclass1"</mark>&gt; div with class myclass1 &lt;/div&gt;
+&lt;div <mark>id="mydiv1"</mark>&gt; div with ID mydiv1 &lt;/div&gt;
+&lt;span <mark>lang="en"</mark>&gt; English language text &lt;/span&gt;
+&lt;a <mark>href="http://w3c.org"</mark>&gt; W3C link &lt;/a&gt;
+            </code></pre>
+          </section>
+          <section>
+            <h3>CSS 3</h3>
+            <ul>
+              <li>W3C Standard
+              <li>50 sub-specifications (modules)
+              <li>360 CSS properties
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Specifically version 3 of the standard.
+                <li>50 different sub-specifications referred to as
+                  CSS3 modules which are in various stages of
+                  standardization.
+                <li>There are more than 360 CSS property names across
+                  all the CSS3 modules.
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>CSS Value Definition Syntax (VDS)</h3>
+            <ul>
+              <li>VDS:
+            <pre><code class="css overflow"  data-noescape><'text-emphasis-position'> =
+  [ over | under ] && [ right | left ]
+            </code></pre>
+              <li>EBNF:
+            <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
+  ( ( 'over' ' ' | 'under' ' ') ' '
+    ( 'right' ' ' | 'left' ' ') ' ' ) ;
+            </code></pre>
+          </section>
+          <section>
+            <h3>CSS Value Definition Syntax (VDS)</h3>
+            <ul>
+              <li>Generator:
+            <pre><code class="clojure overflow"  data-noescape>(gen/tuple
+  (gen/return " ")
+  (gen/frequency [
+    [100
+      (gen/tuple (gen/return " ") (gen/return "over"))]
+    [100
+      (gen/tuple (gen/return " ") (gen/return "under"))]])
+  (gen/return " ")
+  (gen/frequency [
+    [100
+      (gen/tuple (gen/return " ") (gen/return "right"))]
+    [100
+      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+            </code></pre>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>And here is the final test.check generator for that rule.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Controlling the Grammar</h3>
+            <ul>
+              <li>Generator:
+            <pre><code class="clojure overflow"  data-noescape>(gen/tuple
+  (gen/return " ")
+  (gen/frequency [
+    [100                                                          &nbsp;
+      (gen/tuple (gen/return " ") (gen/return "over"))]
+    [100
+      (gen/tuple (gen/return " ") (gen/return "under"))]])
+  (gen/return " ")
+  (gen/frequency [
+    [100
+      (gen/tuple (gen/return " ") (gen/return "right"))]
+    [100
+      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+            </code></pre>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Here is the grammar I showed earlier.
+                <li>This is actually omitting the extra parts that
+                  allow the grammar to be controlled or tuned
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Controlling the Grammar</h3>
+            <ul>
+              <li>Generator:
+            <pre><code class="clojure overflow"  data-noescape>(gen/tuple
+  (gen/return " ")
+  (gen/frequency [
+    [(get weights [:prop-text-emphasis-position :cat 1 :alt 0] 100)
+      (gen/tuple (gen/return " ") (gen/return "over"))]
+    [(get weights [:prop-text-emphasis-position :cat 1 :alt 1] 100)
+      (gen/tuple (gen/return " ") (gen/return "under"))]])
+  (gen/return " ")
+  (gen/frequency [
+    [(get weights [:prop-text-emphasis-position :cat 3 :alt 0] 100)
+      (gen/tuple (gen/return " ") (gen/return "right"))]
+    [(get weights [:prop-text-emphasis-position :cat 3 :alt 1] 100)
+      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+            </code></pre>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>
+              </ul>
+            </aside>
           </section>
         </section>
+        </section>
         <section data-transition="none">
-          <h3>Consensus Oracle</h3>
+          <section>
+            <h3>Consensus Oracle</h3>
+            <aside class="notes">
+              <ul>
+                <li>
+                <li><font color="green">[show fragment #1]</font>
+                  <ul>
+                    <li>
+                  </ul>
+              </ul> 
+            </aside>
+          </section>
+          <section>
+            <img src="imgs/results1.png" width=80%></img>
+          </section>
+          <section>
+            <img src="imgs/results1_expanded.png" width=80%></img>
+          </section>
+          <section>
+            <table>
+              <tr>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_firefox.png"
+                       style="margin: 5px"></img>
+                </td>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_diff_firefox_chrome.png"
+                       style="margin: 5px; transform: translateY(-15%)"></img>
+                </td>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_chrome.png"
+                       style="margin: 5px"></img>
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_diff_chrome_servo.png"
+                       style="margin: 5px"></img>
+                </td>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_servo.png"
+                       style="margin: 5px; transform: translateY(15%)"></img>
+                </td>
+                <td style="border: 0px">
+                  <img src="imgs/results1_7_diff_firefox_servo.png"
+                       style="margin: 5px"></img>
+                </td>
+              </tr>
+            </table>
+          </section>
         </section>
         <section>
           <h3>Results</h3>
+            <aside class="notes">
+              <ul>
+                <li>
+                <li><font color="green">[show fragment #1]</font>
+                  <ul>
+                    <li>
+                  </ul>
+              </ul> 
+            </aside>
         </section>
         <section>
           <h3>Questions?</h3>
+            <aside class="notes">
+              <ul>
+                <li>
+                <li><font color="green">[show fragment #1]</font>
+                  <ul>
+                    <li>
+                  </ul>
+              </ul> 
+            </aside>
         </section>
       </div>
     </div>
