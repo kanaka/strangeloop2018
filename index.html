@@ -912,8 +912,7 @@
                   renders these test cases.
                 <li>It turns out that our goals for determining
                   correctness are the same as for generating the inputs
-                  <li> <font color="green">[show fragment #1]</font>
-                    Goals:
+                  <li>Goals: <font color="green">[show fragment #1]</font>
                   <ul>
                     <li><b>Automated</b>: a human shouldn't have to
                       determine whether a browser has rendered a web
@@ -922,10 +921,6 @@
                     <li><b>Controllable</b>: To explain why this is
                       important I'll have to descirbe how a consensus
                       Oracle works. <!-- TODO -->
-                  <ul>
-                    <li>
-                    <li>
-                  </ul>
               </ul> 
             </aside>
           </section>
@@ -951,7 +946,7 @@
             </aside>
           </section>
           <section>
-            <h2>Consensus Example</h2>
+            <h3>Consensus Example</h3>
             <pre><code class="html"  data-noescape>&lt;html&gt;
   &lt;body style="background: #1289af; font: 25px/1 Ahem"&gt;
     &lt;marquee bgcolor="navy"&gt;
@@ -975,7 +970,7 @@
             </aside>
           </section>
           <section>
-            <h2>Consensus Example</h2>
+            <h3>Consensus Example</h3>
             <table class="browser-table">
               <tr>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
@@ -1068,13 +1063,75 @@
             </aside>
           </section>
           <section>
-            Simple Squared Sum of Differences (SSD) with a threshold.
+            <h3>Consensus?</h3>
+            <ul style="list-style: none">
+              <li class="fragment">Squared Sum of Differences (SSD) with a threshold.
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>There are numerous methods of comparing two images
+                  described in the literature. There is even some
+                  consideration of using machine learning approaches
+                  for comparing two browser renderings to determine if
+                  they are similar enough to be indistinguishable to
+                  the human eye.
+                <li>The fact is that the comparison method is
+                  something that testers in practice will want to have
+                  control over. This is an aspect of controllability
+                  of the consensus algorith mentioned above.
+                <li>We found that a simple Squared Sum of Differences
+                  compared to configurable threshold value was
+                  sufficient to validate our overall approach.
+                  <font color="green">[show fragment #1]</font>
+                <li>
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>Consensus Yet?</h3>
+            <ul style="list-style: none">
+              <li class="fragment">One is at fault
+              <li class="fragment">All members at fault
+              <li class="fragment">No clear fault
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show fragment #2]</font>
+                  Difference between A and B is below threshold,<br>
+                  B and C are also below the threshold,<br>
+                  but A and C are above the threshold and classified
+                  as different.
+                <li>In other words, browser B split the difference
+                  between the other two.
+                <li>This is another area where the tester will want
+                  controllability and will likely select different
+                  consensus algorithms depending on the goal.
+              </ul>
+            </aside>
           </section>
           <section>
             <img src="imgs/results1.png" width=80%></img>
           </section>
           <section>
             <img src="imgs/results1_expanded.png" width=80%></img>
+          </section>
+          <section>
+            <h3>Beyond Browsers</h3>
+            <aside class="notes">
+              There are other instances beyond browsers where there are
+              this approach would work. PDF rendering. POSIX utility
+              implementations. Basically any W3C and IEEE standard will
+              often have multiple implementations.
+              However, not just for cases where there are multiple
+              implementation from different vendors/creators. This
+              approach could also be used for testing of multiple
+              versions of the same SUT. With a bit of integration with
+              source control and automated testing systems this could be
+              used to identify regressions and if/when they are fixed.
+              In a black box SUT situation it could be used to create
+              a matrix of product version and feature support.
+            </aside>
           </section>
         </section>
         <section>
