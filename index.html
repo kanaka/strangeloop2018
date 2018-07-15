@@ -61,9 +61,9 @@
         </section>
         <section>
           <section>
-            <h3>The Problem</h3>
+            <h2>The Problem</h2>
             <ul>
-              <li class="fragment"><font color="green">The Test Oracle Problem</font></li>
+              <li class="fragment" style="list-style: none"><font color="green">The Test Oracle Problem</font></li>
             </ul>
             <aside class="notes">
               <ul>
@@ -175,7 +175,7 @@
           </section>
         </section>
         <section>
-          <h3>A Solution</h3>
+          <h2>A Solution</h2>
           <ul>
             <li class="fragment">Property-Based Testing (PBT)</li>
             <li class="fragment">Grammar-based Input Generators</li>
@@ -189,14 +189,14 @@
         </section>
         <section>
           <section>
-            <h3>Property-Based Testing (PBT)</h3>
+            <h2>Property-Based Testing (PBT)</h2>
             <ul>
-              <li>Popularized by QuickCheck<br>
-                (Claessen &amp; Hughes, 2000)
+              <li>QuickCheck (Claessen &amp; Hughes, 2000)
               <li>Input properties are defined in terms of generators
-              <li>Output properties define success/failure (e.g. test Oracle)
+              <li>Output properties define success (e.g. test Oracle)
+              <li>Output property violations indicate test failure
               <li>Grow "size" of input properties until output
-                properties violated (test failure)
+                properties violated
             </ul>
             <aside class="notes">
               <ul>
@@ -409,18 +409,18 @@
         </section>
         <section data-transition="none">
           <section>
-            <h3>Grammar-based Input Generators</h3>
+            <h2>Input Generators</h2>
             <ul>
               <li>Test Case Composition (web pages):
                 <ul>
                   <li>HTML (content)
                   <li>CSS (presentation)
                 </ul>
-              <li class="fragment">Goals
+              <li class="fragment">Goals:
                 <ul>
-                  <li>Comprehensive
                   <li>Automated
                   <li>Controllable
+                  <!--<li>Comprehensive-->
                 </ul>
             </ul>
             <aside class="notes">
@@ -435,10 +435,6 @@
                 <li><font color="green">[show fragment #1]</font>
                   The are several goal we want for our generators:
                   <ul>
-                    <li><b>Comprehensive</b>: we want web pages that cover
-                      the whole domain valid web pages. So generators
-                      themselves are generated from raw data from
-                      upstream HTML and CSS standards.
                     <li><b>Automated</b>: already mentioned that we want
                       automated creation of the generators themselves,
                       but we also want the generators output full
@@ -448,6 +444,12 @@
                       pages is essentially unbounded, we want the
                       tester to have the ability to choose more narrow
                       domains to focus on.
+                    <!--
+                    <li><b>Comprehensive</b>: we want web pages that cover
+                      the whole domain valid web pages. So generators
+                      themselves are generated from raw data from
+                      upstream HTML and CSS standards.
+                    -->
                   </ul>
               </ul> 
             </aside>
@@ -596,7 +598,7 @@
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
             <pre><code class="css"  data-noescape>.classname #idname tagname {
@@ -614,7 +616,7 @@
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
             <pre><code class="css"  data-noescape><mark>.classname #idname tagname</mark> {
@@ -632,7 +634,7 @@
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
             <pre><code class="css"  data-noescape>.classname #idname tagname {
@@ -650,7 +652,7 @@
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
             <pre><code class="css"  data-noescape>.classname #idname tagname {
@@ -667,7 +669,7 @@
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
             <pre><code class="css"  data-noescape>.classname #idname tagname {
@@ -868,7 +870,6 @@
                 <li>The weights variable in the example is a lookup
                   table built from the default weights overlayed with
                   value loaded from a tester's weight file.
-                <li>TODO: Corresponding data from the weight file.
               </ul>
             </aside>
           </section>
@@ -895,36 +896,93 @@
         </section>
         <section data-transition="none">
           <section>
-            <h3>Consensus Oracle</h3>
+            <h2>Consensus</h2>
+            <ul>
+              <li class="fragment">Goals
+                <ul>
+                  <li>Automated
+                  <li>Controllable
+                </ul>
+            </ul>
             <aside class="notes">
               <ul>
-                <li>
-                <li><font color="green">[show fragment #1]</font>
+                <li>We have a way to generate web page test cases
+                  that are <b>automated</b> and <b>controllable</b>,
+                  but how do determine whether our browser correctly
+                  renders these test cases.
+                <li>It turns out that our goals for determining
+                  correctness are the same as for generating the inputs
+                  <li> <font color="green">[show fragment #1]</font>
+                    Goals:
                   <ul>
+                    <li><b>Automated</b>: a human shouldn't have to
+                      determine whether a browser has rendered a web
+                      page correctly. Which has means we also need to
+                      minimize false positives and false negatives.
+                    <li><b>Controllable</b>: To explain why this is
+                      important I'll have to descirbe how a consensus
+                      Oracle works. <!-- TODO -->
+                  <ul>
+                    <li>
                     <li>
                   </ul>
               </ul> 
             </aside>
           </section>
           <section>
-            <img src="imgs/results1.png" width=80%></img>
+            <h2>Consensus Oracle</h2>
+            <ul>
+              <li class="fragment">Multiple implementations
+              <li class="fragment">Chrome, Firefox, Safari, Edge,
+                Opera, Vivaldi, Brave, UC Browser, Internet Explorer,
+                Chromium, Servo, Pale Moon, Dolphin, Tor Browser,
+                Maxthon, Baidu Browser, etc, etc
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li><font color="green">[show fragment #1]</font> The
+                  key insight here is that a number of cases in the
+                  real-world where SUTs will have multiple
+                  implementations.
+                <li>This is particularly true in the web browser space
+                  where there is a surplus of implementations.<font
+                    color="green">[show fragment #1]</font>
+              </ul> 
+            </aside>
           </section>
           <section>
-            <img src="imgs/results1_expanded.png" width=80%></img>
+            <h2>Consensus Example</h2>
+            <pre><code class="html"  data-noescape>&lt;html&gt;
+  &lt;body style="background: #1289af; font: 25px/1 Ahem"&gt;
+    &lt;marquee bgcolor="navy"&gt;
+      &lt;q <font color="yellow">...ELIDED...</font> &gt; pX &lt;/q&gt;
+    &lt;/marquee&gt;
+    p
+    &lt;mark <font color="yellow">...ELIDED...</font>&gt; &lt;/mark&gt;
+    &lt;strong style="offset-anchor: right;
+                   box-align: stretch;
+                   padding-right: -1.75vw" <font color="yellow">...ELIDED...</font>&gt;
+      &lt;mark <font color="yellow">...ELIDED...</font>&gt; Xp XX &lt;/mark&gt;
+      &amp;#x00c9;
+    &lt;/strong&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Here is a example web page that was generated
+                  using HTML and CSS generators.
+              </ul>
+            </aside>
           </section>
           <section>
+            <h2>Consensus Example</h2>
             <table class="browser-table">
               <tr>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
                   <div style="visibility: hidden">FFFFFFF</div>
-                  <span>Firefox</span>
+                  <span>Firefox&nbsp;&nbsp;</span>
                   <img src="imgs/results1_7_firefox.png"
                        style="margin: 5px"></img>
-                </td>
-                <td style="padding: 0px; text-align: center; vertical-align: top">
-                  <img src="imgs/results1_7_diff_firefox_chrome.png"
-                       style="margin: 5px"></img>
-                  <div style="visibility: hidden">FFFFFFF</div>
                 </td>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
                   <div style="visibility: hidden">FFFFFFF</div>
@@ -932,30 +990,95 @@
                   <img src="imgs/results1_7_chrome.png"
                        style="margin: 5px"></img>
                 </td>
+                <td style="padding: 0px; text-align: center; vertical-align: top">
+                  <div style="visibility: hidden">FFFFFFF</div>
+                  <span>Servo&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <img src="imgs/results1_7_servo.png"
+                       style="margin: 5px"></img>
+                </td>
               </tr>
+            </table>
+            <aside class="notes">
+              <ul>
+                <li>And here are the results of rendering that page in
+                  three popular browsers.
+                <li>It is pretty clear just from visual inspection
+                  that Servo has significantly different rendering
+                  from the other two however, it's not as obvious
+                  whether Firefox and Chrome are different.
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <table class="browser-table">
               <tr>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
-                  <img src="imgs/results1_7_diff_chrome_servo.png"
+                  <span>Firefox</span>
+                  <img src="imgs/results1_7_firefox.png"
+                       style="margin: 5px"></img>
+                </td>
+                <td style="padding: 0px; text-align: center; vertical-align: top"
+                    class="fragment" data-fragment-index=1>
+                  <img src="imgs/results1_7_diff_firefox_servo.png"
                        style="margin: 5px"></img>
                   <div style="visibility: hidden">FFFFFFF</div>
                 </td>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
-                  <div style="visibility: hidden">FFFFFFF</div>
                   <span>Servo</span>
                   <img src="imgs/results1_7_servo.png"
                        style="margin: 5px"></img>
                 </td>
+              </tr>
+              <tr>
+                <td style="padding: 0px; text-align: center; vertical-align: top"
+                    class="fragment" data-fragment-index=1>
+                  <img src="imgs/results1_7_diff_firefox_chrome.png"
+                       style="margin: 5px"></img>
+                  <div style="visibility: hidden">FFFFFFF</div>
+                </td>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
-                  <img src="imgs/results1_7_diff_firefox_servo.png"
+                  <span>Chrome</span>
+                  <img src="imgs/results1_7_chrome.png"
+                       style="margin: 5px"></img>
+                </td>
+                <td style="padding: 0px; text-align: center; vertical-align: top"
+                    class="fragment" data-fragment-index=1>
+                  <img src="imgs/results1_7_diff_chrome_servo.png"
                        style="margin: 5px"></img>
                   <div style="visibility: hidden">FFFFFFF</div>
                 </td>
               </tr>
             </table>
+            <aside class="notes">
+              <ul>
+                <li>Let's re-arrange them
+                <li>And now let's show the result of subtracting the
+                  color channel values for each pair of browsers.
+                  <font color="green">[show fragment #1]</font>
+                  Black areas in the difference images mean that color
+                  at that pixel in both images was identical.
+                <li>Now it's easy to see the difference between Servo
+                  and the other two browsers.
+                <li>We can also see that Firefox and Chrome are very
+                  similar although there are in fact some subtle
+                  spacing differences between the HTML elements.
+                <li>This raises the question of how do we determine if
+                  there is in fact consensus or not?
+              </ul>
+            </aside>
+          </section>
+          <section>
+            Simple Squared Sum of Differences (SSD) with a threshold.
+          </section>
+          <section>
+            <img src="imgs/results1.png" width=80%></img>
+          </section>
+          <section>
+            <img src="imgs/results1_expanded.png" width=80%></img>
           </section>
         </section>
         <section>
-          <h3>Results</h3>
+          <h2>Results</h2>
             <aside class="notes">
               <ul>
                 <li>
@@ -968,16 +1091,26 @@
         </section>
         <section>
           <h3>Questions?</h3>
-            <aside class="notes">
-              <ul>
-                <li>
+        </section>
+        <section>
+          <h3>Contact</h3>
+          <ul style="list-style: none">
+            <li><a href="//twitter.com/bus_kanaka">@bus_kanaka</a>
+            <li><a href="//kanaka.github.io/compsac2018">kanaka.github.io/compsac2018</a>
+            <li><a href="//github.com/kanaka">github.com/kanaka</a>
+            <li>joeldmartin@mavs.uta.edu
+            <li>levine@cse.uta.edu
+          </ul>
+        </section>
+          <aside class="notes">
+            <ul>
+              <li>
                 <li><font color="green">[show fragment #1]</font>
                   <ul>
                     <li>
                   </ul>
-              </ul> 
-            </aside>
-        </section>
+            </ul> 
+          </aside>
       </div>
     </div>
 
