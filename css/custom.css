@@ -4,8 +4,19 @@ code mark {
 }
 */
 
-.overflow{
+.overflow {
     overflow: auto;
     width: 120%; /* Takes up the whole width of the slide */
 }
 
+.browser-table  {
+    /*border: 3px solid white;*/
+    border: 0px;
+    border-bottom: 0px;
+}
+
+.browser-table td {
+    /*border: 3px solid purple;*/
+    border: 0px;
+    border-bottom: 0px !important;
+}

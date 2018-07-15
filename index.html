@@ -63,39 +63,26 @@
           <section>
             <h3>The Problem</h3>
             <ul>
-              <li class="fragment">The Test Oracle Problem</li>
+              <li class="fragment"><font color="green">The Test Oracle Problem</font></li>
             </ul>
             <aside class="notes">
               <ul>
                 <li>
                   The are some systems where determining correct
-                  behavior is difficult. To be more precise: there
-                  exists a class of systems under test for which the
-                  process of determining the correct output based on
-                  a given input has a similar order of complexity to
-                  the system under test itself. This is the Test
-                  Oracle Problem
+                  behavior during testing is difficult. To be more
+                  precise: there exists a class of systems under test
+                  for which the process of determining the correct
+                  output based on a given input has a similar order of
+                  complexity to the system under test itself. This is
+                  the Test Oracle Problem
                   <font color="green"> [show fragment #1]</font>. Our
                   paper proposes an approach to address this problem
-                  in the context of browser render testing. I'll also
-                  discuss ways in which the approach is more broadly
-                  applicable to systems beyond browser rendering.
+                  in the context of browser render testing.
               </ul>
             </aside>
           </section>
           <section>
             <h3>Browser Rendering</h3>
-<!--
-<html>
-  <body style="background: #1289af">
-    <div style="left: 10%; width: 20%;
-                font: 25px/1 rgba(100,100,100,0.5)">
-      Pythia, Apollo, Dione.
-    </div>
-  </body>
-</html>
--->
-<!--<code class="hlhtml" data-trim>-->
             <div style="position:relative">
               <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
 &lt;html&gt;
@@ -240,14 +227,18 @@
           <section data-transition="none">
             <h3>PBT Test Shrinking</h3>
             <ul>
-              <li>Each test case is a tree of generator nodes.
-              <li>Pick nodes in the tree and try smaller size values.
-              <li>Gradient descent walk to find "smallest" test failure
-              <li>Extremely important for complex compound generators
-                (e.g. recursive)
+              <li>Tree of generator nodes
+              <li>Pick node, try small size value
+              <li>Gradient descent walk to the "smallest" tree
+              <li>Critical for compound/recursive generators
             </ul>
             <aside class="notes">
               <ul>
+                <li>Each test case is a tree of generator nodes.
+                <li>Pick nodes in the tree and try smaller size values.
+                <li>Gradient descent walk to find "smallest" test failure
+                <li>Extremely important for complex compound
+                  generators (e.g. recursive)
                 <li>Hard to overstate the importance of test
                   shrinking. The highly recursive nature of the HTML
                   grammar means that generated test cases can become
@@ -369,8 +360,9 @@
             <aside class="notes">
               <ul>
                 <li>Now let's introduce a bug in our SUT such that
-                  a sequence containing 13 to 17 integers will result
-                  in the value 0 being returned instead of the sum.
+                  any sequence containing 13 to 17 integers will
+                  result in the value 0 being returned instead of the
+                  sum.
                 <li>Our properties remain unchanged.
                 <li>We can see that running 10 iterations still passed
                   because the sizes being generated P are still small
@@ -405,11 +397,12 @@
                 <li>However, running with a maximum of 100 iterations
                   triggers a test case failure on the 31st iteration.
                 <li>The initial input property which triggered the
-                  failure has 16 elements. <!-- TODO: highlight -->
+                  failure contained 16 integers. <!-- TODO: highlight -->
                 <li>After the failure was discovered, the quick-check
                   function ran an addition 262 test shrink iterations
                   and found that a sequence of 13 zeros that triggers
-                  the failure.
+                  the failure. This is the smallest test case that was
+                  found that still triggered the failure.
               </ul>
             </aside>
           </section>
@@ -480,6 +473,10 @@
                   Then we parse the EBNF grammar files and output
                   generator functions for each of the rules in the
                   grammar.
+                <li><font color="green">[show fragment #1]</font>
+                  Finally, the PBT test harness is able to use the
+                  generators for our input properties to generate HTML
+                  and CSS test cases.
               </ul> 
             </aside>
           </section>
@@ -487,56 +484,94 @@
             <h3>HTML 5</h3>
             <ul>
               <li>W3C Standard
-              <li>130 tag elements
-              <li>110 tag attributes
+              <li>130 Elements (tags)
+              <li>110 Attributes
             </ul>
             <aside class="notes">
               <ul>
-                <li>Specifically version 5 of the standard
-                <li><font color="green">[show fragment #1]</font>
-                  <ul>
-                    <li>
-                  </ul>
+                <li>Let's talk briefly about HTML. HTML is a World
+                  Wide Web Consortium standard. HTML 5 is the current
+                  major version of the standard.
+                <li>HTML is composed of two major parts: elements and
+                  attributes.
+                <li>The standard defines approximate 130 HTML elements
+                  and 110 attributes.
               </ul> 
             </aside>
           </section>
           <section data-transition="none-out">
-            <h3>HTML Elements</h3>
-            <pre><code class="html" data-noescape>
-&lt;div&gt; div content &lt;/div&gt;
-&lt;span&gt; span content &lt;/span&gt;
-&lt;body&gt; body of page &lt;/body&gt;
-&lt;b&gt; bold text &lt;/b&gt;
-            </code></pre>
+            <h3>HTML Example</h3>
+            <pre><code class="html" data-noescape>&lt;html&gt;
+  &lt;body&gt;
+    page document body
+    &lt;div&gt; div content &lt;/div&gt;
+    &lt;span class="myclass1"&gt; span content &lt;/span&gt;
+    &lt;div id="mydiv1"&gt; div content &lt;/div&gt;
+    &lt;b style="text-color: red"&gt; bold red text &lt;/b&gt;
+    &lt;div&gt;
+      &lt;b&gt; bold text within a div &lt;/b&gt;
+      &lt;span&gt; span content within a div &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;a href="http://w3c.org"&gt; text of link to W3C &lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Here is an example web page container HTML
+                <li>There are two major components of HTML ...
+              </ul> 
+            </aside>
           </section>
           <section data-transition="none-in">
-            <h3>HTML Elements</h3>
-            <pre><code class="html" data-noescape>
-&lt;<mark>div</mark>&gt; div content &lt;/<mark>div</mark>&gt;
-&lt;<mark>span</mark>&gt; span content &lt;/<mark>span</mark>&gt;
-&lt;<mark>body</mark>&gt; body of page &lt;/<mark>body</mark>&gt;
-&lt;<mark>b</mark>&gt; bold text &lt;/<mark>b</mark>&gt;
+            <h3>HTML Example</h3>
+            <pre><code class="html" data-noescape>&lt;<mark>html</mark>&gt;
+  &lt;<mark>body</mark>&gt;
+    page document body
+    &lt;<mark>div</mark>&gt; div content &lt;/<mark>div</mark>&gt;
+    &lt;<mark>span</mark> class="myclass1"&gt; span content &lt;/<mark>span</mark>&gt;
+    &lt;<mark>div</mark> id="mydiv1"&gt; div content &lt;/<mark>div</mark>&gt;
+    &lt;<mark>b</mark> style="text-color: red"&gt; bold red text &lt;/<mark>b</mark>&gt;
+    &lt;<mark>div</mark>&gt;
+      &lt;<mark>b</mark>&gt; bold text within a div &lt;/<mark>b</mark>&gt;
+      &lt;<mark>span</mark>&gt; span content within a div &lt;/<mark>span</mark>&gt;
+    &lt;/<mark>div</mark>&gt;
+    &lt;<mark>a</mark> href="http://w3c.org"&gt; text of link to W3C &lt;/<mark>a</mark>&gt;
+  &lt;/<mark>body</mark>&gt;
+&lt;/<mark>html</mark>&gt;</code></pre>
             </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>First: elements which are delineated by tags.
+                <li>Note that the grammar for HTML elements is
+                  recursive and permits elements to be contained
+                  within other elements.
+              </ul> 
+            </aside>
           </section>
           <section data-transition="none-out">
-            <h3>HTML Attributes</h3>
-            <pre><code class="html"  data-noescape>
-&lt;div style="text-color: red"&gt; div containing red text &lt;/div&gt;
-&lt;div class="myclass1"&gt; div with class myclass1 &lt;/div&gt;
-&lt;div id="mydiv1"&gt; div with ID mydiv1 &lt;/div&gt;
-&lt;span lang="en"&gt; English language text &lt;/span&gt;
-&lt;a href="http://w3c.org"&gt; W3C link &lt;/a&gt;
-            </code></pre>
-          </section>
-          <section data-transition="none-in">
-            <h3>HTML Attributes</h3>
-            <pre><code class="html"  data-noescape>
-&lt;div <mark>style="text-color: red"</mark>&gt; div containing red text &lt;/div&gt;
-&lt;div <mark>class="myclass1"</mark>&gt; div with class myclass1 &lt;/div&gt;
-&lt;div <mark>id="mydiv1"</mark>&gt; div with ID mydiv1 &lt;/div&gt;
-&lt;span <mark>lang="en"</mark>&gt; English language text &lt;/span&gt;
-&lt;a <mark>href="http://w3c.org"</mark>&gt; W3C link &lt;/a&gt;
-            </code></pre>
+            <h3>HTML Example</h3>
+            <pre><code class="html" data-noescape>&lt;html&gt;
+  &lt;body&gt;
+    page document body
+    &lt;div&gt; div content &lt;/div&gt;
+    &lt;span <mark>class="myclass1"</mark>&gt; span content &lt;/span&gt;
+    &lt;div <mark>id="mydiv1"</mark>&gt; div content &lt;/div&gt;
+    &lt;b <mark>style="text-color: red"</mark>&gt; bold red text &lt;/b&gt;
+    &lt;div&gt;
+      &lt;b&gt; bold text within a div &lt;/b&gt;
+      &lt;span&gt; span content within a div &lt;/span&gt;
+    &lt;/div&gt;
+    &lt;a <mark>href="http://w3c.org"</mark>&gt; text of link to W3C &lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Second: HTML attributes.
+                <li>Some attributes like class and id are global while
+                  other like href are specific to certain types of
+                  elements.
+              </ul> 
+            </aside>
           </section>
           <section>
             <h3>CSS 3</h3>
@@ -547,106 +582,316 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>Specifically version 3 of the standard.
-                <li>50 different sub-specifications referred to as
-                  CSS3 modules which are in various stages of
-                  standardization.
+                <li>CSS is also a World Web Consortium standard.
+                <li>CSS 3 is the major version of the standard.
+                <li>The CSS standard is a fair bit more complicated
+                  than the HTML one in terms of its grammar.
+                <li>There are actually 50 different sub-specifications
+                  referred to as CSS3 modules which are in various
+                  stages of standardization.
                 <li>There are more than 360 CSS property names across
                   all the CSS3 modules.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Stylesheet:
+            </ul>
+            <pre><code class="css"  data-noescape>.classname #idname tagname {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff;
+  transform: translate3d(0px, 0px, -45px) rotateX(90deg);
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Here is an example of a CSS stylesheet.
+                <li>There are four main components
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Stylesheet:
+            </ul>
+            <pre><code class="css"  data-noescape><mark>.classname #idname tagname</mark> {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #fff;
+  transform: translate3d(0px, 0px, -45px) rotateX(90deg);
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>1) Selectors, which identify which HTML elements the
+                following block will apply to.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Stylesheet:
+            </ul>
+            <pre><code class="css"  data-noescape>.classname #idname tagname {
+  <mark>background: rgba(0, 0, 0, 0.5);</mark>
+  <mark>border: 1px solid #fff;</mark>
+  <mark>transform: translate3d(0px, 0px, -45px) rotateX(90deg);</mark>
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>A block of declarations.
+                <li>Each declaration consists of ...
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Stylesheet:
+            </ul>
+            <pre><code class="css"  data-noescape>.classname #idname tagname {
+  <mark>background</mark>: rgba(0, 0, 0, 0.5);
+  <mark>border</mark>: 1px solid #fff;
+  <mark>transform</mark>: translate3d(0px, 0px, -45px) rotateX(90deg);
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Property names and ...
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Stylesheet:
+            </ul>
+            <pre><code class="css"  data-noescape>.classname #idname tagname {
+  background: <mark>rgba(0, 0, 0, 0.5);</mark>
+  border: <mark>1px solid #fff;</mark>
+  transform: <mark>translate3d(0px, 0px, -45px) rotateX(90deg);</mark>
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Value data
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul>
+              <li>Inline:
+            </ul>
+            <pre><code class="html"  data-noescape>&lt;div style="background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #fff;
+            transform: translate3d(0px, 0px, -45px)
+                       rotateX(90deg);"&gt;
+  div content
+&lt;/div&gt;
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>These are the same definitions from the previous
+                  example but embedded inline into the HTML.
+                <li>The selectors are omitted because these
+                  declarations only apply to the HTML elements that
+                  they embedded within.
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h3>CSS Value Definition Syntax (VDS)</h3>
+            <ul class="fragment">
+              <li>VDS
+            <pre><code class="css overflow"  data-noescape><'text-emphasis-position'> =
+  [ over | under ] && [ right | left ]</code></pre>
+              <li class="fragment">EBNF
+            <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
+  ( ( 'over' ' ' | 'under' ' ') ' '
+    ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Bulk of the CSS3 standard is dedicated to defining
+                  CSS values.
+                <li>CSS values are defined using a bespoke grammar
+                  called Value Definition Syntax (or VDS).
+                <li>The grammar is similar to EBNF but with additional
+                  combinators that are optimized to deal with the
+                  ordering and repetition flexibility that CSS values
+                  permits.
+                <li><font color="green">[show fragment #1]</font>
+                  Here is an example of the VDS definition of the
+                  values for the <b>text-emphasis-position</b>
+                  property name.
+                <li>This definition states that the value should be
+                  either the word "over" or "under" and either the
+                  word "right" or "left".
+                <li><font color="green">[show fragment #1]</font>
+                  This is the equivalent EBNF translation of the VDS
+                  grammar.
               </ul>
             </aside>
           </section>
           <section>
             <h3>CSS Value Definition Syntax (VDS)</h3>
             <ul>
-              <li>VDS:
-            <pre><code class="css overflow"  data-noescape><'text-emphasis-position'> =
-  [ over | under ] && [ right | left ]
-            </code></pre>
-              <li>EBNF:
+              <li>EBNF
             <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
   ( ( 'over' ' ' | 'under' ' ') ' '
-    ( 'right' ' ' | 'left' ' ') ' ' ) ;
-            </code></pre>
-          </section>
-          <section>
-            <h3>CSS Value Definition Syntax (VDS)</h3>
-            <ul>
-              <li>Generator:
+    ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
+              <li>Generators:
             <pre><code class="clojure overflow"  data-noescape>(gen/tuple
+  (gen/frequency [
+    [100 (gen/tuple (gen/return "over") (gen/return " "))]
+    [100 (gen/tuple (gen/return "under") (gen/return " "))]])
   (gen/return " ")
   (gen/frequency [
-    [100
-      (gen/tuple (gen/return " ") (gen/return "over"))]
-    [100
-      (gen/tuple (gen/return " ") (gen/return "under"))]])
-  (gen/return " ")
-  (gen/frequency [
-    [100
-      (gen/tuple (gen/return " ") (gen/return "right"))]
-    [100
-      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+    [100 (gen/tuple (gen/return "right") (gen/return " "))]
+    [100 (gen/tuple (gen/return "left") (gen/return " "))]])
+  (gen/return " "))
             </code></pre>
             </ul>
             <aside class="notes">
               <ul>
-                <li>And here is the final test.check generator for that rule.
+                <li>The EBNF is then translated into Clojure
+                  test.check generator code.
+                <li>The frequency generator selects between multiple
+                  other generators based on weights. In this case the
+                  even weights result in 50% chance of choosing the
+                  over/under and right/left pairs.
               </ul>
             </aside>
           </section>
           <section data-transition="none">
             <h3>Controlling the Grammar</h3>
             <ul>
-              <li>Generator:
+              <li>Tunable weights at grammar branch points
+              <li class="fragment">Enables:
+                <ul>
+                  <li>Single component testing
+                  <li>Avoid known failures
+                  <li>Pairwise or combinatorial testing
+                  <li>Typical and atypical test cases
+                </ul>
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>One of our goals of our overall approach is that
+                  the system is controllable.
+                <li>We accomplish this by having tunable weights
+                  associated with each branch point in the grammar.
+                <li><font color="green">[show fragment #1]</font>
+                  Grammar controlability enables a number of
+                  interesting scenarios such as:
+                  <ul>
+                    <li><b>Single component testing</b>. For example
+                      there may be a new HTML element that we want to
+                      focus our testing on.
+                    <li><b>Avoid known failures</b>. For example, we
+                      may have found a bug hyperlink rendering that
+                      occurs frequently. We can continue testing
+                      without requiring a fix to the SUT by disabling
+                      the part of the grammar that generates
+                      hyperlinks.
+                    <li><b>Pairwise or combinatorial testing</b>. Many
+                      bugs are triggered by the interaction a small
+                      number of components that make up the SUT. So
+                      pairwise and combinatorial testing can be an
+                      efficient way to locate bugs in the SUT.
+                    <li><b>Typical and atypical test cases</b>.
+                      Sometimes we are interested in testing our SUT
+                      on typical data. For example we may want to gain
+                      confidence that our browser will render the top
+                      100 web sites correctly. Other times we may want
+                      to focus on uncommon elements. Perhaps we just
+                      introduced some new elements to the SUT that are
+                      not widely used yet.
+                  </ul>
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Revisiting the Grammar</h3>
+            <ul style="list-style: none">
+              <li><font color="yellow">text-emphasis-position</font> generator:
             <pre><code class="clojure overflow"  data-noescape>(gen/tuple
-  (gen/return " ")
   (gen/frequency [
     [100                                                          &nbsp;
-      (gen/tuple (gen/return " ") (gen/return "over"))]
+      (gen/tuple (gen/return "over") (gen/return " "))]
     [100
-      (gen/tuple (gen/return " ") (gen/return "under"))]])
+      (gen/tuple (gen/return "under") (gen/return " "))]])
   (gen/return " ")
   (gen/frequency [
     [100
-      (gen/tuple (gen/return " ") (gen/return "right"))]
+      (gen/tuple (gen/return "right" (gen/return " ")))]
     [100
-      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+      (gen/tuple (gen/return "left") (gen/return " "))]])
+  (gen/return " "))
             </code></pre>
             </ul>
             <aside class="notes">
               <ul>
                 <li>Here is the grammar I showed earlier.
                 <li>This is actually omitting the extra parts that
-                  allow the grammar to be controlled or tuned
+                  allow the grammar to be controlled or tuned.
               </ul>
             </aside>
           </section>
           <section data-transition="none">
-            <h3>Controlling the Grammar</h3>
-            <ul>
-              <li>Generator:
+            <h3>Revisiting the Grammar</h3>
+            <ul style="list-style: none">
+              <li><font color="yellow">text-emphasis-position</font> generator:
             <pre><code class="clojure overflow"  data-noescape>(gen/tuple
-  (gen/return " ")
   (gen/frequency [
     [(get weights [:prop-text-emphasis-position :cat 1 :alt 0] 100)
-      (gen/tuple (gen/return " ") (gen/return "over"))]
+      (gen/tuple (gen/return "over") (gen/return " "))]
     [(get weights [:prop-text-emphasis-position :cat 1 :alt 1] 100)
-      (gen/tuple (gen/return " ") (gen/return "under"))]])
+      (gen/tuple (gen/return "under") (gen/return " "))]])
   (gen/return " ")
   (gen/frequency [
     [(get weights [:prop-text-emphasis-position :cat 3 :alt 0] 100)
-      (gen/tuple (gen/return " ") (gen/return "right"))]
+      (gen/tuple (gen/return "right") (gen/return " "))]
     [(get weights [:prop-text-emphasis-position :cat 3 :alt 1] 100)
-      (gen/tuple (gen/return " ") (gen/return "left"))]]))
+      (gen/tuple (gen/return "left") (gen/return " "))]])
+  (gen/return " "))
             </code></pre>
             </ul>
             <aside class="notes">
               <ul>
-                <li>
+                <li>Here is what the full emitted grammar looks like
+                  with the weight lookups included.
+                <li>The weights variable in the example is a lookup
+                  table built from the default weights overlayed with
+                  value loaded from a tester's weight file.
+                <li>TODO: Corresponding data from the weight file.
               </ul>
             </aside>
           </section>
-        </section>
+          <section data-transition="none">
+            <h3>Weights File</h3>
+            <ul style="list-style: none">
+              <li>weights.edn:
+            <pre><code class="clojure overflow"  data-noescape>{
+...
+ [:prop-text-emphasis-position :cat 1 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 1 :alt 1]  50,
+ [:prop-text-emphasis-position :cat 3 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 3 :alt 1]  50,
+...
+}</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Corresponding data from the weight file.
+                <li>This example makes the "over" and "right" words
+                  twice as common as under and left.
+              </ul>
+            </aside>
+          </section>
         </section>
         <section data-transition="none">
           <section>
@@ -668,33 +913,42 @@
             <img src="imgs/results1_expanded.png" width=80%></img>
           </section>
           <section>
-            <table>
+            <table class="browser-table">
               <tr>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
+                  <div style="visibility: hidden">FFFFFFF</div>
+                  <span>Firefox</span>
                   <img src="imgs/results1_7_firefox.png"
                        style="margin: 5px"></img>
                 </td>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
                   <img src="imgs/results1_7_diff_firefox_chrome.png"
-                       style="margin: 5px; transform: translateY(-15%)"></img>
+                       style="margin: 5px"></img>
+                  <div style="visibility: hidden">FFFFFFF</div>
                 </td>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
+                  <div style="visibility: hidden">FFFFFFF</div>
+                  <span>Chrome</span>
                   <img src="imgs/results1_7_chrome.png"
                        style="margin: 5px"></img>
                 </td>
               </tr>
               <tr>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
                   <img src="imgs/results1_7_diff_chrome_servo.png"
                        style="margin: 5px"></img>
+                  <div style="visibility: hidden">FFFFFFF</div>
                 </td>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
+                  <div style="visibility: hidden">FFFFFFF</div>
+                  <span>Servo</span>
                   <img src="imgs/results1_7_servo.png"
-                       style="margin: 5px; transform: translateY(15%)"></img>
+                       style="margin: 5px"></img>
                 </td>
-                <td style="border: 0px">
+                <td style="padding: 0px; text-align: center; vertical-align: top">
                   <img src="imgs/results1_7_diff_firefox_servo.png"
                        style="margin: 5px"></img>
+                  <div style="visibility: hidden">FFFFFFF</div>
                 </td>
               </tr>
             </table>
