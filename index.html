@@ -1109,42 +1109,89 @@
                   consensus algorithms depending on the goal.
               </ul>
             </aside>
-          </section>
-          <section>
-            <img src="imgs/results1.png" width=80%></img>
-          </section>
-          <section>
-            <img src="imgs/results1_expanded.png" width=80%></img>
+            <!-- TODO: consensus/rendering challenges: borders, Ahem, etc -->
           </section>
           <section>
             <h3>Beyond Browsers</h3>
+            <ul class="fragment">
+              <li>Implementation of standards
+              <li>Regression/fix testing
+              <li>Feature support matrix
+            </ul>
             <aside class="notes">
-              There are other instances beyond browsers where there are
-              this approach would work. PDF rendering. POSIX utility
-              implementations. Basically any W3C and IEEE standard will
-              often have multiple implementations.
-              However, not just for cases where there are multiple
-              implementation from different vendors/creators. This
-              approach could also be used for testing of multiple
-              versions of the same SUT. With a bit of integration with
-              source control and automated testing systems this could be
-              used to identify regressions and if/when they are fixed.
-              In a black box SUT situation it could be used to create
-              a matrix of product version and feature support.
+              <ul>
+                <li>There are other instances beyond browsers where
+                  there are this approach would work. PDF rendering.
+                  POSIX utility implementations. Basically any W3C and
+                  IEEE standard will often have multiple
+                  implementations.
+                <li>However, not just for cases where there are
+                  multiple implementation from different
+                  vendors/creators. This approach could also be used
+                  for testing of multiple versions of the same SUT.
+                  With a bit of integration with source control and
+                  automated testing systems this could be used to
+                  identify regressions and if/when they are fixed.
+                <li>It could be used to create a feature matrix
+                  showing when a product began supporting a feature by
+                  comparing the most recent version against older
+                  versions of the product.
+              </ul>
             </aside>
           </section>
         </section>
         <section>
-          <h2>Results</h2>
+          <section>
+            <h2>Results</h2>
+            <table>
+              <tr class="fragment" data-fragment-index=1>
+                <th width=35%>&nbsp;</th>
+                <th>Median</th>
+                <th>Maximum</th>
+              <tr class="fragment" data-fragment-index=1>
+                <td>First fail</td>
+                <td>8 iterations</td>
+                <td>15 iterations</td>
+              <tr class="fragment" data-fragment-index=2>
+                <td>Fail size</td>
+                <td>3,025 bytes</td>
+                <td>109,983 bytes</td>
+              <tr class="fragment" data-fragment-index=3>
+                <td>Shrunk</td>
+                <td>154 bytes</td>
+                <td>245 bytes</td>
+            </table>
             <aside class="notes">
               <ul>
-                <li>
-                <li><font color="green">[show fragment #1]</font>
-                  <ul>
-                    <li>
-                  </ul>
+                <li>We created an implementation of the approach
+                  described and ran the system with a consensus pool
+                  that included the Firefox, Chrome and Servo
+                  browsers.
+                <li>Across 130 test runs, every run identified
+                  a failure case before hitting the maximum number of
+                  iterations we had specified.
+                <li><font color="green">[show fragment #1]</font> In
+                  fact, the maximum number of steps until a failing
+                  case was found was 15. The median number of
+                  iterations to find a failure case was 8.
+                <li>We were actually surprised by how quickly the
+                  system was able to generate test cases that
+                  triggered browser differences. But the reason is
+                  something I mentioned earlier: due to the nature of
+                  the generators, the size of each test case increases
+                  rapidly and large numbers of features are tested per
+                  test case.
+                <li><font color="green">[show fragment #2]</font> The
+                  median size of the first failing test case was
+                  3 kilobytes and the maximum was 110 kilobytes. The
+                  median number of steps needed to shrink a test case
+                  was 113 iterations.
+                <li><font color="green">[show fragment #2]</font> The
+                  median size of the test case after shrinking was
+                  154 bytes and the maximum was 245 bytes.
               </ul> 
             </aside>
+          </section>
         </section>
         <section>
           <h3>Questions?</h3>
@@ -1158,7 +1205,6 @@
             <li>joeldmartin@mavs.uta.edu
             <li>levine@cse.uta.edu
           </ul>
-        </section>
           <aside class="notes">
             <ul>
               <li>
@@ -1168,6 +1214,23 @@
                   </ul>
             </ul> 
           </aside>
+        </section>
+        <section>
+          <section>
+            <h2>Extra Material</h2>
+          </section>
+          <section>
+            <img src="imgs/results1.png" width=80%></img>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <img src="imgs/results1_expanded.png" width=80%></img>
+          </section>
+          <section>
+            <img src="imgs/test_arch.svg" width=35%></img>
+          </section>
+        </section>
       </div>
     </div>
 
