@@ -20,3 +20,22 @@ code mark {
     border: 0px;
     border-bottom: 0px !important;
 }
+
+.reveal .slides section .fragment.mark-current-red,
+.reveal .slides section .fragment.mark-current-green,
+.reveal .slides section .fragment.mark-current-blue {
+  opacity: 1;
+  visibility: inherit; }
+
+.reveal .slides section .fragment.mark-current-red.current-fragment {
+  background-color: #ff2c2d; }
+
+.reveal .slides section .fragment.mark-current-green.current-fragment {
+  color: white !important;
+  /*background-color: #17ff2e;*/
+  background-color: #075020; }
+
+.reveal .slides section .fragment.mark-current-blue.current-fragment {
+  color: white !important;
+  /*background-color: #1b91ff;*/
+  background-color: #104170; }

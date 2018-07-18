@@ -30,7 +30,7 @@
     <div class="reveal">
       <div class="slides">
         <section>
-          <h3>Property-Based Testing of Browser Rendering Engines with a Consensus Oracle</h3>
+          <h2>Property-Based Testing of Browser Rendering Engines with a Consensus Oracle</h2>
           <p><font color="#ffea9a">COMPSAC 2018</font></p>
           <ul style="list-style: none">
             <li><font color="green">Joel Martin</font>
@@ -53,9 +53,9 @@
                 My name is Joel Martin. I'm a Principal Software Engineer at
                 ViaSat, Inc and I am also a PhD candidate at the University of
                 Texas, Arlington. My co-author on this paper is David Levine from
-                the University of Texas, Arlington. The title of this paper is
+                the University of Texas, Arlington. <!--The title of this paper is
                 'Property-Based Testing of Browser Rendering Engines with
-                a Consensus Oracle'
+                a Consensus Oracle'--> Let's jump right in.
             </ul>
           </aside>
         </section>
@@ -75,66 +75,22 @@
                   output based on a given input has a similar order of
                   complexity to the system under test itself. This is
                   the Test Oracle Problem
-                  <font color="green"> [show fragment #1]</font>. Our
+                  <font color="green"> [show #1]</font>. Our
                   paper proposes an approach to address this problem
-                  in the context of browser render testing.
+                  in the context of web browser render testing.
               </ul>
             </aside>
           </section>
           <section>
             <h3>Browser Rendering</h3>
             <div style="position:relative">
-              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
+              <pre style="position:absolute" class="fragment" data-fragment-index=1><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
-    &lt;div style="left: 10%; width: 20%;
-                font: 'Fira Sans' 25px/1
-                      rgba(100,100,100,0.5)"&gt;
-      Pythia, Apollo, Dione.
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-              </code></pre>
-              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
-&lt;html&gt;
-  &lt;body style="background: #1289af"&gt;
-    &lt;div style="<mark>left: 10%; width: 20%;</mark>
-                font: 'Fira Sans' 25px/1
-                      rgba(100,100,100,0.5)"&gt;
-      Pythia, Apollo, Dione.
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-              </code></pre>
-              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
-&lt;html&gt;
-  &lt;body style="background: #1289af"&gt;
-    &lt;div style="left: 10%; width: 20%;
-                font: <mark>'Fira Sans'</mark> 25px/1
-                      rgba(100,100,100,0.5)"&gt;
-      Pythia, Apollo, Dione.
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-              </code></pre>
-              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
-&lt;html&gt;
-  &lt;body style="<mark>background: #1289af</mark>"&gt;
-    &lt;div style="left: 10%; width: 20%;
-                font: 'Fira Sans' 25px/1
-                      <mark>rgba(100,100,100,0.5)</mark>"&gt;
-      Pythia, Apollo, Dione.
-    &lt;/div&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-              </code></pre>
-              <pre style="position:absolute" class="fragment"><code class="html" data-noescape>
-&lt;html&gt;
-  &lt;body style="background: #1289af"&gt;
-    &lt;div style="left: 10%; width: 20%;
-                font: <mark>'Fira Sans' 25px/1</mark>
-                      rgba(100,100,100,0.5)"&gt;
-      <mark>Pythia, Apollo, Dione.</mark>
+    &lt;div style="<span class="fragment mark-current-blue" data-fragment-index=2>left: 10%; width: 20%;</span>
+                font: <span class="fragment mark-current-blue" data-fragment-index=5><span class="fragment mark-current-blue" data-fragment-index=3>'Fira Sans'</span> 25px/1</span>
+                      <span class="fragment mark-current-blue" data-fragment-index=4>rgba(100,100,100,0.5)</span>"&gt;
+      <span class="fragment mark-current-blue" data-fragment-index=5>Pythia, Apollo, Dione.</span>
     &lt;/div&gt;
   &lt;/body&gt;
 &lt;/html&gt;
@@ -144,22 +100,22 @@
               <ul>
                 <li>
                   Let's consider a browser rendering test case.
-                  <font color="green">[show fragment #1]</font> Even
+                  <font color="green">[show #1]</font> Even
                   though this web page is fairly simple compared to
                   real-world web pages, it is still non-trivial to
                   verify that a browser has rendered this page
                   correctly. There are a number of reasons for this:
                   <ul>
-                    <li><font color="green">[show fragment #2]</font>
+                    <li><font color="green">[show #2]</font>
                       The CSS element sizing and positioning
                       standard is large and nuanced (and one of the
                       basic things we would like to test)
-                    <li><font color="green">[show fragment #3]</font>
+                    <li><font color="green">[show #3]</font>
                       environment factors: browser window geometry,
                       available OS fonts 
-                    <li><font color="green">[show fragment #4]</font>
+                    <li><font color="green">[show #4]</font>
                       color model and alpha blending 
-                    <li><font color="green">[show fragment #5]</font>
+                    <li><font color="green">[show #5]</font>
                       font rendering model (especially spacing
                       issues like kerning which may cause other page
                       elements to shift significantly)
@@ -167,80 +123,81 @@
                   Current solutions to browser render testing often
                   involve manual user intervention at some stage of
                   the process and use a highly constrained test
-                  environment. The goal of our approach is a browser
-                  render testing system that is both comprehensive and
-                  fully automated.
+                  environment. Our paper proposes an approach that is
+                  both comprehensive and fully automated.
               </ul>
             </aside>
           </section>
-        </section>
-        <section>
-          <h2>A Solution</h2>
-          <ul>
-            <li class="fragment">Property-Based Testing (PBT)</li>
-            <li class="fragment">Grammar-based Input Generators</li>
-            <li class="fragment">Consensus Oracle</li>
-          </ul>
-          <aside class="notes">
-            There are three main components to our approach.
-            Property-based testing, grammar-based input generators,
-            and a consensus oracle. Let's consider each one in turn.
-          </aside>
+          <section>
+            <h2>A Solution</h2>
+            <ul>
+              <li class="fragment">Property-Based Testing (PBT)</li>
+              <li class="fragment">Grammar-based Input Generators</li>
+              <li class="fragment">Consensus Oracle</li>
+            </ul>
+            <aside class="notes">
+              There are three main components to our approach.
+              <ul>
+                <li><font color="green">[show #1]</font>
+                  Property-based testing,
+                <li><font color="green">[show #2]</font>
+                  grammar-based input generators,
+                <li><font color="green">[show #3]</font>
+                  and a consensus oracle.
+              </ul>
+              Let's consider each one in turn.
+            </aside>
+          </section>
         </section>
         <section>
           <section>
             <h2>Property-Based Testing (PBT)</h2>
             <ul>
               <li>QuickCheck (Claessen &amp; Hughes, 2000)
-              <li>Input properties are defined in terms of generators
-              <li>Output properties define success (e.g. test Oracle)
+              <li>Input properties: generators
+              <li>Output properties: success/failure (e.g. test Oracle)
               <li>Output property violations indicate test failure
-              <li>Grow "size" of input properties until output
-                properties violated
+              <li>Grow "size" until output properties violated
             </ul>
             <aside class="notes">
               <ul>
                 <li>Property-based testing is a testing methodology
                   that was popularized by the QuickCheck system
-                  developed by Koen Claessen and John Hughes in 2000.
+                  proposed by Koen Claessen and John Hughes in 2000.
                 <li>In property-based testing the tester defines
-                  properties or assertions about the inputs values and
-                  output values of the system under test.
-                <li>Typical PBT systems define input properties in
-                  terms of generator functions. Each generator
-                  function takes a size value which has a generator
-                  specific meaning. Generators are combined to create
-                  compound generators which can be recursive.
-                <li>Output properties are used by the test system to
-                  validate outputs for a given set of inputs. When
-                  test results violate the output properties the
+                  properties or assertions about the input and output
+                  values of the system under test.
+                <li>Input properties define the range of valid inputs
+                  to the SUT. Output properties are used by the test
+                  system to validate outputs for a given set of
+                  inputs. When output properties are violated the
                   corresponding inputs are considered a failing test
                   case.
-                <li>A single run of property-based testing involves
-                  calling the input properties with larger and larger
-                  size values to stochastically generate large and
-                  large test cases until the output properties are
-                  violated.
+                <li>A typical PBT system defines input properties in
+                  terms of generator functions. Generator functions
+                  can be combined to create compound generators which
+                  can also be recursive.
+                <li>Each input property generator function takes
+                  a size value which has a generator specific
+                  meaning. A single run of property-based testing
+                  involves calling the input properties with larger
+                  and larger size values to stochastically generate
+                  large and large test cases until the output
+                  properties are violated.
               </ul>
             </aside>
           </section>
           <section data-transition="none">
             <h3>PBT Test Shrinking</h3>
-            <ul>
+            <ul class="fragment">
               <li>Tree of generator nodes
               <li>Pick node, try small size value
-              <li>Gradient descent walk to the "smallest" tree
+              <li>Continue until "smallest" discovered
               <li>Critical for compound/recursive generators
             </ul>
             <aside class="notes">
               <ul>
-                <li>Each test case is a tree of generator nodes.
-                <li>Pick nodes in the tree and try smaller size values.
-                <li>Gradient descent walk to find "smallest" test failure
-                <li>Extremely important for complex compound
-                  generators (e.g. recursive)
-                <li>Hard to overstate the importance of test
-                  shrinking. The highly recursive nature of the HTML
+                <li>The highly recursive nature of the HTML
                   grammar means that generated test cases can become
                   before large.
                 <li>There is a positive aspect to this in that large
@@ -250,9 +207,18 @@
                   cases are not helpful to the tester in doing root
                   cause analysis.
                 <li>Test shrinking can significantly reduce the size
-                  of the test case while still preserving the
-                  failure in the system under test.
-                <li>Now let's look at a simple PBT example.
+                  of the test case while still preserving the failure
+                  in the system under test. How does it work?
+                <li><font color="green">[show #1]</font>
+                  We can think of each test case is a tree of
+                  generator nodes. Shrinking process picks a node in
+                  the tree and tries a smaller size value. If
+                  resulting test case is smaller then continue
+                  otherwise backtrack. Continue until a minima is
+                  reached.
+                <li>Extremely important for complex compound
+                  generators (e.g. recursive). Hard to overstate the
+                  importance of test shrinking.
               </ul>
             </aside>
         </section>
@@ -263,15 +229,15 @@
                 <li>Input property: P is a sequence of integers</li>
                 <li>Output property: sum of integers in P <font style="visibility: hidden" color="green">(almost)</font></li>
               </ul>
-              <pre class="fragment"><code class="clojure" data-noescape>> (def SUT
-    (fn [x] (apply + x)))
+              <pre class="fragment" data-fragment-index=1><code class="clojure" data-noescape>> <span class="fragment mark-current-blue" data-fragment-index=2>(def SUT
+    (fn [x] (apply + x)))</span>
 
-> (tc/quick-check 10
-    (props/for-all
-      [P (gen/vector gen/int)]
-      (= (SUT P) (apply + P))))
-{:result true,
- :num-tests 10}
+> (<span class="fragment mark-current-blue" data-fragment-index=6>tc/quick-check 10</span>
+    (<span class="fragment mark-current-blue" data-fragment-index=5>props/for-all</span>
+      <span class="fragment mark-current-blue" data-fragment-index=3>[P (gen/vector gen/int)]</span>
+      <span class="fragment mark-current-blue" data-fragment-index=4>(= (SUT P) (apply + P))</span>))
+<span class="fragment mark-current-blue" data-fragment-index=7>{:result true,
+ :num-tests 10}</span>
 
 
 
@@ -282,24 +248,29 @@
                 <li>Let's consider a simple example.
                 <li>We define the input property as a sequence of
                   integers.
-                <li>The output property states that the output from
-                  running the SUT on the input property should be
-                  a value that is the sum of the values in input
-                  sequence.
-                <li><font color="green">[show fragment #5]</font>
-                  Here is code showing what this would look like coded
-                  with Clojure's test.check library. Namespace imports
-                  have been elided.
-                <li>First we define the SUT to be the application of
-                  sum to a sequence.
-                <li>Then we define our properties using the props-all
-                  function and pass this to the quick-check function
-                  to run 10 test iterations.
-                <li>The input property P is defined as a compound
+                <li>The output property states that the output of the
+                  SUT is the sum of the values in input sequence.
+                <li><font color="green">[show #1]</font>
+                  Here is code showing what this would look like
+                  implemented with Clojure's test.check library.
+                  Namespace imports have been elided.
+                <li><font color="green">[show #2]</font>
+                  First we define the SUT to be the application of sum
+                  to a sequence.
+                <li><font color="green">[show #3]</font>
+                  The input property P is defined as a compound
                   generator which generates a vector of integers.
-                <li>The output property states that the execution of
+                <li><font color="green">[show #4]</font>
+                  The output property states that the execution of
                   the SUT on P should have the exact same result
                   as apply sum to the values in P.
+                <li><font color="green">[show #5]</font>
+                  We define our properties using the props-all
+                  function.
+                <li><font color="green">[show #6]</font>
+                  and we call the quick-check function to run 10
+                  test iterations.
+                <li><font color="green">[show #7]</font>
                 <li>The final two lines are the result of the test
                   showing that all 10 iterations were run with no
                   property violations.
@@ -386,21 +357,24 @@
       [P (gen/vector gen/int)]
       (= (SUT P) (apply + P))))
 {:result false,
- :num-tests 31,
- :fail [[1 19 12 18 -7 30 -8 15
-         13 -15 8 -3 1 -21 10 19]],
- :shrunk {:total-nodes-visited 262,
-          :smallest [[0 0 0 0 0 0 0 0 0 0 0 0 0]]}} </code></pre>
+ :num-tests <span class="fragment mark-current-blue" data-fragment-index=1>31</span>,
+ :fail [<span class="fragment mark-current-blue" data-fragment-index=2>[1 19 12 18 -7 30 -8 15
+         13 -15 8 -3 1 -21 10 19]</span>],
+ :shrunk {:total-nodes-visited <span class="fragment mark-current-blue" data-fragment-index=3>262</span>,
+          :smallest [<span class="fragment mark-current-blue" data-fragment-index=4>[0 0 0 0 0 0 0 0 0 0 0 0 0]</span>]}} </code></pre>
             </div>
             <aside class="notes">
               <ul>
                 <li>However, running with a maximum of 100 iterations
-                  triggers a test case failure on the 31st iteration.
+                  triggers a test case failure on the
+                  <font color="green">[show #1]</font> 31st iteration.
                 <li>The initial input property which triggered the
-                  failure contained 16 integers. <!-- TODO: highlight -->
+                  failure contained <font color="green">[show #2]</font> 16 integers.
                 <li>After the failure was discovered, the quick-check
-                  function ran an addition 262 test shrink iterations
-                  and found that a sequence of 13 zeros that triggers
+                  function ran an addition
+                  <font color="green">[show #3]</font> 262 test shrink iterations
+                  and found that a sequence of
+                  <font color="green">[show #4]</font> 13 zeros that triggers
                   the failure. This is the smallest test case that was
                   found that still triggered the failure.
               </ul>
@@ -432,7 +406,7 @@
                   presentation respectively. The third component of
                   web page is the behavior defined in JavaScript but
                   that is not in scope for our paper.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   The are several goal we want for our generators:
                   <ul>
                     <li><b>Automated</b>: already mentioned that we want
@@ -464,18 +438,18 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Our basic approach is to use first download and
                   normalize HTML and CSS specification data.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Then we load that data and use it to generate
                   EBNF grammars that can parse web pages containing
                   HTML and CSS.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Then we parse the EBNF grammar files and output
                   generator functions for each of the rules in the
                   grammar.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Finally, the PBT test harness is able to use the
                   generators for our input properties to generate HTML
                   and CSS test cases.
@@ -501,74 +475,33 @@
               </ul> 
             </aside>
           </section>
-          <section data-transition="none-out">
+          <section>
             <h3>HTML Example</h3>
-            <pre><code class="html" data-noescape>&lt;html&gt;
-  &lt;body&gt;
+            <pre><code class="html" data-noescape>&lt;<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;
+  &lt;<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
     page document body
-    &lt;div&gt; div content &lt;/div&gt;
-    &lt;span class="myclass1"&gt; span content &lt;/span&gt;
-    &lt;div id="mydiv1"&gt; div content &lt;/div&gt;
-    &lt;b style="text-color: red"&gt; bold red text &lt;/b&gt;
-    &lt;div&gt;
-      &lt;b&gt; bold text within a div &lt;/b&gt;
-      &lt;span&gt; span content within a div &lt;/span&gt;
-    &lt;/div&gt;
-    &lt;a href="http://w3c.org"&gt; text of link to W3C &lt;/a&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span> <span class="fragment mark-current-blue" data-fragment-index=3>class="myclass1"</span>&gt; span content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span> <span class="fragment mark-current-blue" data-fragment-index=3>id="mydiv1"</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span> <span class="fragment mark-current-blue" data-fragment-index=3>style="text-color: red"</span>&gt; bold red text &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt; bold text within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
+      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt; span content within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
+    &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>a</span> <span class="fragment mark-current-blue" data-fragment-index=3>href="http://w3c.org"</span>&gt; text of link to W3C &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>a</span>&gt;
+  &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
+&lt;/<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;</code></pre>
             <aside class="notes">
               <ul>
-                <li>Here is an example web page container HTML
-                <li>There are two major components of HTML ...
-              </ul> 
-            </aside>
-          </section>
-          <section data-transition="none-in">
-            <h3>HTML Example</h3>
-            <pre><code class="html" data-noescape>&lt;<mark>html</mark>&gt;
-  &lt;<mark>body</mark>&gt;
-    page document body
-    &lt;<mark>div</mark>&gt; div content &lt;/<mark>div</mark>&gt;
-    &lt;<mark>span</mark> class="myclass1"&gt; span content &lt;/<mark>span</mark>&gt;
-    &lt;<mark>div</mark> id="mydiv1"&gt; div content &lt;/<mark>div</mark>&gt;
-    &lt;<mark>b</mark> style="text-color: red"&gt; bold red text &lt;/<mark>b</mark>&gt;
-    &lt;<mark>div</mark>&gt;
-      &lt;<mark>b</mark>&gt; bold text within a div &lt;/<mark>b</mark>&gt;
-      &lt;<mark>span</mark>&gt; span content within a div &lt;/<mark>span</mark>&gt;
-    &lt;/<mark>div</mark>&gt;
-    &lt;<mark>a</mark> href="http://w3c.org"&gt; text of link to W3C &lt;/<mark>a</mark>&gt;
-  &lt;/<mark>body</mark>&gt;
-&lt;/<mark>html</mark>&gt;</code></pre>
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>First: elements which are delineated by tags.
+                <li>Here is an example web page HTML
+                <li>There are two major components of HTML.
+                <li><font color="green">[show #1]</font>
+                    First: elements which are delineated by tags.
                 <li>Note that the grammar for HTML elements is
                   recursive and permits elements to be contained
                   within other elements.
-              </ul> 
-            </aside>
-          </section>
-          <section data-transition="none-out">
-            <h3>HTML Example</h3>
-            <pre><code class="html" data-noescape>&lt;html&gt;
-  &lt;body&gt;
-    page document body
-    &lt;div&gt; div content &lt;/div&gt;
-    &lt;span <mark>class="myclass1"</mark>&gt; span content &lt;/span&gt;
-    &lt;div <mark>id="mydiv1"</mark>&gt; div content &lt;/div&gt;
-    &lt;b <mark>style="text-color: red"</mark>&gt; bold red text &lt;/b&gt;
-    &lt;div&gt;
-      &lt;b&gt; bold text within a div &lt;/b&gt;
-      &lt;span&gt; span content within a div &lt;/span&gt;
-    &lt;/div&gt;
-    &lt;a <mark>href="http://w3c.org"</mark>&gt; text of link to W3C &lt;/a&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Second: HTML attributes.
+                <li><font color="green">[show #1]</font>
+                    Second: HTML attributes.
                 <li>Some attributes like class and id are global while
                   other like href are specific to certain types of
                   elements.
@@ -601,92 +534,33 @@
             <ul style="list-style: none">
               <li>Stylesheet:
             </ul>
-            <pre><code class="css"  data-noescape>.classname #idname tagname {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #fff;
-  transform: translate3d(0px, 0px, -45px) rotateX(90deg);
+
+            <pre><code class="css"  data-noescape><span class="fragment mark-current-blue" data-fragment-index=1>.classname #idname tagname</span> {
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>background</span>: <span class="fragment mark-current-blue" data-fragment-index=4>rgba(0, 0, 0, 0.5);</span></span>
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>border</span>: <span class="fragment mark-current-blue" data-fragment-index=4>1px solid #fff;</span></span>
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>transform</span>: <span class="fragment mark-current-blue" data-fragment-index=4>translate3d(0px, 0px, -45px) rotateX(90deg);</span></span>
 }
             </code></pre>
             <aside class="notes">
               <ul>
                 <li>Here is an example of a CSS stylesheet.
                 <li>There are four main components
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul style="list-style: none">
-              <li>Stylesheet:
-            </ul>
-            <pre><code class="css"  data-noescape><mark>.classname #idname tagname</mark> {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #fff;
-  transform: translate3d(0px, 0px, -45px) rotateX(90deg);
-}
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>1) Selectors, which identify which HTML elements the
-                following block will apply to.
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul style="list-style: none">
-              <li>Stylesheet:
-            </ul>
-            <pre><code class="css"  data-noescape>.classname #idname tagname {
-  <mark>background: rgba(0, 0, 0, 0.5);</mark>
-  <mark>border: 1px solid #fff;</mark>
-  <mark>transform: translate3d(0px, 0px, -45px) rotateX(90deg);</mark>
-}
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>A block of declarations.
+                <li><font color="green">[show #1]</font>
+                  Selectors, which identify which HTML elements the
+                  following block will apply to.
+                <li><font color="green">[show #2]</font>
+                  A block of declarations.
                 <li>Each declaration consists of ...
+                <li><font color="green">[show #3]</font>
+                  Property names and ...
+                <li><font color="green">[show #4]</font>
+                  Value data
               </ul>
             </aside>
           </section>
           <section data-transition="none">
             <h3>CSS 3 Example</h3>
             <ul style="list-style: none">
-              <li>Stylesheet:
-            </ul>
-            <pre><code class="css"  data-noescape>.classname #idname tagname {
-  <mark>background</mark>: rgba(0, 0, 0, 0.5);
-  <mark>border</mark>: 1px solid #fff;
-  <mark>transform</mark>: translate3d(0px, 0px, -45px) rotateX(90deg);
-}
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Property names and ...
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul style="list-style: none">
-              <li>Stylesheet:
-            </ul>
-            <pre><code class="css"  data-noescape>.classname #idname tagname {
-  background: <mark>rgba(0, 0, 0, 0.5);</mark>
-  border: <mark>1px solid #fff;</mark>
-  transform: <mark>translate3d(0px, 0px, -45px) rotateX(90deg);</mark>
-}
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Value data
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul>
               <li>Inline:
             </ul>
             <pre><code class="html"  data-noescape>&lt;div style="background: rgba(0, 0, 0, 0.5);
@@ -708,7 +582,7 @@
           </section>
           <section>
             <h3>CSS Value Definition Syntax (VDS)</h3>
-            <ul class="fragment">
+            <ul class="fragment" style="list-style: none">
               <li>VDS
             <pre><code class="css overflow"  data-noescape><'text-emphasis-position'> =
   [ over | under ] && [ right | left ]</code></pre>
@@ -726,14 +600,14 @@
                   combinators that are optimized to deal with the
                   ordering and repetition flexibility that CSS values
                   permits.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Here is an example of the VDS definition of the
                   values for the <b>text-emphasis-position</b>
                   property name.
                 <li>This definition states that the value should be
                   either the word "over" or "under" and either the
                   word "right" or "left".
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   This is the equivalent EBNF translation of the VDS
                   grammar.
               </ul>
@@ -741,12 +615,12 @@
           </section>
           <section>
             <h3>CSS Value Definition Syntax (VDS)</h3>
-            <ul>
+            <ul style="list-style: none">
               <li>EBNF
             <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
   ( ( 'over' ' ' | 'under' ' ') ' '
     ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
-              <li>Generators:
+              <li class="fragment">Generators:
             <pre><code class="clojure overflow"  data-noescape>(gen/tuple
   (gen/frequency [
     [100 (gen/tuple (gen/return "over") (gen/return " "))]
@@ -787,7 +661,7 @@
                   the system is controllable.
                 <li>We accomplish this by having tunable weights
                   associated with each branch point in the grammar.
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   Grammar controlability enables a number of
                   interesting scenarios such as:
                   <ul>
@@ -912,7 +786,7 @@
                   renders these test cases.
                 <li>It turns out that our goals for determining
                   correctness are the same as for generating the inputs
-                  <li>Goals: <font color="green">[show fragment #1]</font>
+                  <li>Goals: <font color="green">[show #1]</font>
                   <ul>
                     <li><b>Automated</b>: a human shouldn't have to
                       determine whether a browser has rendered a web
@@ -935,13 +809,13 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="green">[show fragment #1]</font> The
+                <li><font color="green">[show #1]</font> The
                   key insight here is that a number of cases in the
                   real-world where SUTs will have multiple
                   implementations.
                 <li>This is particularly true in the web browser space
                   where there is a surplus of implementations.<font
-                    color="green">[show fragment #1]</font>
+                    color="green">[show #1]</font>
               </ul> 
             </aside>
           </section>
@@ -1049,7 +923,7 @@
                 <li>Let's re-arrange them
                 <li>And now let's show the result of subtracting the
                   color channel values for each pair of browsers.
-                  <font color="green">[show fragment #1]</font>
+                  <font color="green">[show #1]</font>
                   Black areas in the difference images mean that color
                   at that pixel in both images was identical.
                 <li>Now it's easy to see the difference between Servo
@@ -1082,8 +956,7 @@
                 <li>We found that a simple Squared Sum of Differences
                   compared to configurable threshold value was
                   sufficient to validate our overall approach.
-                  <font color="green">[show fragment #1]</font>
-                <li>
+                  <font color="green">[show #1]</font>
               </ul>
             </aside>
           </section>
@@ -1096,8 +969,8 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="green">[show fragment #1]</font>
-                <li><font color="green">[show fragment #2]</font>
+                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #2]</font>
                   Difference between A and B is below threshold,<br>
                   B and C are also below the threshold,<br>
                   but A and C are above the threshold and classified
@@ -1170,7 +1043,7 @@
                 <li>Across 130 test runs, every run identified
                   a failure case before hitting the maximum number of
                   iterations we had specified.
-                <li><font color="green">[show fragment #1]</font> In
+                <li><font color="green">[show #1]</font> In
                   fact, the maximum number of steps until a failing
                   case was found was 15. The median number of
                   iterations to find a failure case was 8.
@@ -1181,12 +1054,12 @@
                   the generators, the size of each test case increases
                   rapidly and large numbers of features are tested per
                   test case.
-                <li><font color="green">[show fragment #2]</font> The
+                <li><font color="green">[show #2]</font> The
                   median size of the first failing test case was
                   3 kilobytes and the maximum was 110 kilobytes. The
                   median number of steps needed to shrink a test case
                   was 113 iterations.
-                <li><font color="green">[show fragment #2]</font> The
+                <li><font color="green">[show #2]</font> The
                   median size of the test case after shrinking was
                   154 bytes and the maximum was 245 bytes.
               </ul> 
@@ -1208,7 +1081,7 @@
           <aside class="notes">
             <ul>
               <li>
-                <li><font color="green">[show fragment #1]</font>
+                <li><font color="green">[show #1]</font>
                   <ul>
                     <li>
                   </ul>
