@@ -47,6 +47,7 @@
           <aside class="notes">
             <ul>
               <li>Silence phone
+              <li>Full screen the projector screen
               <li>
                 Good morning everyone!
 
@@ -132,8 +133,8 @@
             <h2>A Solution</h2>
             <ul>
               <li class="fragment">Property-Based Testing (PBT)</li>
-              <li class="fragment">Grammar-based Input Generators</li>
-              <li class="fragment">Consensus Oracle</li>
+              <li class="fragment">Grammar-Based Input Generators</li>
+              <li class="fragment">Consensus-Based Test Oracle</li>
             </ul>
             <aside class="notes">
               There are three main components to our approach.
@@ -143,7 +144,7 @@
                 <li><font color="green">[show #2]</font>
                   grammar-based input generators,
                 <li><font color="green">[show #3]</font>
-                  and a consensus oracle.
+                  and a consensus-based test oracle.
               </ul>
               Let's consider each one in turn.
             </aside>
@@ -409,11 +410,10 @@
                 <li><font color="green">[show #1]</font>
                   The are several goal we want for our generators:
                   <ul>
-                    <li><b>Automated</b>: already mentioned that we want
-                      automated creation of the generators themselves,
-                      but we also want the generators output full
-                      web pages that don't require human final
-                      assembly or tweaking.
+                    <li><b>Automated</b>: We want automated creation
+                      of the generators themselves, and we also want
+                      the generators to output full web pages that don't
+                      require human final assembly or tweaking.
                     <li><b>Controllable</b>: Because the domain of valid web
                       pages is essentially unbounded, we want the
                       tester to have the ability to choose more narrow
@@ -620,7 +620,7 @@
             <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
   ( ( 'over' ' ' | 'under' ' ') ' '
     ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
-              <li class="fragment">Generators:
+              <li>Generators:
             <pre><code class="clojure overflow"  data-noescape>(gen/tuple
   (gen/frequency [
     [100 (gen/tuple (gen/return "over") (gen/return " "))]
@@ -770,7 +770,7 @@
         </section>
         <section data-transition="none">
           <section>
-            <h2>Consensus</h2>
+            <h2>Test Oracle</h2>
             <ul>
               <li class="fragment">Goals
                 <ul>
@@ -793,8 +793,8 @@
                       page correctly. Which has means we also need to
                       minimize false positives and false negatives.
                     <li><b>Controllable</b>: To explain why this is
-                      important I'll have to descirbe how a consensus
-                      Oracle works. <!-- TODO -->
+                      important I'll have to descirbe how the test
+                      Oracle works.
               </ul> 
             </aside>
           </section>
@@ -969,14 +969,27 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="green">[show #1]</font>
+                <li>We now have an answer for whether each pair of
+                  browsers are different from each other. With three
+                  browsers, there are three pairs of difference
+                  values. What if they disagree?
                 <li><font color="green">[show #2]</font>
-                  Difference between A and B is below threshold,<br>
-                  B and C are also below the threshold,<br>
-                  but A and C are above the threshold and classified
-                  as different.
-                <li>In other words, browser B split the difference
-                  between the other two.
+                  It's fairly easy to tell when one browser is at
+                  fault because it will be different from all other
+                  browsers and the other browsers will have
+                  self-similar renders.
+                <li><font color="green">[show #2]</font>
+                  There is also a case where all browsers may be
+                  different from every other browser. This is also
+                  a failure case but it may indicate that there is an
+                  element on the page that is not well standardized.
+                <li><font color="green">[show #2]</font>
+                  And there is also a case where there is no clear
+                  browser at fault. Consider an example where A and
+                  B are below threshold, and B and C are also below
+                  the threshold, but A and C are above the threshold
+                  and classified as different. In other words, browser
+                  B split the difference between the other two.
                 <li>This is another area where the tester will want
                   controllability and will likely select different
                   consensus algorithms depending on the goal.
@@ -986,26 +999,29 @@
           </section>
           <section>
             <h3>Beyond Browsers</h3>
-            <ul class="fragment">
-              <li>Implementation of standards
-              <li>Regression/fix testing
-              <li>Feature support matrix
+            <ul>
+              <li class="fragment">Implementation of standards
+              <li class="fragment">Regression/fix testing
+              <li class="fragment">Feature support matrix
             </ul>
             <aside class="notes">
               <ul>
                 <li>There are other instances beyond browsers where
                   there are this approach would work. PDF rendering.
-                  POSIX utility implementations. Basically any W3C and
-                  IEEE standard will often have multiple
-                  implementations.
-                <li>However, not just for cases where there are
-                  multiple implementation from different
-                  vendors/creators. This approach could also be used
-                  for testing of multiple versions of the same SUT.
-                  With a bit of integration with source control and
-                  automated testing systems this could be used to
-                  identify regressions and if/when they are fixed.
-                <li>It could be used to create a feature matrix
+                  POSIX utility implementations.
+                  <font color="green">[show #2]</font> Basically any
+                  area where there is a software will often have
+                  multiple implementations.
+                <li><font color="green">[show #2]</font>
+                  However, not just for cases where there are multiple
+                  implementation from different vendors/creators. This
+                  approach could also be used for testing of multiple
+                  versions of the same SUT.  With a bit of integration
+                  with source control and automated testing systems
+                  this could be used to identify regressions and
+                  if/when they are fixed.
+                <li><font color="green">[show #2]</font>
+                  It could be used to create a feature matrix
                   showing when a product began supporting a feature by
                   comparing the most recent version against older
                   versions of the product.
@@ -1056,12 +1072,12 @@
                   test case.
                 <li><font color="green">[show #2]</font> The
                   median size of the first failing test case was
-                  3 kilobytes and the maximum was 110 kilobytes. The
-                  median number of steps needed to shrink a test case
-                  was 113 iterations.
+                  3 kilobytes and the maximum was 110 kilobytes.
                 <li><font color="green">[show #2]</font> The
                   median size of the test case after shrinking was
-                  154 bytes and the maximum was 245 bytes.
+                  154 bytes and the maximum was 245 bytes. The median
+                  number of steps needed to shrink a test case was
+                  113 iterations.
               </ul> 
             </aside>
           </section>
