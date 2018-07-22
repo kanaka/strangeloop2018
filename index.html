@@ -747,26 +747,6 @@
               </ul>
             </aside>
           </section>
-          <section data-transition="none">
-            <h3>Weights File</h3>
-            <ul style="list-style: none">
-              <li>weights.edn:
-            <pre><code class="clojure overflow"  data-noescape>{
-...
- [:prop-text-emphasis-position :cat 1 :alt 0] 100,
- [:prop-text-emphasis-position :cat 1 :alt 1]  50,
- [:prop-text-emphasis-position :cat 3 :alt 0] 100,
- [:prop-text-emphasis-position :cat 3 :alt 1]  50,
-...
-}</code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Corresponding data from the weight file.
-                <li>This example makes the "over" and "right" words
-                  twice as common as under and left.
-              </ul>
-            </aside>
-          </section>
         </section>
         <section data-transition="none">
           <section>
@@ -1118,6 +1098,27 @@
           </section>
           <section>
             <img src="imgs/test_arch.svg" width=35%></img>
+          </section>
+          <section data-transition="none">
+            <h3>Weights File</h3>
+            <ul style="list-style: none">
+              <li>weights.edn:
+            <pre><code class="clojure overflow"  data-noescape>{
+...
+ [:prop-text-emphasis-position :cat 1 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 1 :alt 1]  50,
+ [:prop-text-emphasis-position :cat 3 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 3 :alt 1]  50,
+...
+}</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>This weight file snippit corresponds to the
+                  test-emphasis-position property I showed earlier.
+                <li>This example makes the "over" and "right" words
+                  twice as common as under and left.
+              </ul>
+            </aside>
           </section>
         </section>
       </div>
