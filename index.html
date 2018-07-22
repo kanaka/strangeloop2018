@@ -441,15 +441,15 @@
                 <li><font color="green">[show #1]</font>
                   Our basic approach is to use first download and
                   normalize HTML and CSS specification data.
-                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #2]</font>
                   Then we load that data and use it to generate
                   EBNF grammars that can parse web pages containing
                   HTML and CSS.
-                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #3]</font>
                   Then we parse the EBNF grammar files and output
                   generator functions for each of the rules in the
                   grammar.
-                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #4]</font>
                   Finally, the PBT test harness is able to use the
                   generators for our input properties to generate HTML
                   and CSS test cases.
@@ -500,7 +500,7 @@
                 <li>Note that the grammar for HTML elements is
                   recursive and permits elements to be contained
                   within other elements.
-                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #2]</font>
                     Second: HTML attributes.
                 <li>Some attributes like class and id are global while
                   other like href are specific to certain types of
@@ -607,7 +607,7 @@
                 <li>This definition states that the value should be
                   either the word "over" or "under" and either the
                   word "right" or "left".
-                <li><font color="green">[show #1]</font>
+                <li><font color="green">[show #2]</font>
                   This is the equivalent EBNF translation of the VDS
                   grammar.
               </ul>
@@ -795,7 +795,7 @@
                   implementations.
                 <li>This is particularly true in the web browser space
                   where there is a surplus of implementations.<font
-                    color="green">[show #1]</font>
+                    color="green">[show #2]</font>
               </ul> 
             </aside>
           </section>
@@ -953,7 +953,7 @@
                   browsers are different from each other. With three
                   browsers, there are three pairs of difference
                   values. What if they disagree?
-                <li><font color="green">[show #2]</font>
+                <li><font color="green">[show #1]</font>
                   It's fairly easy to tell when one browser is at
                   fault because it will be different from all other
                   browsers and the other browsers will have
@@ -963,7 +963,7 @@
                   different from every other browser. This is also
                   a failure case but it may indicate that there is an
                   element on the page that is not well standardized.
-                <li><font color="green">[show #2]</font>
+                <li><font color="green">[show #3]</font>
                   And there is also a case where there is no clear
                   browser at fault. Consider an example where A and
                   B are below threshold, and B and C are also below
@@ -989,7 +989,7 @@
                 <li>There are other instances beyond browsers where
                   there are this approach would work. PDF rendering.
                   POSIX utility implementations.
-                  <font color="green">[show #2]</font> Basically any
+                  <font color="green">[show #1]</font> Basically any
                   area where there is a software will often have
                   multiple implementations.
                 <li><font color="green">[show #2]</font>
@@ -1000,7 +1000,7 @@
                   with source control and automated testing systems
                   this could be used to identify regressions and
                   if/when they are fixed.
-                <li><font color="green">[show #2]</font>
+                <li><font color="green">[show #3]</font>
                   It could be used to create a feature matrix
                   showing when a product began supporting a feature by
                   comparing the most recent version against older
@@ -1053,7 +1053,7 @@
                 <li><font color="green">[show #2]</font> The
                   median size of the first failing test case was
                   3 kilobytes and the maximum was 110 kilobytes.
-                <li><font color="green">[show #2]</font> The
+                <li><font color="green">[show #3]</font> The
                   median size of the test case after shrinking was
                   154 bytes and the maximum was 245 bytes. The median
                   number of steps needed to shrink a test case was
