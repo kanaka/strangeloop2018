@@ -56,7 +56,17 @@
                 Texas, Arlington. My co-author on this paper is David Levine from
                 the University of Texas, Arlington. <!--The title of this paper is
                 'Property-Based Testing of Browser Rendering Engines with
-                a Consensus Oracle'--> Let's jump right in.
+                a Consensus Oracle'-->
+              <li>I'm going to keep this presentation fairly high
+                level and I'm also going to give a significant amount
+                background information to help you understand our
+                approach. My goal is to pique your interest rather
+                than just give you a raw data dump. If you're
+                interested in more technical detail I invite you to
+                read the paper. And please feel free to stop me in the
+                hall if you have more in-depth questions about our
+                paper.
+              <li>Okay, let's jump right in.
             </ul>
           </aside>
         </section>
@@ -69,16 +79,16 @@
             <aside class="notes">
               <ul>
                 <li>
-                  The are some systems where determining correct
+                  There are some systems where determining correct
                   behavior during testing is difficult. To be more
                   precise: there exists a class of systems under test
                   for which the process of determining the correct
                   output based on a given input has a similar order of
-                  complexity to the system under test itself. This is
-                  the Test Oracle Problem
-                  <font color="green"> [show #1]</font>. Our
-                  paper proposes an approach to address this problem
-                  in the context of web browser render testing.
+                  complexity to the system under test itself.
+                  <font color="green"> [show #1]</font>
+                  This is the Test Oracle Problem. Our paper proposes
+                  an approach to address this problem in the context
+                  of web browser render testing.
               </ul>
             </aside>
           </section>
@@ -162,7 +172,8 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>Property-based testing is a testing methodology
+                <li><font color="red">2:50</font>
+                  Property-based testing is a testing methodology
                   that was popularized by the QuickCheck system
                   proposed by Koen Claessen and John Hughes in 2000.
                 <li>In property-based testing the tester defines
@@ -181,9 +192,9 @@
                 <li>Each input property generator function takes
                   a size value which has a generator specific
                   meaning. A single run of property-based testing
-                  involves calling the input properties with larger
+                  involves calling the generator functions with larger
                   and larger size values to stochastically generate
-                  large and large test cases until the output
+                  larger and larger test cases until the output
                   properties are violated.
               </ul>
             </aside>
@@ -199,8 +210,8 @@
             <aside class="notes">
               <ul>
                 <li>The highly recursive nature of the HTML
-                  grammar means that generated test cases can become
-                  before large.
+                  grammar means that generated test cases can easily
+                  become very large.
                 <li>There is a positive aspect to this in that large
                   cases can each achieve non-trivial code coverage of
                   the system under test.
@@ -400,7 +411,8 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>Now let's talk about the the input properties for
+                <li><font color="red">8:00</font>
+                  Now let's talk about the the input properties for
                   browser render testing. In this case we want to
                   generate web pages which mean generating HTML and
                   CSS. These basically represent the content and
@@ -494,17 +506,16 @@
             <aside class="notes">
               <ul>
                 <li>Here is an example web page HTML
-                <li>There are two major components of HTML.
                 <li><font color="green">[show #1]</font>
-                    First: elements which are delineated by tags.
+                  Elements are delineated by tags.
                 <li>Note that the grammar for HTML elements is
                   recursive and permits elements to be contained
                   within other elements.
                 <li><font color="green">[show #2]</font>
-                    Second: HTML attributes.
-                <li>Some attributes like class and id are global while
-                  other like href are specific to certain types of
-                  elements.
+                  Attributes are key/values settings attached to
+                  elements. Some attributes like class and id are
+                  global while other like href are specific to certain
+                  types of elements.
               </ul> 
             </aside>
           </section>
@@ -760,7 +771,8 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>We have a way to generate web page test cases
+                <li><font color="red">16:00</font>
+                  We have a way to generate web page test cases
                   that are <b>automated</b> and <b>controllable</b>,
                   but how do determine whether our browser correctly
                   renders these test cases.
@@ -781,11 +793,15 @@
           <section>
             <h2>Consensus Oracle</h2>
             <ul>
-              <li class="fragment">Multiple implementations
-              <li class="fragment">Chrome, Firefox, Safari, Edge,
-                Opera, Vivaldi, Brave, UC Browser, Internet Explorer,
-                Chromium, Servo, Pale Moon, Dolphin, Tor Browser,
-                Maxthon, Baidu Browser, etc, etc
+              <li>Multiple implementations
+              <li class="fragment">Browsers:
+                <ul>
+                  <li class="fragment">Chrome, Firefox
+                  <li class="fragment">Edge, Internet Explorer
+                  <li class="fragment">Opera, Vivaldi
+                  <li class="fragment">Brave, UC Browser
+                  <li class="fragment">Chromium, Servo, Pale Moon, Dolphin, Tor Browser, Maxthon, Baidu Browser, etc, etc
+                </ul>
             </ul>
             <aside class="notes">
               <ul>
@@ -819,7 +835,8 @@
             <aside class="notes">
               <ul>
                 <li>Here is a example web page that was generated
-                  using HTML and CSS generators.
+                  using HTML and CSS generators. Some less important
+                  parts have been elided.
               </ul>
             </aside>
           </section>
@@ -933,10 +950,10 @@
                   something that testers in practice will want to have
                   control over. This is an aspect of controllability
                   of the consensus algorith mentioned above.
-                <li>We found that a simple Squared Sum of Differences
+                <li><font color="green">[show #1]</font>
+                  We found that a simple Squared Sum of Differences
                   compared to configurable threshold value was
                   sufficient to validate our overall approach.
-                  <font color="green">[show #1]</font>
               </ul>
             </aside>
           </section>
@@ -960,9 +977,9 @@
                   self-similar renders.
                 <li><font color="green">[show #2]</font>
                   There is also a case where all browsers may be
-                  different from every other browser. This is also
-                  a failure case but it may indicate that there is an
-                  element on the page that is not well standardized.
+                  different from every other browser. We found that
+                  this is often indicative of a gap or ambiguity of
+                  the standard for one of the components on the page.
                 <li><font color="green">[show #3]</font>
                   And there is also a case where there is no clear
                   browser at fault. Consider an example where A and
@@ -1032,7 +1049,8 @@
             </table>
             <aside class="notes">
               <ul>
-                <li>We created an implementation of the approach
+                <li><font color="red">23:00</font>
+                  We created an implementation of the approach
                   described and ran the system with a consensus pool
                   that included the Firefox, Chrome and Servo
                   browsers.
@@ -1057,7 +1075,8 @@
                   median size of the test case after shrinking was
                   154 bytes and the maximum was 245 bytes. The median
                   number of steps needed to shrink a test case was
-                  113 iterations.
+                  113 iterations. You can see how powerful the
+                  shrinking process is and the utility for the tester.
                 <!-- Most of the failing test cases were due to the
                   generators creating web pages that used elements of
                   HTML and CSS that are either considerecd obsolete
@@ -1074,19 +1093,18 @@
         <section>
           <h3>Contact</h3>
           <ul style="list-style: none">
+            <li><a href="//github.com/kanaka/tend">github.com/kanaka/tend</a>
             <li><a href="//twitter.com/bus_kanaka">@bus_kanaka</a>
             <li><a href="//kanaka.github.io/compsac2018">kanaka.github.io/compsac2018</a>
-            <li><a href="//github.com/kanaka">github.com/kanaka</a>
             <li>joeldmartin@mavs.uta.edu
             <li>levine@cse.uta.edu
           </ul>
           <aside class="notes">
             <ul>
-              <li>
-                <li><font color="green">[show #1]</font>
-                  <ul>
-                    <li>
-                  </ul>
+              <li>I'll just leave this up while I take questions.
+              <li>The first link here is where the the implementation
+                of our approach will live. It doesn't exist yet, but
+                once I get WiFi I will push out the repository.
             </ul> 
           </aside>
         </section>
