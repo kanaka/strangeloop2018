@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>COMPSAC 2018 - Property-Based Testing of Browser Rendering Engines with a Consensus Oracle</title>
+    <title>Strange Loop 2018 - Browser Testing Using Grammars and a Consensus Oracle</title>
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/black.css">
@@ -29,55 +29,127 @@
   <body>
     <div class="reveal">
       <div class="slides">
-        <section>
-          <h2>Property-Based Testing of Browser Rendering Engines with a Consensus Oracle</h2>
-          <p><font color="#ffea9a">COMPSAC 2018</font></p>
-          <ul style="list-style: none">
-            <li><font color="green">Joel Martin</font>
-              <ul style="list-style: none">
-                <li>University of Texas, Arlington
-                  <li>ViaSat, Inc
-              </ul>
-            <li><font color="green">David Levine</font>
-              <ul style="list-style: none">
-                <li>Univeristy of Texas, Arlington
-              </ul>
-          </ul>
+        <section data-transition="none">
+          <h2>Browser Testing Using Grammars and a Consensus Oracle</h2>
+          <p><font color="#ffea9a">Strange Loop 2018</font></p>
+          <p><font color="green">Joel Martin</font></p>
+          <p>Questions at: <font color="cyan">https://sli.do</font> <font color="yellow">(Event #SL18)</font></p>
+          <aside class="notes">
+            <ul>
+              <li>Project screen
+                <ul>
+                  <li>Open and full screen presentation
+                  <li>Check colors/highlights on Simple PBT Example
+                  <li>Open report tab
+                  <li>Start full screen terminal, load tmix session
+                    with history
+                </ul>
+              <li>Presenter screen
+                <ul>
+                  <li>Start geckodriver and chromedriver
+                  <li>Load/login to sli.do tab (or on phone)
+                </ul>
+              <li>Silence phone
+          </aside>
+        </section>
+        <section data-transition="none">
+          <h2>Browser Testing Using Grammars and a Consensus Oracle</h2>
+          <p><font color="#ffea9a">Strange Loop 2018</font></p>
+          <p><font color="green">Joel Martin</font></p>
+          <p>Questions at: <font color="cyan">https://sli.do</font> <font color="yellow">(Event #SL18)</font></p>
           <!-- <p><i>Press 's' to show speaker notes</i></p> -->
           <aside class="notes">
             <ul>
-              <li>Silence phone
-              <li>Full screen the projector screen
-              <li>
-                Good morning everyone!
-
-                My name is Joel Martin. I'm a Principal Software Engineer at
-                ViaSat, Inc and I am also a PhD candidate at the University of
-                Texas, Arlington. My co-author on this paper is David Levine from
-                the University of Texas, Arlington. <!--The title of this paper is
-                'Property-Based Testing of Browser Rendering Engines with
-                a Consensus Oracle'-->
-              <li>I'm going to keep this presentation fairly high
-                level and I'm also going to give a significant amount
-                background information to help you understand our
-                approach. My goal is to pique your interest rather
-                than just give you a raw data dump. If you're
-                interested in more technical detail I invite you to
-                read the paper. And please feel free to stop me in the
-                hall if you have more in-depth questions about our
-                paper.
-              <li>Okay, let's jump right in.
+              <li>Good morning everyone!
+              <li>This talk is "Browser Testing Using Grammars and
+                a Consensus Oracle". Hopefully that's what you were
+                expecting :-)
+              <li>I'm going to try and use sli.do for questions so
+                here's the site and event code. I'm going to try and
+                leave some time for questions at the end, but if I run
+                out of time, hopefully I'll be able to lookup your
+                questions and try and answer them on slack today.
+                Also, please feel free to stop me in the hall if you
+                have questions or feedback.
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h2>Introduction</h2>
+          <div>
+            <span class="fragment" data-fragment-index=1><img src="4yr.png"></img></span>
+            <span class="fragment" data-fragment-index=2><img src="5yr.png"></img></span>
+            <span class="fragment" data-fragment-index=3><img src="6yr.png"></img></span>
+          </div>
+          <ul style="list-style: none">
+            <li class="fragment" data-fragment-index=4>Engineer at ViaSat
+            <li class="fragment" data-fragment-index=4>PhD Student at UTA
+            <li class="fragment" data-fragment-index=5>noVNC
+            <li class="fragment" data-fragment-index=5>mal / make-a-lisp
+          </ul>
+          <aside class="notes">
+            <ul>
+              <li>Okay, so quick introduction. So I asked my kids to
+                do a drawing of what I do for a living.
+              <li><font color="green"> [show #1]</font>
+                So here is my four year old daughter.
+              <li><font color="green"> [show #2]</font>
+                So here is my five year old son.
+              <li><font color="green"> [show #3]</font>
+                So here is my six year old daughter.
+              <li>If only my day job was as interesting as in my kids'
+                imaginations.
+              <li><font color="green"> [show #4]</font>
+                I'm a Principal Software Engineer at ViaSat, Inc and
+                I am also a PhD candidate at the University of Texas,
+                Arlington.
+              <li><font color="green"> [show #5]</font>
+                I'm also started the noVNC and the make-a-lisp
+                projects.
+              <li>This presentation is related to the
+                research that I'm doing for my dissertation.
+              <li>The challenges and the solutions I'm going to
+                describe in this talk actually apply to a number of
+                different systems but I'm going to focus on testing of
+                browser rendering engines.
+              <li>My goal with this talk is to pique your interest and
+                give you a new tool in your testing toolbox.
+              <li>Okay, let's jump in.
             </ul>
           </aside>
         </section>
         <section>
           <section>
-            <h2>The Problem</h2>
+            <h2>The Challenges</h2>
             <ul>
-              <li class="fragment" style="list-style: none"><font color="green">The Test Oracle Problem</font></li>
+              <li class="fragment" style="list-style: none"><font color="green">Test Cases</font></li>
+              <li class="fragment" style="list-style: none"><font color="green">Test Oracle</font></li>
             </ul>
             <aside class="notes">
               <ul>
+                <li><font color="red">X:YZ</font>
+                  So what's the problem we're trying to solve? Well,
+                  there are some types of systems that are really hard
+                  to test. And they can be hard to test in a couple of
+                  ways.
+                <li><font color="green"> [show #1]</font>
+                  The first challenge is that it can be hard to find
+                  or generate interesting test cases. And by
+                  interesting all I mean is test cases that trigger
+                  legitimate bugs.
+                <li><font color="green"> [show #1]</font>
+                  The second challenge is that some systems are hard
+                  to verify. The magic box that tells you whether your
+                  system under test is functioning correctly or not is
+                  the Test Oracle. 
+                <li>
+                  If we want to have fully automated testing, both the
+                  generation of test cases and the test oracle will
+                  need to be automated. But if the software to automate
+                  those steps ends up being almost as complex as the
+                  software you want to test, then you have a problem.
+                  Which brings us to ...
+                <!--
                 <li>
                   There are some systems where determining correct
                   behavior during testing is difficult. To be more
@@ -85,17 +157,18 @@
                   for which the process of determining the correct
                   output based on a given input has a similar order of
                   complexity to the system under test itself.
-                  <font color="green"> [show #1]</font>
+                  
                   This is the Test Oracle Problem. Our paper proposes
                   an approach to address this problem in the context
                   of web browser render testing.
+                -->
               </ul>
             </aside>
           </section>
           <section>
             <h3>Browser Rendering</h3>
-            <div style="position:relative">
-              <pre style="position:absolute" class="fragment" data-fragment-index=1><code class="html" data-noescape>
+            <div>
+              <pre class="fragment" data-fragment-index=1><code class="html" data-noescape>
 &lt;html&gt;
   &lt;body style="background: #1289af"&gt;
     &lt;div style="<span class="fragment mark-current-blue" data-fragment-index=2>left: 10%; width: 20%;</span>
@@ -107,15 +180,25 @@
 &lt;/html&gt;
               </code></pre>
             </div>
+            <ul>
+              <li class="fragment" data-fragment-index=2>
+                Element sizing and positioning
+              <li class="fragment" data-fragment-index=3>
+                Environment factors (Screen geometry, OS)
+              <li class="fragment" data-fragment-index=4>
+                Color model and alpha blending
+              <li class="fragment" data-fragment-index=5>
+                Font rendering (kerning, spacing)
+            </ul>
             <aside class="notes">
               <ul>
-                <li>
-                  Let's consider a browser rendering test case.
+                <li>Browser Rendering!
                   <font color="green">[show #1]</font> Even
                   though this web page is fairly simple compared to
                   real-world web pages, it is still non-trivial to
                   verify that a browser has rendered this page
-                  correctly. There are a number of reasons for this:
+                  correctly. There are a number of reasons for this.
+                  I'll just touch on a few:
                   <ul>
                     <li><font color="green">[show #2]</font>
                       The CSS element sizing and positioning
@@ -131,11 +214,15 @@
                       issues like kerning which may cause other page
                       elements to shift significantly)
                   </ul>
+                <li>
                   Current solutions to browser render testing often
                   involve manual user intervention at some stage of
-                  the process and use a highly constrained test
-                  environment. Our paper proposes an approach that is
-                  both comprehensive and fully automated.
+                  the process and use a fairly constrained test
+                  environment.
+                <li>So can we do better? Can we do browser testing in
+                  a way that is fully automated without being narrowly
+                  constrained? I think we can, so let's talk about
+                  that...
               </ul>
             </aside>
           </section>
@@ -147,7 +234,7 @@
               <li class="fragment">Consensus-Based Test Oracle</li>
             </ul>
             <aside class="notes">
-              There are three main components to our approach.
+              There are three main components to this approach.
               <ul>
                 <li><font color="green">[show #1]</font>
                   Property-based testing,
@@ -172,7 +259,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">2:50</font>
+                <li><font color="red">X:YZ</font>
                   Property-based testing is a testing methodology
                   that was popularized by the QuickCheck system
                   proposed by Koen Claessen and John Hughes in 2000.
@@ -209,6 +296,9 @@
             </ul>
             <aside class="notes">
               <ul>
+                <li>Property-based testing is really effective at
+                  finding bugs, but if your bug is buried in a 30MB
+                  test case it's mostly not useful.
                 <li>The highly recursive nature of the HTML
                   grammar means that generated test cases can easily
                   become very large.
@@ -225,9 +315,9 @@
                   We can think of each test case is a tree of
                   generator nodes. Shrinking process picks a node in
                   the tree and tries a smaller size value. If
-                  resulting test case is smaller then continue
-                  otherwise backtrack. Continue until a minima is
-                  reached.
+                  resulting test case is smaller then it continues
+                  shrinking otherwise it backtracks. This continues
+                  until a minima is reached.
                 <li>Extremely important for complex compound
                   generators (e.g. recursive). Hard to overstate the
                   importance of test shrinking.
@@ -348,8 +438,8 @@
                   sum.
                 <li>Our properties remain unchanged.
                 <li>We can see that running 10 iterations still passed
-                  because the sizes being generated P are still small
-                  and no sequence long enough to trigger the bug is
+                  because the length of P is still small and no
+                  sequence is long enough to trigger the bug is
                   generated.
               </ul>
             </aside>
@@ -411,7 +501,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">8:00</font>
+                <li><font color="red">X:YZ</font>
                   Now let's talk about the the input properties for
                   browser render testing. In this case we want to
                   generate web pages which mean generating HTML and
@@ -423,9 +513,10 @@
                   The are several goal we want for our generators:
                   <ul>
                     <li><b>Automated</b>: We want automated creation
-                      of the generators themselves, and we also want
-                      the generators to output full web pages that don't
-                      require human final assembly or tweaking.
+                      of the generators based on specifications, and
+                      we also want the generators to output full web
+                      pages that don't require human final assembly or
+                      tweaking.
                     <li><b>Controllable</b>: Because the domain of valid web
                       pages is essentially unbounded, we want the
                       tester to have the ability to choose more narrow
@@ -443,15 +534,15 @@
           <section>
             <h3>Grammar-Based Generators</h3>
             <ul>
-              <li class="fragment">W3C Standards &rarr; Data
-              <li class="fragment">Data &rarr; EBNF
-              <li class="fragment">EBNF &rarr; Generators
+              <li class="fragment">W3C Specifications &rarr; Spec Data
+              <li class="fragment">Spec Data &rarr; EBNF Grammar
+              <li class="fragment">Grammar EBNF &rarr; Generators
               <li class="fragment">Generators &rarr; HTML+CSS
             </ul>
             <aside class="notes">
               <ul>
                 <li><font color="green">[show #1]</font>
-                  Our basic approach is to use first download and
+                  Our basic approach is to first download and
                   normalize HTML and CSS specification data.
                 <li><font color="green">[show #2]</font>
                   Then we load that data and use it to generate
@@ -477,6 +568,7 @@
             </ul>
             <aside class="notes">
               <ul>
+                <li><font color="red">X:YZ</font>
                 <li>Let's talk briefly about HTML. HTML is a World
                   Wide Web Consortium standard. HTML 5 is the current
                   major version of the standard.
@@ -528,7 +620,8 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>CSS is also a World Web Consortium standard.
+                <li>Cascading Stylesheet (or CSS) is also a World Web
+                  Consortium standard.
                 <li>CSS 3 is the major version of the standard.
                 <li>The CSS standard is a fair bit more complicated
                   than the HTML one in terms of its grammar.
@@ -603,6 +696,7 @@
     ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
             <aside class="notes">
               <ul>
+                <li><font color="red">X:YZ</font>
                 <li>Bulk of the CSS3 standard is dedicated to defining
                   CSS values.
                 <li>CSS values are defined using a bespoke grammar
@@ -612,9 +706,9 @@
                   ordering and repetition flexibility that CSS values
                   permits.
                 <li><font color="green">[show #1]</font>
-                  Here is an example of the VDS definition of the
-                  values for the <b>text-emphasis-position</b>
-                  property name.
+                  Here is an example from the specification for the VDS
+                  definition of the values for the
+                  <b>text-emphasis-position</b> property name.
                 <li>This definition states that the value should be
                   either the word "over" or "under" and either the
                   word "right" or "left".
@@ -658,6 +752,7 @@
             <h3>Controlling the Grammar</h3>
             <ul>
               <li>Tunable weights at grammar branch points
+              <!-- DROP if time short -->
               <li class="fragment">Enables:
                 <ul>
                   <li>Single component testing
@@ -723,9 +818,10 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li>Here is the grammar I showed earlier.
-                <li>This is actually omitting the extra parts that
-                  allow the grammar to be controlled or tuned.
+                <li>Here is the grammar generator I showed earlier.
+                <li>But this isn't complete yet because it is omitting
+                  the extra parts that allow the grammar to be
+                  controlled or tuned.
               </ul>
             </aside>
           </section>
@@ -754,12 +850,100 @@
                   with the weight lookups included.
                 <li>The weights variable in the example is a lookup
                   table built from the default weights overlayed with
-                  value loaded from a tester's weight file.
+                  values loaded from a weight file.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>Weights File</h3>
+            <ul style="list-style: none">
+              <li>weights.edn:
+            <pre><code class="clojure overflow"  data-noescape>{
+...
+ [:prop-text-emphasis-position :cat 1 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 1 :alt 1]  50,
+ [:prop-text-emphasis-position :cat 3 :alt 0] 100,
+ [:prop-text-emphasis-position :cat 3 :alt 1]  50,
+...
+}</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>This weight file snippit corresponds to the
+                  test-emphasis-position property I just showed.
+                <li>The weights have been modified to make the "over"
+                  and "right" words twice as common as "under" and
+                  "left".
               </ul>
             </aside>
           </section>
         </section>
-        <section data-transition="none">
+        <section>
+          <section>
+            <h2>Demo Time</h2>
+            <p><font color="yellow">instacheck</font> - <font color="green">instaparse meets test.check</font></p>
+            <aside class="notes">
+              <font color="red">X:YZ</font>
+              <pre style="font-size: 0.5em">
+vi test/numbers.ebnf
+lein run samples test/numbers.ebnf tmp/samp%.nums
+grep '.' tmp/samp%.nums | less
+lein run samples test/numbers.ebnf tmp/samp%.nums --weights-output tmp/number-weights.edn
+vi tmp/number-weights.edn
+lein run samples test/numbers.ebnf tmp/samp%.nums --weights tmp/number-weights.edn
+grep '.' tmp/samp%.nums</pre>
+              <hr>
+              <pre style="font-size: 0.5em">
+lein run clj test/numbers.ebnf foo.bar &gt; tmp/numbers.clj
+vi tmp/numbers.clj</pre>
+              <ul>
+                <li>Show generating samples 
+                <li>Show generating clj code
+              </ul>
+          </section>
+          <section>
+            <h2>Demo Time</h2>
+            <p><font color="green">Instacheck</font></p>
+            <aside class="notes">
+              <pre style="font-size: 0.5em">
+vi test/math.ebnf
+vi test/mathtest.sh
+lein run check test/math.ebnf tmp/samp%.exp -- ./test/mathtest.sh %
+grep '.' tmp/samp*.exp
+lein run check test/math.ebnf tmp/samp%.exp --iterations 50 --seed 3 -- ./test/mathtest.sh %
+./test/mathtest-verbose.sh ...
+./test/mathtest-verbose.sh tmp/sampfinal.exp</pre>
+              <hr>
+              <pre style="font-size: 0.5em">
+vi ../tend/data/html5.ebnf
+lein run samples --samples 20 ../tend/data/html5.ebnf tmp/samp%.html
+vi tmp/samp19.html</pre>
+              <ul>
+                <li>check mathtest
+							  	<ul>
+                    <li>math.ebnf: generate simple mathematical
+                      expressions
+                    <li>mathtest.sh: SUT in python. Test Oracle in
+                      Ruby checks the answer from SUT
+                    <li>lein run check: run until fail. 
+                    <li>Use verobse on first: not especially clear
+                      what happened
+                    <li>Use verbose on final: clearer that we've
+                      discovered a math precision discrepancy.
+                  </ul>
+                <li>samples for html.ebnf
+							  	<ul>
+                    <li>Emphasize: Grammar for HTML5 and CSS
+                      automatically generated from specification data.
+                    <li>Run: grammar with almost 500 rules so it takes
+                      a few seconds to load. Much more efficient to
+                      use pre-generated Clojure generator code for
+                      a grammar this large.
+                    <li>samp19.html:
+                  </ul>
+              </ul>
+          </section>
+        </section>
+        <section>
           <section>
             <h2>Test Oracle</h2>
             <ul>
@@ -771,7 +955,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">16:00</font>
+                <li><font color="red">X:YZ</font>
                   We have a way to generate web page test cases
                   that are <b>automated</b> and <b>controllable</b>,
                   but how do determine whether our browser correctly
@@ -805,13 +989,13 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="green">[show #1]</font> The
-                  key insight here is that a number of cases in the
-                  real-world where SUTs will have multiple
+                <li><font color="green">[show #1]</font>
+                  The key insight here is that a number of cases in
+                  the real-world where SUTs will have multiple
                   implementations.
                 <li>This is particularly true in the web browser space
-                  where there is a surplus of implementations.<font
-                    color="green">[show #2]</font>
+                  where there is a surplus of implementations.
+                  <font color="green">[show #2-]</font>
               </ul> 
             </aside>
           </section>
@@ -840,7 +1024,7 @@
               </ul>
             </aside>
           </section>
-          <section>
+          <section data-transition="none">
             <h3>Consensus Example</h3>
             <table class="browser-table">
               <tr>
@@ -875,7 +1059,8 @@
               </ul>
             </aside>
           </section>
-          <section>
+          <section data-transition="none">
+            <h3>Consensus Example</h3>
             <table class="browser-table">
               <tr>
                 <td style="padding: 0px; text-align: center; vertical-align: top">
@@ -1027,6 +1212,143 @@
           </section>
         </section>
         <section>
+          <h2>Test System Architecture</h2>
+          <img src="imgs/test_arch_sideways.svg" width=100%></img>
+          <aside class="notes">
+            <ul>
+              <li><font color="red">X:YZ</font>
+                Left: shows retrieving and processing the HTML5 and
+                CSS3 standards data from MDN.
+              <li>Right: webdriver protocol to connect to browsers in
+                consensus pool to load each test case and grab
+                a screenshot.
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <section>
+            <h2>Demo Time</h2>
+            <p><font color="yellow">tend</font> - <font color="green">browser render testing</font></p>
+            <aside class="notes">
+              <font color="red">X:YZ</font>
+              <pre style="font-size: 0.5em">
+vi config.yaml
+lein trampoline run config.yaml</pre>
+              <ul>
+              <li>Show config.yaml
+              <li>Run:
+                <ul>
+                  <li>Establishing connections to headless browsers
+                    via webdriver protocol.
+                  <li>Start web server to serve test cases to browser
+                    and to serve the summary report page. 
+                  <li>
+                </ul>
+              <li>Report page:
+                <ul>
+                  <li>Dynamically updated via websocket connection with server.
+                  <li>Explain the columns
+                  <li>Load and show firefox, Chrome and delta
+                  <li>Switch to previously calculated test (seed 2)
+                <ul>
+              </ul>
+          </section>
+        </section>
+        <section>
+          <h3>Review</h3>
+          <ul style="list-style: none">
+            <li>The Challenges
+              <ul style="list-style: none">
+                <li>Test Cases
+                <li>Test Oracle
+              </ul>
+            <li>A Solution
+              <ul style="list-style: none">
+                <li>Property-Based Testing
+                  <ul style="list-style: none">
+                    <li>Test Shrinking
+                  </ul>
+                <li>Grammar-Based Input Generators (<font color="yellow">instacheck</font>)
+                <li>Consensus-Based Test Oracle (<font color="yellow">rend</font>)
+              </ul>
+          </ul>
+          <aside class="notes">
+            <ul>
+              <li><font color="red">X:YZ</font>
+                Okay, let's briefly recap.
+              <li>The challenges of browser render testing that I've
+                addresses basically fall into two categories: test
+                case generation and the test oracle.
+              <li>However, in both cases it's really a challenge of
+                automation
+              <li>The proposed solution has major components:
+                <ul>
+                  <li>First, property-based testing is framework for
+                    automated generative testing in which the tester
+                    defineds input and output properties and the test
+                    framework attempts to find a input property that
+                    violates the output property.
+                  <li>A critically important feature of most PBT
+                    systems is test shrinking which makes the results
+                    useful for debug purposes.
+                  <li>Second, we create controllable grammar-based input
+                    generators based on web specificatiions. These
+                    generators can create random web pages as test
+                    cases. Controllability is important for narrowing
+                    the unbounded input space to what the tester wants
+                    to focus on.
+                  <li>Third, we use multiple browser implementations
+                    together to automate the process of determining
+                    whether browser rendering is correct or at least
+                    not different. Controlability is important here
+                    too for determining what the meaning of
+                    disagrement is for the tester.
+                </ul>
+            </ul>
+          </aside>
+        </section>
+        <section>
+          <h3>Links & Contact</h3>
+          <ul style="list-style: none">
+            <li><a href="http://kanaka.github.io/strangeloop2018">kanaka.github.io/strangeloop2018</a>
+            <li><a href="https://github.com/kanaka/instacheck">github.com/kanaka/instacheck</a>
+            <li><a href="https://github.com/kanaka/tend">github.com/kanaka/tend</a>
+            <li><a href="https://twitter.com/bus_kanaka">@bus_kanaka</a>
+            <li>joel.martin@viasat.com
+            <li><font color="yellow">We're hiring:</font> <a href="https://viasat.com/careers">viasat.com/careers</a>
+          </ul>
+          <br>
+          <br>
+          <div class="fragment">
+            <h3>Questions?</h3>
+            <p><font color="cyan">https://sli.do</font> <font color="yellow">(Event #SL18)</font></p>
+          </div>
+          <aside class="notes">
+            <ul>
+              <li>Okay, here is some information for further
+                information.
+              <li>The first link is this presentation material.
+              <li>Also, I want to mention that ViaSat is hiring.
+                ViaSat is a great company working on really
+                interesting stuff. Also, we have satellites in space.
+                So check out the careers page.
+              <li><font color="green">[show #1]</font>
+              <li>Okay, I think we have a few minutes for questions.
+            </ul> 
+          </aside>
+        </section>
+        <section>
+          <section>
+            <h2>Extra Material</h2>
+          </section>
+          <section>
+            <img src="imgs/results1.png" width=80%></img>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <img src="imgs/results1_expanded.png" width=80%></img>
+          </section>
           <section>
             <h2>Results</h2>
             <table>
@@ -1049,7 +1371,7 @@
             </table>
             <aside class="notes">
               <ul>
-                <li><font color="red">23:00</font>
+                <li>
                   We created an implementation of the approach
                   described and ran the system with a consensus pool
                   that included the Firefox, Chrome and Servo
@@ -1077,71 +1399,13 @@
                   number of steps needed to shrink a test case was
                   113 iterations. You can see how powerful the
                   shrinking process is and the utility for the tester.
-                <!-- Most of the failing test cases were due to the
+                <li>Most of the failing test cases were due to the
                   generators creating web pages that used elements of
                   HTML and CSS that are either considerecd obsolete
                   (often because they don't have common behavior
                   across browsers) or that are relatively new elements
-                  that are in the process of standardization -->
+                  that are in the process of standardization 
               </ul> 
-            </aside>
-          </section>
-        </section>
-        <section>
-          <h3>Questions?</h3>
-        </section>
-        <section>
-          <h3>Contact</h3>
-          <ul style="list-style: none">
-            <li><a href="//github.com/kanaka/tend">github.com/kanaka/tend</a>
-            <li><a href="//twitter.com/bus_kanaka">@bus_kanaka</a>
-            <li><a href="//kanaka.github.io/compsac2018">kanaka.github.io/compsac2018</a>
-            <li>joeldmartin@mavs.uta.edu
-            <li>levine@cse.uta.edu
-          </ul>
-          <aside class="notes">
-            <ul>
-              <li>I'll just leave this up while I take questions.
-              <li>The first link here is where the the implementation
-                of our approach will live. It doesn't exist yet, but
-                once I get WiFi I will push out the repository.
-            </ul> 
-          </aside>
-        </section>
-        <section>
-          <section>
-            <h2>Extra Material</h2>
-          </section>
-          <section>
-            <img src="imgs/results1.png" width=80%></img>
-            <aside class="notes">
-            </aside>
-          </section>
-          <section>
-            <img src="imgs/results1_expanded.png" width=80%></img>
-          </section>
-          <section>
-            <img src="imgs/test_arch.svg" width=35%></img>
-          </section>
-          <section data-transition="none">
-            <h3>Weights File</h3>
-            <ul style="list-style: none">
-              <li>weights.edn:
-            <pre><code class="clojure overflow"  data-noescape>{
-...
- [:prop-text-emphasis-position :cat 1 :alt 0] 100,
- [:prop-text-emphasis-position :cat 1 :alt 1]  50,
- [:prop-text-emphasis-position :cat 3 :alt 0] 100,
- [:prop-text-emphasis-position :cat 3 :alt 1]  50,
-...
-}</code></pre>
-            <aside class="notes">
-              <ul>
-                <li>This weight file snippit corresponds to the
-                  test-emphasis-position property I showed earlier.
-                <li>This example makes the "over" and "right" words
-                  twice as common as under and left.
-              </ul>
             </aside>
           </section>
         </section>
