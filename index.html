@@ -46,7 +46,8 @@
                 </ul>
               <li>Presenter screen
                 <ul>
-                  <li>Start geckodriver and chromedriver
+                  <li>Open new terminal connected to tmix session
+                  <li>Start geckodriver and chromedriver in tmix
                   <li>Load/login to sli.do tab (or on phone)
                 </ul>
               <li>Silence phone
@@ -64,13 +65,12 @@
               <li>This talk is "Browser Testing Using Grammars and
                 a Consensus Oracle". Hopefully that's what you were
                 expecting :-)
-              <li>I'm going to try and use sli.do for questions so
-                here's the site and event code. I'm going to try and
-                leave some time for questions at the end, but if I run
-                out of time, hopefully I'll be able to lookup your
-                questions and try and answer them on slack today.
-                Also, please feel free to stop me in the hall if you
-                have questions or feedback.
+              <li>Here is the Q&amp;A site and event code. I'm going
+                to try and leave some time for questions at the end,
+                but if I run out of time, hopefully I'll be able to
+                lookup your questions and try and answer them on slack
+                today. Also, please feel free to stop me in the hall
+                if you have questions or feedback.
             </ul>
           </aside>
         </section>
@@ -84,8 +84,8 @@
           <ul style="list-style: none">
             <li class="fragment" data-fragment-index=4>Engineer at ViaSat
             <li class="fragment" data-fragment-index=4>PhD Student at UTA
-            <li class="fragment" data-fragment-index=5>noVNC
-            <li class="fragment" data-fragment-index=5>mal / make-a-lisp
+            <li class="fragment" data-fragment-index=5><a href="https://github.com/novnc/noVNC">noVNC</a>
+            <li class="fragment" data-fragment-index=5><a href="https://github.com/kanaka/mal">mal / make-a-lisp</a>
           </ul>
           <aside class="notes">
             <ul>
@@ -100,14 +100,14 @@
               <li>If only my day job was as interesting as in my kids'
                 imaginations.
               <li><font color="green"> [show #4]</font>
-                I'm a Principal Software Engineer at ViaSat, Inc and
-                I am also a PhD candidate at the University of Texas,
+                I'm a Principal Software Engineer at ViaSat and I am
+                also a PhD candidate at the University of Texas,
                 Arlington.
               <li><font color="green"> [show #5]</font>
-                I'm also started the noVNC and the make-a-lisp
+                I also started the noVNC and the make-a-lisp
                 projects.
-              <li>This presentation is related to the
-                research that I'm doing for my dissertation.
+              <li>This presentation is related to the research that
+                I'm doing for my dissertation.
               <li>The challenges and the solutions I'm going to
                 describe in this talk actually apply to a number of
                 different systems but I'm going to focus on testing of
@@ -127,7 +127,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">1:50</font>
                   So what's the problem we're trying to solve? Well,
                   there are some types of systems that are really hard
                   to test. And they can be hard to test in a couple of
@@ -259,7 +259,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">4:40</font>
                   Property-based testing is a testing methodology
                   that was popularized by the QuickCheck system
                   proposed by Koen Claessen and John Hughes in 2000.
@@ -492,16 +492,17 @@
                   <li>HTML (content)
                   <li>CSS (presentation)
                 </ul>
+                <!--
               <li class="fragment">Goals:
                 <ul>
                   <li>Automated
                   <li>Controllable
-                  <!--<li>Comprehensive-->
                 </ul>
+                -->
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">10:22</font>
                   Now let's talk about the the input properties for
                   browser render testing. In this case we want to
                   generate web pages which mean generating HTML and
@@ -509,6 +510,7 @@
                   presentation respectively. The third component of
                   web page is the behavior defined in JavaScript but
                   that is not in scope for our paper.
+                <!--
                 <li><font color="green">[show #1]</font>
                   The are several goal we want for our generators:
                   <ul>
@@ -521,13 +523,8 @@
                       pages is essentially unbounded, we want the
                       tester to have the ability to choose more narrow
                       domains to focus on.
-                    <!--
-                    <li><b>Comprehensive</b>: we want web pages that cover
-                      the whole domain valid web pages. So generators
-                      themselves are generated from raw data from
-                      upstream HTML and CSS standards.
-                    -->
                   </ul>
+                -->
               </ul> 
             </aside>
           </section>
@@ -559,6 +556,7 @@
               </ul> 
             </aside>
           </section>
+          <!--
           <section>
             <h3>HTML 5</h3>
             <ul>
@@ -568,7 +566,7 @@
             </ul>
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">14:30</font>
                 <li>Let's talk briefly about HTML. HTML is a World
                   Wide Web Consortium standard. HTML 5 is the current
                   major version of the standard.
@@ -684,6 +682,7 @@
               </ul>
             </aside>
           </section>
+          -->
           <section>
             <h3>CSS Value Definition Syntax (VDS)</h3>
             <ul class="fragment" style="list-style: none">
@@ -696,7 +695,7 @@
     ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">11:25</font>
                 <li>Bulk of the CSS3 standard is dedicated to defining
                   CSS values.
                 <li>CSS values are defined using a bespoke grammar
@@ -751,8 +750,8 @@
           <section data-transition="none">
             <h3>Controlling the Grammar</h3>
             <ul>
-              <li>Tunable weights at grammar branch points
-              <!-- DROP if time short -->
+              <li>Tunable weights at grammar alternation points
+              <!-- DROP if time short
               <li class="fragment">Enables:
                 <ul>
                   <li>Single component testing
@@ -760,6 +759,7 @@
                   <li>Pairwise or combinatorial testing
                   <li>Typical and atypical test cases
                 </ul>
+              -->
             </ul>
             <aside class="notes">
               <ul>
@@ -767,6 +767,11 @@
                   the system is controllable.
                 <li>We accomplish this by having tunable weights
                   associated with each branch point in the grammar.
+                <li>By tunning the grammar the tester can decide what
+                  sort of testing to perform. Some examples include
+                  single component testing, avoiding known failures,
+                  pairwise testing, typical and atypical test cases.
+                <!--
                 <li><font color="green">[show #1]</font>
                   Grammar controlability enables a number of
                   interesting scenarios such as:
@@ -794,6 +799,7 @@
                       introduced some new elements to the SUT that are
                       not widely used yet.
                   </ul>
+                -->
               </ul>
             </aside>
           </section>
@@ -882,7 +888,7 @@
             <h2>Demo Time</h2>
             <p><font color="yellow">instacheck</font> - <font color="green">instaparse meets test.check</font></p>
             <aside class="notes">
-              <font color="red">X:YZ</font>
+              <font color="red">15:15</font>
               <pre style="font-size: 0.5em">
 vi test/numbers.ebnf
 lein run samples test/numbers.ebnf tmp/samp%.nums
@@ -896,6 +902,7 @@ grep '.' tmp/samp%.nums</pre>
 lein run clj test/numbers.ebnf foo.bar &gt; tmp/numbers.clj
 vi tmp/numbers.clj</pre>
               <ul>
+                <li>TODO describe instacheck
                 <li>Show generating samples 
                 <li>Show generating clj code
               </ul>
@@ -913,10 +920,12 @@ lein run check test/math.ebnf tmp/samp%.exp --iterations 50 --seed 3 -- ./test/m
 ./test/mathtest-verbose.sh ...
 ./test/mathtest-verbose.sh tmp/sampfinal.exp</pre>
               <hr>
+              <!--
               <pre style="font-size: 0.5em">
 vi ../tend/data/html5.ebnf
-lein run samples --samples 20 ../tend/data/html5.ebnf tmp/samp%.html
+lein run samples - -samples 20 ../tend/data/html5.ebnf tmp/samp%.html
 vi tmp/samp19.html</pre>
+              -->
               <ul>
                 <li>check mathtest
 							  	<ul>
@@ -930,6 +939,7 @@ vi tmp/samp19.html</pre>
                     <li>Use verbose on final: clearer that we've
                       discovered a math precision discrepancy.
                   </ul>
+                <!--
                 <li>samples for html.ebnf
 							  	<ul>
                     <li>Emphasize: Grammar for HTML5 and CSS
@@ -940,12 +950,14 @@ vi tmp/samp19.html</pre>
                       a grammar this large.
                     <li>samp19.html:
                   </ul>
+                -->
               </ul>
           </section>
         </section>
         <section>
           <section>
             <h2>Test Oracle</h2>
+            <!--
             <ul>
               <li class="fragment">Goals
                 <ul>
@@ -953,13 +965,16 @@ vi tmp/samp19.html</pre>
                   <li>Controllable
                 </ul>
             </ul>
+            -->
             <aside class="notes">
               <ul>
-                <li><font color="red">X:YZ</font>
+                <li><font color="red">19:30</font>
                   We have a way to generate web page test cases
-                  that are <b>automated</b> and <b>controllable</b>,
-                  but how do determine whether our browser correctly
-                  renders these test cases.
+                  that is <b>automated</b> and <b>controllable</b>,
+                  but how do we determine whether our browser correctly
+                  renders these test cases in an automated and
+                  controllable way.
+                <!--
                 <li>It turns out that our goals for determining
                   correctness are the same as for generating the inputs
                   <li>Goals: <font color="green">[show #1]</font>
@@ -971,6 +986,7 @@ vi tmp/samp19.html</pre>
                     <li><b>Controllable</b>: To explain why this is
                       important I'll have to descirbe how the test
                       Oracle works.
+                -->
               </ul> 
             </aside>
           </section>
@@ -1051,7 +1067,7 @@ vi tmp/samp19.html</pre>
             <aside class="notes">
               <ul>
                 <li>And here are the results of rendering that page in
-                  three popular browsers.
+                  three different browsers.
                 <li>It is pretty clear just from visual inspection
                   that Servo has significantly different rendering
                   from the other two however, it's not as obvious
@@ -1179,6 +1195,7 @@ vi tmp/samp19.html</pre>
             </aside>
             <!-- TODO: consensus/rendering challenges: borders, Ahem, etc -->
           </section>
+          <!--
           <section>
             <h3>Beyond Browsers</h3>
             <ul>
@@ -1210,18 +1227,25 @@ vi tmp/samp19.html</pre>
               </ul>
             </aside>
           </section>
+          -->
         </section>
         <section>
           <h2>Test System Architecture</h2>
           <img src="imgs/test_arch_sideways.svg" width=100%></img>
           <aside class="notes">
             <ul>
-              <li><font color="red">X:YZ</font>
+              <li><font color="red">25:00</font>
                 Left: shows retrieving and processing the HTML5 and
                 CSS3 standards data from MDN.
-              <li>Right: webdriver protocol to connect to browsers in
-                consensus pool to load each test case and grab
-                a screenshot.
+              <li>Top right: is the browsers configured in our
+                consensus pool.
+              <li>Right: we generate test cases and store them in our
+                data store which is served up by our embedded web
+                server. The test driver then uses the webdriver
+                protocol to connect to the browsers to make them load
+                each test case and then grab a screenshot. The
+                screenshots and delta data are also captured in the
+                data store.
             </ul>
           </aside>
         </section>
@@ -1230,7 +1254,7 @@ vi tmp/samp19.html</pre>
             <h2>Demo Time</h2>
             <p><font color="yellow">tend</font> - <font color="green">browser render testing</font></p>
             <aside class="notes">
-              <font color="red">X:YZ</font>
+              <font color="red">26:54</font>
               <pre style="font-size: 0.5em">
 vi config.yaml
 lein trampoline run config.yaml</pre>
@@ -1249,7 +1273,6 @@ lein trampoline run config.yaml</pre>
                   <li>Dynamically updated via websocket connection with server.
                   <li>Explain the columns
                   <li>Load and show firefox, Chrome and delta
-                  <li>Switch to previously calculated test (seed 2)
                 <ul>
               </ul>
           </section>
@@ -1274,23 +1297,22 @@ lein trampoline run config.yaml</pre>
           </ul>
           <aside class="notes">
             <ul>
-              <li><font color="red">X:YZ</font>
+              <li><font color="red">31:30</font>
                 Okay, let's briefly recap.
               <li>The challenges of browser render testing that I've
                 addresses basically fall into two categories: test
-                case generation and the test oracle.
-              <li>However, in both cases it's really a challenge of
-                automation
-              <li>The proposed solution has major components:
+                case generation and the test oracle. However, in both
+                cases can really be summed up as end-to-end
+                automation.
+              <li>There are three components to the solution:
                 <ul>
                   <li>First, property-based testing is framework for
-                    automated generative testing in which the tester
-                    defineds input and output properties and the test
-                    framework attempts to find a input property that
-                    violates the output property.
-                  <li>A critically important feature of most PBT
-                    systems is test shrinking which makes the results
-                    useful for debug purposes.
+                    automated generative testing in which the test
+                    system searches for an input property that
+                    violates the output property. A critically
+                    important feature of most PBT systems is test
+                    shrinking which reduces the result so it is useful
+                    for debug purposes.
                   <li>Second, we create controllable grammar-based input
                     generators based on web specificatiions. These
                     generators can create random web pages as test
@@ -1299,8 +1321,8 @@ lein trampoline run config.yaml</pre>
                     to focus on.
                   <li>Third, we use multiple browser implementations
                     together to automate the process of determining
-                    whether browser rendering is correct or at least
-                    not different. Controlability is important here
+                    when browser rendering is incorrect or at least
+                    in disagreement. Controlability is important here
                     too for determining what the meaning of
                     disagrement is for the tester.
                 </ul>
@@ -1334,6 +1356,7 @@ lein trampoline run config.yaml</pre>
                 So check out the careers page.
               <li><font color="green">[show #1]</font>
               <li>Okay, I think we have a few minutes for questions.
+              <li><font color="red">34:00</font>
             </ul> 
           </aside>
         </section>
