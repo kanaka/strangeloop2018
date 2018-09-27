@@ -81,51 +81,69 @@
           </aside>
         </section>
         <section>
-          <h2>Introduction</h2>
-          <div>
-            <span class="fragment" data-fragment-index=1><img src="4yr.png"></img></span>
-            <span class="fragment" data-fragment-index=2><img src="5yr.png"></img></span>
-            <span class="fragment" data-fragment-index=3><img src="6yr.png"></img></span>
-          </div>
-          <ul style="list-style: none">
-            <li class="fragment" data-fragment-index=4>Engineer at ViaSat
-            <li class="fragment" data-fragment-index=4>PhD Student at UTA
-            <li class="fragment" data-fragment-index=5><a href="https://github.com/novnc/noVNC">noVNC</a>
-            <li class="fragment" data-fragment-index=5><a href="https://github.com/kanaka/mal">mal / make-a-lisp</a>
-          </ul>
-          <aside class="notes">
-            <ul>
-              <li>Okay, so quick introduction. So I asked my kids to
-                do a drawing of what I do for a living.
-              <li><font color="green"> [show #1]</font>
-                So here is my four year old daughter.
-              <li><font color="green"> [show #2]</font>
-                So here is my five year old son.
-              <li><font color="green"> [show #3]</font>
-                So here is my six year old daughter.
-              <li>If only my day job was as interesting as in my kids'
-                imaginations.
-              <li><font color="green"> [show #4]</font>
-                I'm a Principal Software Engineer at ViaSat and I am
-                also a PhD candidate at the University of Texas,
-                Arlington.
-              <li><font color="green"> [show #5]</font>
-                I also started the noVNC and the make-a-lisp
-                projects.
-              <li>This presentation is derived from research that
-                I'm doing for my dissertation.
-              <li>The challenges and the solutions I'm going to
-                describe in this talk actually apply to a number of
-                different systems but I'm going to focus on testing of
-                browser rendering engines.
-              <li>As an aside, there is a lot of material that
-                I originally planned to cover in this talk that I had
-                to drop for timing reasons. So my goal with this talk
-                is to give you the foundation pieces and to pique your
-                interest so that you'll have a new tool in your
-                testing toolbox.  <li>With that said, let's jump in.
+          <section>
+            <h2>Introduction</h2>
+            <div>
+              <span class="fragment" data-fragment-index=1><img src="imgs/4yr.jpg" width=30% style="transform: rotate(-10deg)"></img></span>
+              <span class="fragment" data-fragment-index=2><img src="imgs/5yr.jpg" width=30% style="transform: rotate(0deg)"></img></span>
+              <span class="fragment" data-fragment-index=3><img src="imgs/6yr.jpg" width=30% style="transform: rotate(10deg)"></img></span>
+            </div>
+            <aside class="notes">
+              <ul>
+                <li>Okay, so quick introduction. So I asked my kids to
+                  do a drawing of what I do for my job.
+                <li><font color="green"> [show #1]</font>
+                  This is my 4 year old daughter's take. This is her
+                  in green sitting on my knee while I sit at my
+                  computer.
+                <li><font color="green"> [show #2]</font>
+                  Here's my 5 year old son's interpretation. Here I am
+                  with my headphone's on typing at my computer.
+                  I especially like what look like binary on the
+                  screen. Although I actually rarely have binary on
+                  screen to be honest.
+                <li><font color="green"> [show #3]</font>
+                  Finally, my 6 year old daughter has decided that my
+                  job is to sit at our coffee table and build legos
+                  with my three kids.
+                <li>Well, I certainly wish I could play legos with
+                  them all day.
+              </ul>
+            </aside>
+          </section>
+          <section>
+            <h2>Introduction <font color="green">part 2</font></h2>
+            <ul style="list-style: none">
+              <li class="fragment" data-fragment-index=4>Engineer at ViaSat
+              <li class="fragment" data-fragment-index=4>PhD Student at UTA
+              <li class="fragment" data-fragment-index=5><a href="https://github.com/novnc/noVNC">noVNC</a>
+              <li class="fragment" data-fragment-index=5><a href="https://github.com/kanaka/mal">mal / make-a-lisp</a>
             </ul>
-          </aside>
+            <aside class="notes">
+              <ul>
+                <li>But here's a different take...
+                <li><font color="green"> [show #4]</font>
+                  I'm a Principal Software Engineer at ViaSat and I am
+                  also a PhD candidate at the University of Texas,
+                  Arlington.
+                <li><font color="green"> [show #5]</font>
+                  I also started the noVNC and the make-a-lisp
+                  projects.
+                <li>This presentation is derived from research that
+                  I'm doing for my dissertation.
+                <li>The challenges and the solutions I'm going to
+                  describe in this talk actually apply to a number of
+                  different systems but I'm going to focus on testing of
+                  browser rendering engines.
+                <li>As an aside, there is a lot of material that
+                  I originally planned to cover in this talk that I had
+                  to drop for timing reasons. So my goal with this talk
+                  is to give you the foundation pieces and to pique your
+                  interest so that you'll have a new tool in your
+                  testing toolbox.  <li>With that said, let's jump in.
+              </ul>
+            </aside>
+          </section>
         </section>
         <section>
           <section>
@@ -150,7 +168,7 @@
                   The second challenge is that some systems are hard
                   to verify. The magic box that tells you whether your
                   system under test is functioning correctly or not is
-                  the Test Oracle. 
+                  the Test Oracle.
                 <li>
                   If we want to have fully automated testing, both the
                   generation of test cases and the test oracle will
@@ -166,7 +184,7 @@
                   for which the process of determining the correct
                   output based on a given input has a similar order of
                   complexity to the system under test itself.
-                  
+
                   This is the Test Oracle Problem. Our paper proposes
                   an approach to address this problem in the context
                   of web browser render testing.
@@ -215,9 +233,9 @@
                       basic things we would like to test)
                     <li><font color="green">[show #3]</font>
                       environment factors: browser window geometry,
-                      available OS fonts 
+                      available OS fonts
                     <li><font color="green">[show #4]</font>
-                      color model and alpha blending 
+                      color model and alpha blending
                     <li><font color="green">[show #5]</font>
                       font rendering model (especially spacing
                       issues like kerning which may cause other page
@@ -534,7 +552,7 @@
                       domains to focus on.
                   </ul>
                 -->
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -562,7 +580,7 @@
                   Finally, the PBT test harness is able to use the
                   generators for our input properties to generate HTML
                   and CSS test cases.
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -795,7 +813,7 @@ grep '.' tmp/samp%.nums</pre>
 lein run clj test/numbers.ebnf foo.bar &gt; tmp/numbers.clj
 vi tmp/numbers.clj</pre>
               <ul>
-                <li>Show generating samples 
+                <li>Show generating samples
                 <li>Show generating clj code
               </ul>
           </section>
@@ -823,7 +841,7 @@ vi tmp/samp19.html</pre>
                       expressions
                     <li>mathtest.sh: SUT in python. Test Oracle in
                       Ruby checks the answer from SUT
-                    <li>lein run check: run until fail. 
+                    <li>lein run check: run until fail.
                     <li>Use verobse on first: not especially clear
                       what happened
                     <li>Use verbose on final: clearer that we've
@@ -841,7 +859,18 @@ vi tmp/samp19.html</pre>
                   </ul>
               </ul>
           </section>
+          <section>
+            <p>"Dad protecting the web."</p>
+            <span><img src="imgs/5yr2.jpg" width=40%></img></span>
+            <aside class="notes">
+              <ul>
+                <li>Here is another piece of art from my 5 year-old
+                  son.
+              </ul>
+            </aside>
+          </section>
         </section>
+
         <section>
           <section>
             <h2>Test Oracle</h2>
@@ -875,7 +904,7 @@ vi tmp/samp19.html</pre>
                       important I'll have to descirbe how the test
                       Oracle works.
                 -->
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -900,7 +929,7 @@ vi tmp/samp19.html</pre>
                 <li>This is particularly true in the web browser space
                   where there is a surplus of implementations.
                   <font color="green">[show #2-]</font>
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -1119,7 +1148,7 @@ lein trampoline run config.yaml</pre>
                   <li>Establishing connections to headless browsers
                     via webdriver protocol.
                   <li>Start web server to serve test cases to browser
-                    and to serve the summary report page. 
+                    and to serve the summary report page.
                   <li>
                 </ul>
               <li>Report page:
@@ -1129,6 +1158,18 @@ lein trampoline run config.yaml</pre>
                   <li>Load and show firefox, Chrome and delta
                 <ul>
               </ul>
+          </section>
+          <section>
+            <p>"The web has a spider named Oracle, and Daddy is
+            protecting and fixing it. That’s his house he lives
+            in."</p>
+            <span><img src="imgs/6yr2.jpg" width=35%></img></span>
+            <aside class="notes">
+              <ul>
+                <li>I couldn't resist one more. Here is one final
+                  piece of art by my 6 year old daughter.
+              </ul>
+            </aside>
           </section>
         </section>
         <section>
@@ -1211,7 +1252,7 @@ lein trampoline run config.yaml</pre>
               <li><font color="green">[show #1]</font>
               <li>Okay, I think we have a few minutes for questions.
               <li><font color="red">34:00</font>
-            </ul> 
+            </ul>
           </aside>
         </section>
         <section>
@@ -1266,7 +1307,7 @@ lein trampoline run config.yaml</pre>
                   attributes.
                 <li>The standard defines approximate 130 HTML elements
                   and 110 attributes.
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -1298,7 +1339,7 @@ lein trampoline run config.yaml</pre>
                   elements. Some attributes like class and id are
                   global while other like href are specific to certain
                   types of elements.
-              </ul> 
+              </ul>
             </aside>
           </section>
           <section>
@@ -1429,8 +1470,8 @@ lein trampoline run config.yaml</pre>
                   HTML and CSS that are either considerecd obsolete
                   (often because they don't have common behavior
                   across browsers) or that are relatively new elements
-                  that are in the process of standardization 
-              </ul> 
+                  that are in the process of standardization
+              </ul>
             </aside>
           </section>
           <section>
