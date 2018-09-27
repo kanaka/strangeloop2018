@@ -46,7 +46,10 @@
                 </ul>
               <li>Presenter screen
                 <ul>
-                  <li>Open new terminal connected to tmix session
+                  <li>Open new terminal connected to tmix session.
+                    Populate tmix windows with history for demo
+                    command lines.
+                  <li>Clear out tmp/samp* files
                   <li>Start geckodriver and chromedriver in tmix
                   <li>Load/login to sli.do tab (or on phone)
                 </ul>
@@ -67,10 +70,11 @@
                 expecting :-)
               <li>Here is the Q&amp;A site and event code. I'm going
                 to try and leave some time for questions at the end,
-                but if I run out of time, hopefully I'll be able to
-                lookup your questions and try and answer them on slack
-                today. Also, please feel free to stop me in the hall
-                if you have questions or feedback.
+                but if I run out of time, I'm planning to lookup your
+                questions and try and answer them on slack today or
+                tomorrow. Also, please feel free to stop me during the
+                so called "hallway" track if you have questions or
+                feedback.
             </ul>
           </aside>
         </section>
@@ -106,15 +110,18 @@
               <li><font color="green"> [show #5]</font>
                 I also started the noVNC and the make-a-lisp
                 projects.
-              <li>This presentation is related to the research that
+              <li>This presentation is derived from research that
                 I'm doing for my dissertation.
               <li>The challenges and the solutions I'm going to
                 describe in this talk actually apply to a number of
                 different systems but I'm going to focus on testing of
                 browser rendering engines.
-              <li>My goal with this talk is to pique your interest and
-                give you a new tool in your testing toolbox.
-              <li>Okay, let's jump in.
+              <li>As an aside, there is a lot of material that
+                I originally planned to cover in this talk that I had
+                to drop for timing reasons. So my goal with this talk
+                is to give you the foundation pieces and to pique your
+                interest so that you'll have a new tool in your
+                testing toolbox.  <li>With that said, let's jump in.
             </ul>
           </aside>
         </section>
@@ -509,7 +516,7 @@
                   CSS. These basically represent the content and
                   presentation respectively. The third component of
                   web page is the behavior defined in JavaScript but
-                  that is not in scope for our paper.
+                  that is not in scope for this project.
                 <!--
                 <li><font color="green">[show #1]</font>
                   The are several goal we want for our generators:
@@ -556,133 +563,6 @@
               </ul> 
             </aside>
           </section>
-          <!--
-          <section>
-            <h3>HTML 5</h3>
-            <ul>
-              <li>W3C Standard
-              <li>130 Elements (tags)
-              <li>110 Attributes
-            </ul>
-            <aside class="notes">
-              <ul>
-                <li><font color="red">14:30</font>
-                <li>Let's talk briefly about HTML. HTML is a World
-                  Wide Web Consortium standard. HTML 5 is the current
-                  major version of the standard.
-                <li>HTML is composed of two major parts: elements and
-                  attributes.
-                <li>The standard defines approximate 130 HTML elements
-                  and 110 attributes.
-              </ul> 
-            </aside>
-          </section>
-          <section>
-            <h3>HTML Example</h3>
-            <pre><code class="html" data-noescape>&lt;<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;
-  &lt;<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
-    page document body
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span> <span class="fragment mark-current-blue" data-fragment-index=3>class="myclass1"</span>&gt; span content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span> <span class="fragment mark-current-blue" data-fragment-index=3>id="mydiv1"</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span> <span class="fragment mark-current-blue" data-fragment-index=3>style="text-color: red"</span>&gt; bold red text &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
-      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt; bold text within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
-      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt; span content within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
-    &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
-    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>a</span> <span class="fragment mark-current-blue" data-fragment-index=3>href="http://w3c.org"</span>&gt; text of link to W3C &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>a</span>&gt;
-  &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
-&lt;/<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;</code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Here is an example web page HTML
-                <li><font color="green">[show #1]</font>
-                  Elements are delineated by tags.
-                <li>Note that the grammar for HTML elements is
-                  recursive and permits elements to be contained
-                  within other elements.
-                <li><font color="green">[show #2]</font>
-                  Attributes are key/values settings attached to
-                  elements. Some attributes like class and id are
-                  global while other like href are specific to certain
-                  types of elements.
-              </ul> 
-            </aside>
-          </section>
-          <section>
-            <h3>CSS 3</h3>
-            <ul>
-              <li>W3C Standard
-              <li>50 sub-specifications (modules)
-              <li>360 CSS properties
-            </ul>
-            <aside class="notes">
-              <ul>
-                <li>Cascading Stylesheet (or CSS) is also a World Web
-                  Consortium standard.
-                <li>CSS 3 is the major version of the standard.
-                <li>The CSS standard is a fair bit more complicated
-                  than the HTML one in terms of its grammar.
-                <li>There are actually 50 different sub-specifications
-                  referred to as CSS3 modules which are in various
-                  stages of standardization.
-                <li>There are more than 360 CSS property names across
-                  all the CSS3 modules.
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul style="list-style: none">
-              <li>Stylesheet:
-            </ul>
-
-            <pre><code class="css"  data-noescape><span class="fragment mark-current-blue" data-fragment-index=1>.classname #idname tagname</span> {
-  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>background</span>: <span class="fragment mark-current-blue" data-fragment-index=4>rgba(0, 0, 0, 0.5);</span></span>
-  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>border</span>: <span class="fragment mark-current-blue" data-fragment-index=4>1px solid #fff;</span></span>
-  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>transform</span>: <span class="fragment mark-current-blue" data-fragment-index=4>translate3d(0px, 0px, -45px) rotateX(90deg);</span></span>
-}
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>Here is an example of a CSS stylesheet.
-                <li>There are four main components
-                <li><font color="green">[show #1]</font>
-                  Selectors, which identify which HTML elements the
-                  following block will apply to.
-                <li><font color="green">[show #2]</font>
-                  A block of declarations.
-                <li>Each declaration consists of ...
-                <li><font color="green">[show #3]</font>
-                  Property names and ...
-                <li><font color="green">[show #4]</font>
-                  Value data
-              </ul>
-            </aside>
-          </section>
-          <section data-transition="none">
-            <h3>CSS 3 Example</h3>
-            <ul style="list-style: none">
-              <li>Inline:
-            </ul>
-            <pre><code class="html"  data-noescape>&lt;div style="background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #fff;
-            transform: translate3d(0px, 0px, -45px)
-                       rotateX(90deg);"&gt;
-  div content
-&lt;/div&gt;
-            </code></pre>
-            <aside class="notes">
-              <ul>
-                <li>These are the same definitions from the previous
-                  example but embedded inline into the HTML.
-                <li>The selectors are omitted because these
-                  declarations only apply to the HTML elements that
-                  they embedded within.
-              </ul>
-            </aside>
-          </section>
-          -->
           <section>
             <h3>CSS Value Definition Syntax (VDS)</h3>
             <ul class="fragment" style="list-style: none">
@@ -693,13 +573,17 @@
             <pre><code class="bash overflow"  data-noescape>prop-text-emphasis-position =
   ( ( 'over' ' ' | 'under' ' ') ' '
     ( 'right' ' ' | 'left' ' ') ' ' ) ;</code></pre>
+            </ul>
             <aside class="notes">
               <ul>
                 <li><font color="red">11:25</font>
-                <li>Bulk of the CSS3 standard is dedicated to defining
-                  CSS values.
-                <li>CSS values are defined using a bespoke grammar
-                  called Value Definition Syntax (or VDS).
+                <li>So for a concrete example of how we use
+                  specification data to create generators I'm going to
+                  give and example for one aspect of the CSS standard.
+                <li>The bulk of the CSS3 standard is dedicated to
+                  defining CSS values. CSS values are defined using
+                  a bespoke grammar called Value Definition Syntax (or
+                  VDS).
                 <li>The grammar is similar to EBNF but with additional
                   combinators that are optimized to deal with the
                   ordering and repetition flexibility that CSS values
@@ -875,7 +759,7 @@
             <aside class="notes">
               <ul>
                 <li>This weight file snippit corresponds to the
-                  test-emphasis-position property I just showed.
+                  text-emphasis-position property I just showed.
                 <li>The weights have been modified to make the "over"
                   and "right" words twice as common as "under" and
                   "left".
@@ -889,6 +773,13 @@
             <p><font color="yellow">instacheck</font> - <font color="green">instaparse meets test.check</font></p>
             <aside class="notes">
               <font color="red">15:15</font>
+              <ul>
+                <li>So now I'm going to demonstrate property-based
+                  testing and grammar-based test case generation. This
+                  part of the project is generically useful so I split
+                  it off into a standalone project called instacheck.
+                  Let's try it out.
+              </ul>
               <pre style="font-size: 0.5em">
 vi test/numbers.ebnf
 lein run samples test/numbers.ebnf tmp/samp%.nums
@@ -902,7 +793,6 @@ grep '.' tmp/samp%.nums</pre>
 lein run clj test/numbers.ebnf foo.bar &gt; tmp/numbers.clj
 vi tmp/numbers.clj</pre>
               <ul>
-                <li>TODO describe instacheck
                 <li>Show generating samples 
                 <li>Show generating clj code
               </ul>
@@ -920,12 +810,10 @@ lein run check test/math.ebnf tmp/samp%.exp --iterations 50 --seed 3 -- ./test/m
 ./test/mathtest-verbose.sh ...
 ./test/mathtest-verbose.sh tmp/sampfinal.exp</pre>
               <hr>
-              <!--
               <pre style="font-size: 0.5em">
 vi ../tend/data/html5.ebnf
 lein run samples - -samples 20 ../tend/data/html5.ebnf tmp/samp%.html
 vi tmp/samp19.html</pre>
-              -->
               <ul>
                 <li>check mathtest
 							  	<ul>
@@ -939,7 +827,6 @@ vi tmp/samp19.html</pre>
                     <li>Use verbose on final: clearer that we've
                       discovered a math precision discrepancy.
                   </ul>
-                <!--
                 <li>samples for html.ebnf
 							  	<ul>
                     <li>Emphasize: Grammar for HTML5 and CSS
@@ -950,7 +837,6 @@ vi tmp/samp19.html</pre>
                       a grammar this large.
                     <li>samp19.html:
                   </ul>
-                -->
               </ul>
           </section>
         </section>
@@ -1193,41 +1079,7 @@ vi tmp/samp19.html</pre>
                   consensus algorithms depending on the goal.
               </ul>
             </aside>
-            <!-- TODO: consensus/rendering challenges: borders, Ahem, etc -->
           </section>
-          <!--
-          <section>
-            <h3>Beyond Browsers</h3>
-            <ul>
-              <li class="fragment">Implementation of standards
-              <li class="fragment">Regression/fix testing
-              <li class="fragment">Feature support matrix
-            </ul>
-            <aside class="notes">
-              <ul>
-                <li>There are other instances beyond browsers where
-                  there are this approach would work. PDF rendering.
-                  POSIX utility implementations.
-                  <font color="green">[show #1]</font> Basically any
-                  area where there is a software will often have
-                  multiple implementations.
-                <li><font color="green">[show #2]</font>
-                  However, not just for cases where there are multiple
-                  implementation from different vendors/creators. This
-                  approach could also be used for testing of multiple
-                  versions of the same SUT.  With a bit of integration
-                  with source control and automated testing systems
-                  this could be used to identify regressions and
-                  if/when they are fixed.
-                <li><font color="green">[show #3]</font>
-                  It could be used to create a feature matrix
-                  showing when a product began supporting a feature by
-                  comparing the most recent version against older
-                  versions of the product.
-              </ul>
-            </aside>
-          </section>
-          -->
         </section>
         <section>
           <h2>Test System Architecture</h2>
@@ -1365,12 +1217,160 @@ lein trampoline run config.yaml</pre>
             <h2>Extra Material</h2>
           </section>
           <section>
-            <img src="imgs/results1.png" width=80%></img>
+            <h3>Beyond Browsers</h3>
+            <ul>
+              <li class="fragment">Implementation of standards
+              <li class="fragment">Regression/fix testing
+              <li class="fragment">Feature support matrix
+            </ul>
             <aside class="notes">
+              <ul>
+                <li>There are other instances beyond browsers where
+                  there are this approach would work. PDF rendering.
+                  POSIX utility implementations.
+                  <font color="green">[show #1]</font> Basically any
+                  area where there is a software will often have
+                  multiple implementations.
+                <li><font color="green">[show #2]</font>
+                  However, not just for cases where there are multiple
+                  implementation from different vendors/creators. This
+                  approach could also be used for testing of multiple
+                  versions of the same SUT.  With a bit of integration
+                  with source control and automated testing systems
+                  this could be used to identify regressions and
+                  if/when they are fixed.
+                <li><font color="green">[show #3]</font>
+                  It could be used to create a feature matrix
+                  showing when a product began supporting a feature by
+                  comparing the most recent version against older
+                  versions of the product.
+              </ul>
             </aside>
           </section>
           <section>
-            <img src="imgs/results1_expanded.png" width=80%></img>
+            <h3>HTML 5</h3>
+            <ul>
+              <li>W3C Standard
+              <li>130 Elements (tags)
+              <li>110 Attributes
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li><font color="red">14:30</font>
+                <li>Let's talk briefly about HTML. HTML is a World
+                  Wide Web Consortium standard. HTML 5 is the current
+                  major version of the standard.
+                <li>HTML is composed of two major parts: elements and
+                  attributes.
+                <li>The standard defines approximate 130 HTML elements
+                  and 110 attributes.
+              </ul> 
+            </aside>
+          </section>
+          <section>
+            <h3>HTML Example</h3>
+            <pre><code class="html" data-noescape>&lt;<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;
+  &lt;<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
+    page document body
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span> <span class="fragment mark-current-blue" data-fragment-index=3>class="myclass1"</span>&gt; span content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span> <span class="fragment mark-current-blue" data-fragment-index=3>id="mydiv1"</span>&gt; div content &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span> <span class="fragment mark-current-blue" data-fragment-index=3>style="text-color: red"</span>&gt; bold red text &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt; bold text within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>b</span>&gt;
+      &lt;<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt; span content within a div &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>span</span>&gt;
+    &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>div</span>&gt;
+    &lt;<span class="fragment mark-current-blue" data-fragment-index=2>a</span> <span class="fragment mark-current-blue" data-fragment-index=3>href="http://w3c.org"</span>&gt; text of link to W3C &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>a</span>&gt;
+  &lt;/<span class="fragment mark-current-blue" data-fragment-index=2>body</span>&gt;
+&lt;/<span class="fragment mark-current-blue" data-fragment-index=2>html</span>&gt;</code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Here is an example web page HTML
+                <li><font color="green">[show #1]</font>
+                  Elements are delineated by tags.
+                <li>Note that the grammar for HTML elements is
+                  recursive and permits elements to be contained
+                  within other elements.
+                <li><font color="green">[show #2]</font>
+                  Attributes are key/values settings attached to
+                  elements. Some attributes like class and id are
+                  global while other like href are specific to certain
+                  types of elements.
+              </ul> 
+            </aside>
+          </section>
+          <section>
+            <h3>CSS 3</h3>
+            <ul>
+              <li>W3C Standard
+              <li>50 sub-specifications (modules)
+              <li>360 CSS properties
+            </ul>
+            <aside class="notes">
+              <ul>
+                <li>Cascading Stylesheet (or CSS) is also a World Web
+                  Consortium standard.
+                <li>CSS 3 is the major version of the standard.
+                <li>The CSS standard is a fair bit more complicated
+                  than the HTML one in terms of its grammar.
+                <li>There are actually 50 different sub-specifications
+                  referred to as CSS3 modules which are in various
+                  stages of standardization.
+                <li>There are more than 360 CSS property names across
+                  all the CSS3 modules.
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul style="list-style: none">
+              <li>Stylesheet:
+            </ul>
+
+            <pre><code class="css"  data-noescape><span class="fragment mark-current-blue" data-fragment-index=1>.classname #idname tagname</span> {
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>background</span>: <span class="fragment mark-current-blue" data-fragment-index=4>rgba(0, 0, 0, 0.5);</span></span>
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>border</span>: <span class="fragment mark-current-blue" data-fragment-index=4>1px solid #fff;</span></span>
+  <span class="fragment mark-current-blue" data-fragment-index=2><span class="fragment mark-current-blue" data-fragment-index=3>transform</span>: <span class="fragment mark-current-blue" data-fragment-index=4>translate3d(0px, 0px, -45px) rotateX(90deg);</span></span>
+}
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>Here is an example of a CSS stylesheet.
+                <li>There are four main components
+                <li><font color="green">[show #1]</font>
+                  Selectors, which identify which HTML elements the
+                  following block will apply to.
+                <li><font color="green">[show #2]</font>
+                  A block of declarations.
+                <li>Each declaration consists of ...
+                <li><font color="green">[show #3]</font>
+                  Property names and ...
+                <li><font color="green">[show #4]</font>
+                  Value data
+              </ul>
+            </aside>
+          </section>
+          <section data-transition="none">
+            <h3>CSS 3 Example</h3>
+            <ul style="list-style: none">
+              <li>Inline:
+            </ul>
+            <pre><code class="html"  data-noescape>&lt;div style="background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #fff;
+            transform: translate3d(0px, 0px, -45px)
+                       rotateX(90deg);"&gt;
+  div content
+&lt;/div&gt;
+            </code></pre>
+            <aside class="notes">
+              <ul>
+                <li>These are the same definitions from the previous
+                  example but embedded inline into the HTML.
+                <li>The selectors are omitted because these
+                  declarations only apply to the HTML elements that
+                  they embedded within.
+              </ul>
+            </aside>
           </section>
           <section>
             <h2>Results</h2>
@@ -1430,6 +1430,14 @@ lein trampoline run config.yaml</pre>
                   that are in the process of standardization 
               </ul> 
             </aside>
+          </section>
+          <section>
+            <img src="imgs/results1.png" width=80%></img>
+            <aside class="notes">
+            </aside>
+          </section>
+          <section>
+            <img src="imgs/results1_expanded.png" width=80%></img>
           </section>
         </section>
       </div>
