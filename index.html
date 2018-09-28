@@ -68,8 +68,7 @@
             <ul>
               <li>Good morning everyone!
               <li>This talk is "Browser Testing Using Grammars and
-                a Consensus Oracle". Hopefully that's what you were
-                expecting :-)
+                a Consensus Oracle".
               <li>Here is the Q&amp;A site and event code. I'm going
                 to try and leave some time for questions at the end,
                 but if I run out of time, I'm planning to lookup your
@@ -105,7 +104,7 @@
                 <li><font color="green"> [show #3]</font>
                   Finally, my 6 year old daughter has decided that my
                   job is to sit at our coffee table and build legos
-                  with my three kids.
+                  with she and her brother and sister.
                 <li>Well, I certainly wish I could play legos with
                   them all day.
               </ul>
@@ -135,12 +134,7 @@
                   describe in this talk actually apply to a number of
                   different systems but I'm going to focus on testing of
                   browser rendering engines.
-                <li>As an aside, there is a lot of material that
-                  I originally planned to cover in this talk that I had
-                  to drop for timing reasons. So my goal with this talk
-                  is to give you the foundation pieces and to pique your
-                  interest so that you'll have a new tool in your
-                  testing toolbox.  <li>With that said, let's jump in.
+                  <li>So let's jump in.
               </ul>
             </aside>
           </section>
@@ -444,7 +438,7 @@
                 <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
               </ul>
               <pre><code class="clojure" data-noescape>> (def SUT
-    (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
+    (fn [x] (if (<= 13 (count x) 17) nil (apply + x))))
 
 > (tc/quick-check 10
     (props/for-all
@@ -461,7 +455,7 @@
               <ul>
                 <li>Now let's introduce a bug in our SUT such that
                   any sequence containing 13 to 17 integers will
-                  result in the value 0 being returned instead of the
+                  result in the value nil being returned instead of the
                   sum.
                 <li>Our properties remain unchanged.
                 <li>We can see that running 10 iterations still passed
@@ -479,7 +473,7 @@
                 <li>Output property: sum of integers in P <font color="green">(almost)</font></li>
               </ul>
               <pre><code class="clojure" data-noescape>> (def SUT
-    (fn [x] (if (<= 13 (count x) 17) 0 (apply + x))))
+    (fn [x] (if (<= 13 (count x) 17) nil (apply + x))))
 
 > (tc/quick-check 100
     (props/for-all
@@ -609,9 +603,9 @@
                   ordering and repetition flexibility that CSS values
                   permits.
                 <li><font color="green">[show #1]</font>
-                  Here is an example from the specification for the VDS
-                  definition of the values for the
-                  <b>text-emphasis-position</b> property name.
+                  Here is an example from the specification of the VDS
+                  definition for the values that are permitted for the
+                  <b>text-emphasis-position</b> property.
                 <li>This definition states that the value should be
                   either the word "over" or "under" and either the
                   word "right" or "left".
@@ -799,14 +793,14 @@
                   part of the project is generically useful so I split
                   it off into a standalone project called instacheck.
                   Let's try it out.
+                <li><font color="red">SWITCH to TERMINAL</font>
               </ul>
               <pre style="font-size: 0.5em">
 vi test/numbers.ebnf
 lein run samples test/numbers.ebnf tmp/samp%.nums
-grep '.' tmp/samp%.nums | less
-lein run samples test/numbers.ebnf tmp/samp%.nums --weights-output tmp/number-weights.edn
-vi tmp/number-weights.edn
-lein run samples test/numbers.ebnf tmp/samp%.nums --weights tmp/number-weights.edn
+vi -O tmp/samp1.nums  tmp/samp9.nums
+vi tmp/numbers-weights.edn
+lein run samples test/numbers.ebnf tmp/samp%.nums --weights test/numbers-weights.edn
 grep '.' tmp/samp%.nums</pre>
               <hr>
               <pre style="font-size: 0.5em">
@@ -814,12 +808,13 @@ lein run clj test/numbers.ebnf foo.bar &gt; tmp/numbers.clj
 vi tmp/numbers.clj</pre>
               <ul>
                 <li>Show generating samples
-                <li>Show generating clj code
+                <li>We can also ask instacheck to output the
+                  equivalent Clojure generator code for a grammar.
               </ul>
           </section>
           <section>
             <h2>Demo Time</h2>
-            <p><font color="green">Instacheck</font></p>
+            <p><font color="yellow">instacheck</font> - <font color="green">instaparse meets test.check</font></p>
             <aside class="notes">
               <pre style="font-size: 0.5em">
 vi test/math.ebnf
@@ -829,11 +824,6 @@ grep '.' tmp/samp*.exp
 lein run check test/math.ebnf tmp/samp%.exp --iterations 50 --seed 3 -- ./test/mathtest.sh %
 ./test/mathtest-verbose.sh ...
 ./test/mathtest-verbose.sh tmp/sampfinal.exp</pre>
-              <hr>
-              <pre style="font-size: 0.5em">
-vi ../tend/data/html5.ebnf
-lein run samples - -samples 20 ../tend/data/html5.ebnf tmp/samp%.html
-vi tmp/samp19.html</pre>
               <ul>
                 <li>check mathtest
 							  	<ul>
@@ -847,6 +837,17 @@ vi tmp/samp19.html</pre>
                     <li>Use verbose on final: clearer that we've
                       discovered a math precision discrepancy.
                   </ul>
+              </ul>
+          </section>
+          <section>
+            <h2>Demo Time</h2>
+            <p><font color="yellow">instacheck</font> - <font color="green">instaparse meets test.check</font></p>
+            <aside class="notes">
+              <pre style="font-size: 0.5em">
+vi ../tend/data/html5.ebnf
+lein run samples - -samples 20 ../tend/data/html5.ebnf tmp/samp%.html
+vi tmp/samp19.html</pre>
+              <ul>
                 <li>samples for html.ebnf
 							  	<ul>
                     <li>Emphasize: Grammar for HTML5 and CSS
@@ -857,6 +858,7 @@ vi tmp/samp19.html</pre>
                       a grammar this large.
                     <li>samp19.html:
                   </ul>
+                <li><font color="red">SWITCH back to PRESENTATION</font>
               </ul>
           </section>
           <section>
@@ -886,9 +888,9 @@ vi tmp/samp19.html</pre>
             <aside class="notes">
               <ul>
                 <li><font color="red">19:30</font>
-                  We have a way to generate web page test cases
-                  that is <b>automated</b> and <b>controllable</b>,
-                  but how do we determine whether our browser correctly
+                  We have a way to generate web page test cases that
+                  is <b>automated</b> and <b>controllable</b>, but how
+                  do we determine whether our browser correctly
                   renders these test cases in an automated and
                   controllable way.
                 <!--
@@ -1142,21 +1144,23 @@ vi tmp/samp19.html</pre>
 vi config.yaml
 lein trampoline run config.yaml</pre>
               <ul>
-              <li>Show config.yaml
-              <li>Run:
-                <ul>
-                  <li>Establishing connections to headless browsers
-                    via webdriver protocol.
-                  <li>Start web server to serve test cases to browser
-                    and to serve the summary report page.
-                  <li>
-                </ul>
-              <li>Report page:
-                <ul>
-                  <li>Dynamically updated via websocket connection with server.
-                  <li>Explain the columns
-                  <li>Load and show firefox, Chrome and delta
-                <ul>
+                <li><font color="red">SWITCH to TERMINAL</font>
+                <li>Show config.yaml
+                <li>Run:
+                  <ul>
+                    <li>Establishing connections to headless browsers
+                      via webdriver protocol.
+                    <li>Start web server to serve test cases to browser
+                      and to serve the summary report page.
+                  </ul>
+                <li><font color="red">SWITCH to REPORT PAGE</font>
+                <li>Report page:
+                  <ul>
+                    <li>Dynamically updated via websocket connection with server.
+                    <li>Explain the columns
+                    <li>Load and show firefox, Chrome and delta
+                  </ul>
+                <li><font color="red">SWITCH back to PRESENTATION</font>
               </ul>
           </section>
           <section>
@@ -1242,7 +1246,7 @@ lein trampoline run config.yaml</pre>
           </div>
           <aside class="notes">
             <ul>
-              <li>Okay, here is some information for further
+              <li>Okay, here is where you can go for further
                 information.
               <li>The first link is this presentation material.
               <li>Also, I want to mention that ViaSat is hiring.
